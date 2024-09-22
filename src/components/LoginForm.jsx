@@ -5,33 +5,62 @@ import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-center items-center rounded-lg mt-48 bg-white max-w-[50vw] max-h-[50vh] ">
-      <div className="bg-[url('./src/assets/LogoLogin.png')] h-[50vh] w-[25vw] p-5">
-        <form className="flex flex-col gap-2">
-          <div className=" flex flex-col items-center justify-center">
-            <b>Login</b>
-            <span>Please login to book appointment.</span>
-          </div>
+    <div className="flex justify-center items-center rounded-lg mt-40 bg-white max-w-[50vw] max-h-[60vh]">
+      <div className="bg-[url('./src/assets/LoginLogo.png')] bg-contain bg-center h-[60vh] w-[50vw]">
+        <div className="flex flex-row">
+          <form className="flex flex-col gap-4 bg-white px-8 w-1/2 h-[60vh] rounded-lg">
+            <div className=" flex flex-col items-center justify-center gap-3 pt-8">
+              <b className="text-4xl font-bold">Login</b>
+              <span className="font-normal text-gray-500">
+                Please login to book appointment.
+              </span>
+            </div>
 
-          {/* --------- Email --------- */}
-          <label>Email</label>
-          <input type="email" name="Email" required className="" />
+            {/* --------- Email --------- */}
+            <label className="mx-1">Username</label>
+            <input
+              type="text"
+              name="Username"
+              placeholder="Input your username"
+              required
+              className="bg-[#eee] rounded-xl px-5 py-2"
+            />
 
-          {/* --------- Password -------- */}
-          <label>Password</label>
-          <input type="password" name="Password" required />
+            {/* --------- Password -------- */}
+            <label className="mx-1">Password</label>
+            <input
+              type="password"
+              name="Password"
+              placeholder="Input your password"
+              required
+              className="bg-[#eee] rounded-xl px-5 py-2"
+            />
 
-          <div>
-            <Button text="Login" textColor="white" onClick={navigate()} />
-          </div>
+            {/* -------- REMEMBER --------- */}
+            <div></div>
 
-          <span>or use another account</span>
-          <div></div>
-        </form>
-      </div>
+            {/* ------- BUTTON LOGIN --------- */}
+            <div className="bg-green-500 rounded-full px-8 py-3 mx-20 mt-5 md:block font-light text-center w-[50%]">
+              <Button text="Login" textColor="white" />
+            </div>
 
-      <div className="h-[50vh] w-[25vw] ">
-        <h1>Register</h1>
+            <span className="text-center">or use another account</span>
+            <div></div>
+          </form>
+
+          <form className="flex flex-col justify-center items-center gap-5 px-8 w-1/2 h-[60vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40">
+            <b className="text-4xl font-bold text-white">
+              Start your <br />
+              journey now
+            </b>
+            <p className="font-normal text-white">
+              If you don't have an account yet, join us and start your journey.
+            </p>
+            <div className="border rounded-full px-8 py-3 mx-24 md:block font-light text-center w-[50%]">
+              <Button text="Register" textColor="white" />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
