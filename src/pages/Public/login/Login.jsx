@@ -1,15 +1,15 @@
 import React from "react";
-import RegisterForm from "../../components/RegisterForm";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import LoginForm from "../../../components/LoginForm";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/Footer";
 
-const Register = () => {
+const Login = () => {
   return (
     <>
       <Navbar />
       <div className="bg-center bg-cover bg-[url('./src/assets/BgLogin.jpg')] min-h-svh">
         <div className="flex justify-center">
-          <RegisterForm />
+          <LoginForm />
         </div>
       </div>
       <Footer />
@@ -17,4 +17,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

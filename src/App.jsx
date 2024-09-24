@@ -1,10 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { path } from "./utils/constant";
-import Home from "./pages/Public/Home";
-import Login from "./pages/Public/Login";
-import Register from "./pages/Public/Register";
-import About from "./pages/Public/About";
+import { Home, Login, Register, About, Contact } from "./pages/Public";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -17,7 +14,7 @@ const App = () => {
     { path: path.TEAM, element: <Register /> },
     { path: path.FEATURES, element: <Register /> },
     { path: path.PRICING, element: <Register /> },
-    { path: path.REGISTER, element: <Register /> },
+    { path: path.CONTACT, element: <Contact /> },
   ]);
 
   return <RouterProvider router={router} />;

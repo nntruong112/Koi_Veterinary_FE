@@ -1,170 +1,133 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  Button,
-  Card,
-  Checkbox,
-  Flex,
-  Form,
-  Input,
-  Spin,
-  Typography,
-} from "antd";
+import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa6";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
 
-  const handleLogin = async (values) => {
-    console.log(values);
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+
+  const [confirmPass, setConfirmPass] = useState("");
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+
+  const toggleShowPass = () => {
+    setShowPass(!showPass);
+  };
+
+  const toggleShowConfirmPass = () => {
+    setShowConfirmPass(!showConfirmPass);
   };
 
   return (
-    <div className="w-1/2 flex flex-col my-40 items-start bg-white bg-center bg-cover bg-[url('./src/assets/LoginLogo.png')]  min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm">
-      <Card
-        style={{
-          width: "full",
-          padding: "0px",
-          background: "transparent",
-        }}
-      >
-        <Flex align="center">
-          {/* ---------- Left Side -------------- */}
-          <Flex
-            vertical
-            flex={1}
-            className="bg-gradient-to-b from-gray-300/40 to-gray-600/40  gap-y-20  px-[40px] py-[120px]"
-          >
-            <Typography.Title
-              level={1}
-              strong
-              className="flex justify-center items-center"
-            >
-              Hello Friends
-            </Typography.Title>
-
-            <Typography.Text
-              level={3}
-              strong
-              className="flex justify-center items-center"
-            >
+    <div className="flex justify-center items-center rounded-lg my-20 bg-white max-w-[50vw] max-h-[75vh]">
+      <div className="bg-[url('./src/assets/LoginLogo.png')] bg-contain bg-center h-[75vh] w-[50vw]">
+        <div className="flex flex-row ">
+          {/* --------------- RIGHT SIDE ---------------- */}
+          <form className="flex flex-col justify-center items-center gap-8 px-8 w-1/2 h-[75vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40">
+            <b className="text-4xl font-bold text-white">
+              Hello
+              <br />
+              friends
+            </b>
+            <p className="font-normal text-white text-center">
               If you have an account, login here and have fun.
-            </Typography.Text>
-
-            <Form.Item>
+            </p>
+            <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center w-[50%]">
               <Button
+                text="Login"
+                textColor="white"
                 onClick={() => {
-                  navigate("/login");
+                  navigate("/Login");
                 }}
-                size="large"
-                style={{
-                  width: "100%",
-                  borderRadius: "50px",
-                }}
-              >
-                Sign In
-              </Button>
-            </Form.Item>
-          </Flex>
+              />
+            </div>
+          </form>
 
-          {/* ---------- Right Side ------------- */}
-          <Flex vertical flex={1} className="bg-white px-[50px] py-[67px]">
-            <Typography.Title
-              level={3}
-              strong
-              className="flex justify-center items-center"
-            >
-              Sign In
-            </Typography.Title>
-            <Typography.Text
-              type="secondary"
-              strong
-              className="flex justify-center items-center"
-            ></Typography.Text>
-            <Form layout="vertical" onFinish={handleLogin} autoComplete="off">
-              {/* -------- FULL NAME -------- */}
-              <Form.Item
-                label="Full Name"
-                name="fullName"
-                rules={[
-                  { required: true, message: "Please input your full name" },
-                ]}
-              >
-                <Input size="large" placeholder="Enter your email" />
-              </Form.Item>
-              {/* --------- EMAIL -------- */}
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  { required: true, message: "Please input your Email!" },
-                  { type: "email", message: "The input is not valid Email" },
-                ]}
-              >
-                <Input size="large" placeholder="Enter your email" />
-              </Form.Item>
+          {/* --------------- RIGHT SIDE ---------------- */}
+          <form className="flex flex-col gap-6 bg-white px-8 w-1/2 h-[75vh] rounded-lg">
+            <div className=" flex flex-col items-center justify-center gap-3 pt-8">
+              <b className="text-4xl font-bold">Login</b>
+              <span className="font-normal text-gray-500">
+                Please login to book appointment.
+              </span>
+            </div>
 
-              {/* -------- PASSWORD --------- */}
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  { required: true, message: "Please input your Password!" },
-                ]}
-              >
-                <Input.Password
-                  size="large"
-                  placeholder="Enter your password"
-                />
-              </Form.Item>
+            {/* --------- Full name --------- */}
+            <input
+              type="text"
+              name="FullName"
+              placeholder="Full Name"
+              required
+              className="bg-[#eee] rounded-xl px-5 py-2"
+            />
 
-              {/* -------- CONFIRM PASSWORD --------- */}
-              <Form.Item
-                label="Confirm Password"
-                name="passwordConfirm"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Confirm Password!",
-                  },
-                ]}
-              >
-                <Input.Password
-                  size="large"
-                  placeholder="Re-enter your password"
-                />
-              </Form.Item>
+            {/* --------- Username --------- */}
+            <input
+              type="text"
+              name="Username"
+              placeholder="Username"
+              required
+              className="bg-[#eee] rounded-xl px-5 py-2"
+            />
 
-              {/* -------- BUTTON ------ */}
-              {/* {error && (
-                <Alert
-                  description={error}
-                  type="error"
-                  showIcon
-                  closable
-                  className="mb-[1.5rem]"
-                />
-              )} */}
-              <Form.Item>
-                <Button
-                  // type={`${loading ? "" : "primary"}`}
-                  htmlType="submit"
-                  size="large"
-                  style={{
-                    width: "100%",
-                    background: "green",
-                    color: "white",
-                    borderRadius: "50px",
-                  }}
-                >
-                  {/* {loading ? <Spin/> : 'Create Account'} */}
-                  Create an account
-                </Button>
-              </Form.Item>
-            </Form>
-          </Flex>
-        </Flex>
-      </Card>
+            {/* --------- Password -------- */}
+            <div className="relative">
+              <input
+                type={showPass ? "text" : "password"}
+                name="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+                className="bg-[#eee] rounded-xl px-5 py-2 w-full"
+              />
+
+              <span
+                onClick={toggleShowPass}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              >
+                {showPass ? <FaEye /> : <FaEyeSlash />}
+              </span>
+            </div>
+
+            {/* --------- Confirm Password -------- */}
+            <div className="relative">
+              <input
+                type={showConfirmPass ? "text" : "password"}
+                name="Re-Password"
+                value={confirmPass}
+                onChange={(e) => setConfirmPass(e.target.value)}
+                placeholder="Confirm Password"
+                required
+                className="bg-[#eee] rounded-xl px-5 py-2 w-full"
+              />
+
+              <span
+                onClick={toggleShowConfirmPass}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              >
+                {showConfirmPass ? <FaEye /> : <FaEyeSlash />}
+              </span>
+            </div>
+
+            {/* ------- BUTTON LOGIN --------- */}
+            <div className="bg-green-500 rounded-full px-8 py-3 mx-20 mt-5 md:block font-light text-center w-[50%]">
+              <Button text="Register" textColor="white" />
+            </div>
+
+            <span className="text-center text-sm">or use another account</span>
+
+            <div className="flex justify-center items-center gap-8">
+              <FaFacebook className="text-blue-700 text-[30px] cursor-pointer" />
+              <FcGoogle className="text-[33px] cursor-pointer" />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

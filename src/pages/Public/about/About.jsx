@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { assets } from "../../assets/assets";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import { assets } from "../../../assets/assets";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/Footer";
 import { TiTick } from "react-icons/ti";
 import { FaTasks, FaChartLine, FaNetworkWired, FaRocket } from "react-icons/fa";
 
