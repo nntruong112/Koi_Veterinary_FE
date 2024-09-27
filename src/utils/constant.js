@@ -9,4 +9,7 @@ export const path = {
   FEATURES: "/features",
   PRICING: "/pricing",
   CONTACT: "/contact",
+  ADMIN: "/admin",
+  DASHBOARD: "dashboard",
+  CUSTOMER: "customer",
 };

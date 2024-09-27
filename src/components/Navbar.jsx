@@ -1,17 +1,17 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
 import { path } from "../utils/constant";
-import Button from "../components/Button";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const goLogin = useCallback(() => {
-    navigate(path.LOGIN);
-  }, []);
+  const [token, setToken] = useState(true);
+
+  const user = useSelector((state) => state.auth.login.currentUser);
 
   return (
-    <div className="flex items-center justify-around bg-primary text-xl py-4 border-b-2 border-b-black">
+    <div className="flex items-center justify-around bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200 text-xl py-4">
       <img className="w-44 cursor-pointer" src={assets.Logo} alt="" />
       <ul className="hidden md:flex items-start gap-5 font-medium">
         <NavLink to={path.HOME}>
@@ -55,8 +55,43 @@ const Navbar = () => {
         </NavLink>
       </ul>
 
-      <div className="bg-[#3399FF] px-8 py-3 rounded-full font-light md:block">
-        <Button onClick={goLogin} text={"Login"} textColor="white" />
+      <div className="flex items-center gap-4">
+        {user ? (
+          <div className="flex items-center gap-2 cursor-pointer group relative">
+            <p>
+              Hi, <span> {user.username} </span>
+            </p>
+            <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
+              <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
+                <p
+                  onClick={() => navigate("my-profile")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Profile
+                </p>
+                <p
+                  onClick={() => navigate("my-appointment")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Appointment
+                </p>
+                <p
+                  onClick={() => setToken(false)}
+                  className="hover:text-black cursor-pointer"
+                >
+                  Logout
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={() => navigate("/login")}
+            className="bg-blue-500 text-white px-8 py-3 rounded-full font-light hidden md:block"
+          >
+            LOGIN
+          </button>
+        )}
       </div>
     </div>
   );

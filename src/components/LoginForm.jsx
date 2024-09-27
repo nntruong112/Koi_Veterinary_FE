@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/apiRequest.js";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
 
@@ -15,12 +19,26 @@ const LoginForm = () => {
     setShowPass(!showPass);
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const newUser = {
+      username: username,
+      password: password,
+    };
+
+    loginUser(newUser, dispatch, navigate);
+  };
+
   return (
     <div className="flex justify-center items-center rounded-lg my-32 bg-white max-w-[50vw] max-h-[65vh]">
       <div className="bg-[url('./src/assets/LoginLogo.png')] bg-contain bg-center h-[65vh] w-[50vw]">
         <div className="flex flex-row ">
           {/* --------------- RIGHT SIDE ---------------- */}
-          <form className="flex flex-col gap-6 bg-white px-8 w-1/2 h-[65vh] rounded-lg">
+          <form
+            onSubmit={handleLogin}
+            className="flex flex-col gap-6 bg-white px-8 w-1/2 h-[65vh] rounded-lg"
+          >
             <div className=" flex flex-col items-center justify-center gap-3 pt-8">
               <b className="text-4xl font-bold">Login</b>
               <span className="font-normal text-gray-500">
@@ -28,12 +46,13 @@ const LoginForm = () => {
               </span>
             </div>
 
-            {/* --------- Email --------- */}
+            {/* --------- Username --------- */}
             <input
               type="text"
               name="Username"
               placeholder="Username"
               required
+              onChange={(e) => setUsername(e.target.value)}
               className="bg-[#eee] rounded-xl px-5 py-2"
             />
 
@@ -42,7 +61,6 @@ const LoginForm = () => {
               <input
                 type={showPass ? "text" : "password"}
                 name="Password"
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 required

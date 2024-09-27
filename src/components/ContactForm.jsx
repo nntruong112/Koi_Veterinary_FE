@@ -12,7 +12,7 @@ const ContactForm = () => {
       <section className="flex justify-center gap-y-0 gap-x-[50px]">
         <div className="my-10 flex flex-col md:flex-row gap-12">
           <img
-            className="w-[600px] h-[440px] md:max-w-[360px]  rounded-lg object-cover shadow-[10px_12px_40px_rgba(0,0,0,0.2)] -translate-x-10"
+            className="w-[600px] h-[440px] md:max-w-[360px] rounded-lg object-cover shadow-[10px_12px_40px_rgba(0,0,0,0.2)] -translate-x-10"
             src={assets.KoiPool}
             alt=""
           />
@@ -28,7 +28,7 @@ const ContactForm = () => {
             Careers at KOI HEALTH CENTER
           </p>
           <p>Learn more about our teams and job openings.</p>
-          <div className="border border-solid border-black font-bold text-xl p-5 hover:bg-primary">
+          <div className="border border-solid border-black font-bold text-xl p-5 hover:bg-blue-300">
             <Button text="Explore more" textColor="black" />
           </div>
         </div>

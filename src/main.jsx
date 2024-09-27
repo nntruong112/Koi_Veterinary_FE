@@ -1,18 +1,17 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
-import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
-import reduxStore from "./redux.js";
-
-const { store, persistor } = reduxStore();
+import { store } from "./redux/store.js";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { RouterProvider } from "react-router-dom";
+import routes from "./routes/combineRoutes.jsx";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <App />
-    </PersistGate>
+    <GoogleOAuthProvider clientId="333028122679-8qui3jtdf79sm38ft0rqnrgnbvuhmrs5.apps.googleusercontent.com">
+      <RouterProvider router={routes} />
+    </GoogleOAuthProvider>
   </Provider>
 );
