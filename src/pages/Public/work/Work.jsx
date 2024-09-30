@@ -1,15 +1,37 @@
-import React from "react";
-import { assets } from "../../../assets/assets";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../../redux/apiRequest";
+import { useNavigate } from "react-router-dom";
 
 const Work = () => {
-  return (
-    <div className="flex flex-col justify-center items-center">
-      <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
-        Một số bệnh thường gặp tại cá. <br /> Cách xử lý, khắc phục ra sao?
-      </h2>
+  const user = useSelector((state) => state.auth.login?.currentUser);
+  const userList = useSelector((state) => state.users.users?.allUsers);
 
-      <img src={assets.KoiPool} className="w-1/3" />
-    </div>
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // if (!user) {
+    //   navigate("/login");
+    // }
+
+    if ((user?.accessToken, dispatch)) {
+      getAllUsers(user?.accessToken, dispatch);
+    }
+  }, []);
+  return (
+    <main>
+      <div>{`Your role: ${user?.admin ? `Admin` : `User`}`}</div>
+      <div>
+        {userList?.map((user) => {
+          return (
+            <div>
+              <p>{user.username}</p>
+            </div>
+          );
+        })}
+      </div>
+    </main>
   );
 };
 

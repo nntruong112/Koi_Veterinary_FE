@@ -6,6 +6,9 @@ const Admin = React.lazy(() => import("../pages/Private/admin/Admin"));
 const Dashboard = React.lazy(() =>
   import("../pages/Private/admin/dashboard/Dashboard")
 );
+const MyProfile = React.lazy(() =>
+  import("../pages/Private/member/profile/MyProfile")
+);
 
 const PrivateRoutes = [
   {
@@ -18,6 +21,8 @@ const PrivateRoutes = [
       },
     ],
   },
+
+  { path: path.PROFILE, element: <LoadLazy children={<MyProfile />} /> },
 ];
 
 export default PrivateRoutes;

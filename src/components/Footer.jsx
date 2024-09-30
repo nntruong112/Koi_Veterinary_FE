@@ -4,7 +4,7 @@ import { AiFillFacebook, AiFillInstagram } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <div className="bg-primary">
+    <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-0 text-sm md:mx-10">
         {/* ------- Left Section -------- */}
         <div className="mt-5">

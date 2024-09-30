@@ -1,14 +1,37 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
 import { path } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
+import { IoIosArrowDropdown } from "react-icons/io";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(true);
+  const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.auth.login.currentUser);
+  const user = useSelector((state) => state.auth);
+
+  // Tạo state để lưu thông tin giải mã
+  const [decodedUser, setDecodedUser] = useState(null);
+
+  useEffect(() => {
+    // Giải mã token khi component được mount hoặc khi user data thay đổi
+    if (user?.data?.token) {
+      try {
+        const decoded = jwtDecode(user.data.token);
+        setDecodedUser(decoded); // Lưu thông tin đã giải mã vào state
+        console.log("Decoded JWT: ", decoded);
+      } catch (decodeError) {
+        console.log("Decode error: ", decodeError);
+      }
+    }
+  }, [user]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div className="flex items-center justify-around bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200 text-xl py-4">
@@ -56,11 +79,12 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-4">
-        {user ? (
+        {user.data ? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
             <p>
-              Hi, <span> {user.username} </span>
+              Hi, <span> {decodedUser?.["user: "]?.name || "User"} </span>
             </p>
+            <IoIosArrowDropdown />
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
               <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                 <p
@@ -76,7 +100,7 @@ const Navbar = () => {
                   My Appointment
                 </p>
                 <p
-                  onClick={() => setToken(false)}
+                  onClick={handleLogout}
                   className="hover:text-black cursor-pointer"
                 >
                   Logout
