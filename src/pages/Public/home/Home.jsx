@@ -14,7 +14,7 @@ const Home = () => {
           <h2 className="font-bold">
             Koi Health Center: <br /> Comprehensive Care for Koi Fish Health
           </h2>
-          <img className="w-[403px] h-[403px]" src={assets.About_1} />
+          <img className="w-[403px] h-[403px]" src={assets.koihealth} />
           <h3 className="text-slate-700">
             Administering Treatment to a Koi Fish
           </h3>

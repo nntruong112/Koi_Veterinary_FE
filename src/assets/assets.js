@@ -6,6 +6,8 @@ import BackgroundLogin from "./BgLogin.jpg";
 import AboutImage from "./AboutImage.png";
 import KoiPool from "./yeu-cau-ho-ca-koi.jpg";
 import About_1 from "./About1.jpg";
+import koihealth from "./koihealth.jpg";
+
 
 export const assets = {
   Logo,
@@ -16,4 +18,5 @@ export const assets = {
   AboutImage,
   KoiPool,
   About_1,
+  koihealth,
 };
