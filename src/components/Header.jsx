@@ -14,10 +14,7 @@ const Header = () => {
             Minh City.
           </p>
         </div>
-        <a
-          href=""
-          className="flex items-center gap-3 bg-blue-400 px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300"
-        >
+        <a className="flex items-center gap-3 bg-blue-400 px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300">
           Book Appointment
           <img className="w-4" src={assets.ArrowIcon} alt="" />
         </a>

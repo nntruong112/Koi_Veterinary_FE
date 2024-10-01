@@ -1,8 +1,11 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import { AiFillFacebook, AiFillInstagram } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-0 text-sm md:mx-10">
@@ -21,9 +24,9 @@ const Footer = () => {
         <div className="mt-10">
           <p className="text-xl font-medium mb-5">COMPANY</p>
           <ul className="flex flex-col gap-2 text-gray-600">
-            <li>Home</li>
-            <li>About us</li>
-            <li>Contact us</li>
+            <li onClick={() => navigate("/")}> Home</li>
+            <li onClick={() => navigate("/about")}>About us</li>
+            <li onClick={() => navigate("/contact")}>Contact us</li>
             <li>Privacy policy</li>
           </ul>
         </div>
