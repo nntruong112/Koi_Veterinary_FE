@@ -9,6 +9,7 @@ const Register = React.lazy(() => import("../pages/Public/register/Register"));
 const About = React.lazy(() => import("../pages/Public/about/About"));
 const Contact = React.lazy(() => import("../pages/Public/contact/Contact"));
 const Work = React.lazy(() => import("../pages/Public/work/Work"));
+const Team = React.lazy(() => import("../pages/Public/team/Team"));
 
 const PublicRoutes = [
   { path: path.HOME, element: <LoadLazy children={<Home />} /> },
@@ -18,6 +19,7 @@ const PublicRoutes = [
   //   { path: path.TESTIMONIALS, element: <Register /> },
   //   { path: path.WORK, element: <Register /> },
   { path: path.WORK, element: <LoadLazy children={<Work />} /> },
+  { path: path.TEAM, element: <LoadLazy children={<Team />} /> },
   //   { path: path.FEATURES, element: <Register /> },
   //   { path: path.PRICING, element: <Register /> },
   { path: path.CONTACT, element: <LoadLazy children={<Contact />} /> },
