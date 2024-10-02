@@ -3,8 +3,11 @@ import Header from "../../../components/Header";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { assets } from "../../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar />
@@ -47,9 +50,6 @@ const Home = () => {
           </p>
         </div>
         <div className="  flex items-center flex-col gap-6 text-2xl text-center w-1/2 font-bold mb-1 text-[#3d3c3c]">
-          {/* <h2>
-            Bệnh thối vây <br /> Cách xử lý, khắc phục ra sao?
-          </h2> */}
           <img src={assets.KoiPool} />
         </div>
       </section>

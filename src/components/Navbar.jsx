@@ -34,7 +34,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-around bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200 text-xl py-4">
+    <div className="flex items-center h-[121px] justify-around bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200 text-xl py-4">
       <img
         onClick={() => navigate("/")}
         className="w-44 cursor-pointer"

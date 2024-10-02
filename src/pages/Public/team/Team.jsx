@@ -7,7 +7,7 @@ const Team = () => {
   return (
     <>
       <Navbar />
-      <div className="w-full grid grid-cols-5 gap-4 gap-y-6 overflow-hidden cursor-pointer group">
+      <div className="w-full grid grid-cols-5 gap-4 gap-y-6 overflow-hidden cursor-pointer group pb-10">
         <div className="border border-[#C9D8FF] rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500">
           <img src={assets.koihealth} alt="" />
           <p className="text-[#262626] text-lg text-center font-medium">

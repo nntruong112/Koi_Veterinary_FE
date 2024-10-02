@@ -1,6 +1,5 @@
 import React from "react";
 import { assets } from "../assets/assets";
-import Button from "./Button";
 
 const ContactForm = () => {
   return (
@@ -29,7 +28,7 @@ const ContactForm = () => {
           </p>
           <p>Learn more about our teams and job openings.</p>
           <div className="border border-solid border-black font-bold text-xl p-5 hover:bg-blue-300">
-            <Button text="Explore more" textColor="black" />
+            <button>Explore more</button>
           </div>
         </div>
       </section>
@@ -70,7 +69,7 @@ const ContactForm = () => {
           ></textarea>
 
           <div className="w-[500px] bg-green-500 text-white p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
-            <Button text="Submit" textColor="white" />
+            <button>Submit</button>
           </div>
         </form>
       </section>

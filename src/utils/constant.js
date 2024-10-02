@@ -12,6 +12,7 @@ export const path = {
   ADMIN: "/admin",
   DASHBOARD: "dashboard",
   PROFILE: "/my-profile",
+  BOOKING: "/booking",
 };
 
 // /**

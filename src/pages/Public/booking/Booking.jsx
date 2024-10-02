@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../../../components/Button";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 
@@ -12,7 +11,7 @@ const Booking = () => {
       </h1>
 
       <section className=" min-h-svh flex justify-center items-center">
-        <form className="w-[50vw] h-[50vh]  bg-primary rounded-lg flex flex-col gap-8 items-center">
+        <form className="w-[50vw] h-[50vh]  bg-[url('./src/assets/LoginLogo.png')] border border-l-blue-300 rounded-lg flex flex-col gap-8 items-center">
           <h2 className="font-semibold text-4xl ">Booking</h2>
 
           <input
@@ -50,7 +49,7 @@ const Booking = () => {
             <option value="ngu">Cá bị bênh ngủ</option>
           </select>
           <div className="w-[500px] bg-green-500 p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
-            <Button text="Submit" textColor="white" />
+            <button>Explore more</button>
           </div>
         </form>
       </section>
