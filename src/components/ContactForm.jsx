@@ -1,6 +1,5 @@
 import React from "react";
 import { assets } from "../assets/assets";
-import Button from "./Button";
 
 const ContactForm = () => {
   return (
@@ -22,14 +21,14 @@ const ContactForm = () => {
           <p className="font-semibold text-lg text-gray-600">OUR CENTER</p>
           <p>123 XVNT, Ward 17, Binh Thanh District, HCMC</p>
           <p>
-            Tel: +84 0915-756-852 <br /> Email: koihealthcenter@gmail.com
+            Tel: +84 915-756-852 <br /> Email: KoiHealthService@gmail.com
           </p>
           <p className="font-serif text-lg text-gray-600">
             Careers at KOI HEALTH CENTER
           </p>
           <p>Learn more about our teams and job openings.</p>
-          <div className="border border-solid border-black font-bold text-xl p-5 hover:bg-blue-300">
-            <Button text="Explore more" textColor="black" />
+          <div className="border border-solid text-black border-black font-bold text-xl p-5 hover:bg-primary hover:text-white">
+            <button>Explore more</button>
           </div>
         </div>
       </section>
@@ -69,8 +68,8 @@ const ContactForm = () => {
             className="w-[500px] p-2 rounded-md resize-y text-lg bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
           ></textarea>
 
-          <div className="w-[500px] bg-green-500 text-white p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
-            <Button text="Submit" textColor="white" />
+          <div className="w-[500px] text-white bg-primary p-3 rounded-lg font-semibold hover:bg-primary/90 transition text-center">
+            <button>Submit</button>
           </div>
         </form>
       </section>

@@ -1,33 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getInfoByToken } from "../../services/userService";
+import * as status from "../../utils/status";
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    users: {
-      allUsers: null,
-      isFetching: false,
-      error: false,
-    },
+    status: status.IDLE,
+    data: null,
+    error: null,
   },
 
-  reducers: {
-    getUsersStart: (state) => {
-      state.users.isFetching = true;
-    },
+  reducers: {},
 
-    getUsersSuccess: (state, action) => {
-      state.users.isFetching = false;
-      state.users.allUsers = action.payload;
-    },
-
-    getUsersFailed: (state) => {
-      state.users.isFetching = false;
-      state.users.error = true;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getInfoByToken.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getInfoByToken.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = action.payload;
+      })
+      .addCase(getInfoByToken.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
   },
 });
-
-export const { getUsersStart, getUsersSuccess, getUsersFailed } =
-  userSlice.actions;
 
 export default userSlice.reducer;

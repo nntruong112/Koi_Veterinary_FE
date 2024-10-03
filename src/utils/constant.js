@@ -1,4 +1,5 @@
 export const path = {
+  // PUBLIC PAGES
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
@@ -9,9 +10,19 @@ export const path = {
   FEATURES: "/features",
   PRICING: "/pricing",
   CONTACT: "/contact",
+
+  // ADMIN
   ADMIN: "/admin",
   DASHBOARD: "dashboard",
+  APPOINTMENT: "appointment",
+  ADD_DOCTOR: "add-doctor",
+  DOCTOR: "doctors",
+
+  // USER
+  USERS: "users",
   PROFILE: "/my-profile",
+  FISH: "/my-fish",
+  MY_APPOINTMENT: "/my-appointment",
 };
 
 // /**

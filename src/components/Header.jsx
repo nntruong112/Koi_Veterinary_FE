@@ -1,5 +1,5 @@
 import React from "react";
-import { assets } from "../assets/assets";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const Header = () => {
   return (
@@ -14,12 +14,9 @@ const Header = () => {
             Minh City.
           </p>
         </div>
-        <a
-          href=""
-          className="flex items-center gap-3 bg-blue-400 px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300"
-        >
+        <a className="flex items-center gap-3 bg-primary px-8 py-3 rounded-full text-white text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300">
           Book Appointment
-          <img className="w-4" src={assets.ArrowIcon} alt="" />
+          <FaArrowRightLong className="w-4 mt-0.5" />
         </a>
       </div>
     </section>

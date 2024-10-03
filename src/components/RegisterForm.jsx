@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { register } from "../services/authService";
-import { useDispatch } from "react-redux";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { validateEmail } from "../utils/validateData";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
@@ -172,27 +169,26 @@ const RegisterForm = () => {
         <div className="flex flex-row ">
           {/* --------------- LEFT SIDE ---------------- */}
           <form className="flex flex-col justify-center items-center gap-8 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40">
-            <b className="text-4xl font-bold text-white">
+            <b className="text-4xl font-bold text-black">
               Hello
               <br />
               friends
             </b>
-            <p className="font-normal text-white text-center">
+            <p className="font-normal text-black text-center">
               If you have an account, login here and have fun.
             </p>
-            <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center w-[50%]">
-              <Button
-                text="Login"
-                textColor="white"
+            <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center text-white w-[50%] bg-primary">
+              <button
                 onClick={() => {
-                  navigate("/Login");
+                  navigate("/login");
                 }}
-              />
+              >
+                Login
+              </button>
             </div>
           </form>
 
           {/* --------------- RIGHT SIDE ---------------- */}
-          {/* {message ? <Message message={message} /> : null} */}
           <form
             className="flex flex-col gap-6 bg-white px-8 py-4 w-1/2 min-h-[70vh] rounded-lg"
             onSubmit={handleRegister}
@@ -213,7 +209,6 @@ const RegisterForm = () => {
                 className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
                   nameError ? "border-red-500" : "border-none"
                 } focus:border-red-500 `}
-                // onChange={(e) => setName(e.target.value)}
                 onChange={handleChange}
               />
 
@@ -231,7 +226,6 @@ const RegisterForm = () => {
                 className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
                   emailError ? "border-red-500" : "border-none"
                 } focus:border-red-500 `}
-                // onChange={(e) => setEmail(e.target.value)}
                 onChange={handleChange}
               />
 
@@ -249,7 +243,6 @@ const RegisterForm = () => {
                 className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
                   usernameError ? "border-red-500" : "border-none"
                 } focus:border-red-500 `}
-                // onChange={(e) => setUsername(e.target.value)}
                 onChange={handleChange}
               />
 
@@ -267,7 +260,6 @@ const RegisterForm = () => {
                   type={showPass ? "text" : "password"}
                   name="password"
                   placeholder="Password"
-                  // onChange={(e) => setPassword(e.target.value)}
                   onChange={handleChange}
                   className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
                     confirmPasswordError ? "border-red-500" : "border-none"
@@ -317,11 +309,11 @@ const RegisterForm = () => {
               )}
             </div>
 
-            {/* ------- BUTTON LOGIN --------- */}
+            {/* ------- BUTTON REGISTER --------- */}
 
             <button
               type="submit"
-              className="bg-green-500 rounded-full px-8 py-3 mx-20 mt-5 md:block font-light text-center w-[50%] text-white"
+              className="bg-primary rounded-full px-8 py-3 mx-20 mt-5 md:block font-medium text-center w-[50%] text-white"
             >
               Register
             </button>

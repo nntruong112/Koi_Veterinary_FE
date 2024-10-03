@@ -5,7 +5,6 @@ import { FaFacebook } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { jwtDecode } from "jwt-decode";
 import { login } from "../services/authService.js";
 
 const LoginForm = () => {
@@ -80,16 +79,15 @@ const LoginForm = () => {
         const originalPromiseResult = unwrapResult(resultAction);
 
         if (originalPromiseResult) {
-          //Chuyen huong ve trang login
-          navigate("/");
-
           //Hien thi thong bao
           alert("Login successfully");
+
+          //Chuyen huong ve trang login
+          navigate("/");
         }
       } catch (error) {
         const responseError = error?.response?.data?.error;
-        console.log(responseError);
-        alert(responseError);
+        alert("Login failed: " + responseError);
       }
     }
   };
@@ -145,6 +143,7 @@ const LoginForm = () => {
                 <span
                   onClick={toggleShowPass}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  aria-label="Show password"
                 >
                   {showPass ? <FaEye /> : <FaEyeSlash />}
                 </span>
@@ -177,11 +176,15 @@ const LoginForm = () => {
             </div>
 
             {/* ------- BUTTON LOGIN --------- */}
-            <div className="bg-green-500 rounded-full px-8 py-3 mx-20 mt-5 md:block font-medium text-center text-white w-[50%]">
+            <div className="rounded-full px-8 py-3 mx-20 mt-5 md:block font-medium text-center text-white w-[50%] bg-primary">
               <button type="submit">Login</button>
             </div>
 
-            <span className="text-center text-sm">or use another account</span>
+            <span className="text-center text-sm">
+              <hr />
+              or use another account
+              <hr />
+            </span>
 
             <div className="flex justify-center items-center gap-8">
               <FaFacebook className="text-blue-700 text-[30px] cursor-pointer" />
@@ -191,17 +194,17 @@ const LoginForm = () => {
 
           {/* --------------- RIGHT SIDE ---------------- */}
           <form className="flex flex-col justify-center items-center gap-5 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40">
-            <b className="text-4xl font-bold text-white">
+            <b className="text-4xl font-bold text-black">
               Start your <br />
               journey now
             </b>
-            <p className="font-normal text-white">
+            <p className="font-normal text-black">
               If you don't have an account yet, join us and start your journey.
             </p>
-            <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center text-white w-[50%]">
+            <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center text-white w-[50%] bg-primary">
               <button
                 onClick={() => {
-                  navigate("/Register");
+                  navigate("/register");
                 }}
               >
                 Register

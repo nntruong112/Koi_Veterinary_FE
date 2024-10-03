@@ -4,11 +4,11 @@ import { AiFillFacebook, AiFillInstagram } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-200">
+    <div className="bg-gradient-to-r from-white via-purple-300 to-cyan-300">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-0 text-sm md:mx-10">
         {/* ------- Left Section -------- */}
         <div className="mt-5">
-          <img className="mb-8 w-44" src={assets.Logo} alt="" />
+          <img className="mb-8 w-28" src={assets.Logo} alt="" />
           <p className="w-full md:w-2/3 text-gray-600 leading-6">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text

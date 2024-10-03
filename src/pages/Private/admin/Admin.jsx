@@ -1,15 +1,19 @@
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import SideBar from "../../../components/Private/admin/sidebar/SideBar";
+import NavBar from "../../../components/Navbar";
 
 const Admin = () => {
-  const isLogin = true;
-  const navigate = useNavigate();
   return (
-    <div>
-      <h1>Admin</h1>
-      {/* <Outlet /> */}
-      {isLogin ? <Outlet /> : navigate("/login")}
-    </div>
+    <>
+      <NavBar />
+      <div className="flex flex-row gap-5">
+        <SideBar />
+        <main>
+          <Outlet />
+        </main>
+      </div>
+    </>
   );
 };
 
