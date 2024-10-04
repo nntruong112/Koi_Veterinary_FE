@@ -13,6 +13,7 @@ export const path = {
   DASHBOARD: "dashboard",
   PROFILE: "/my-profile",
   BOOKING: "/booking",
+  INFO: "/info",
 };
 
 // /**

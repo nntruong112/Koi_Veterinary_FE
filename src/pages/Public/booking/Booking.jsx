@@ -10,8 +10,8 @@ const Booking = () => {
         BOOKING FOR YOUR SERVICES.
       </h1>
 
-      <section className=" min-h-svh flex justify-center items-center">
-        <form className="w-[50vw] h-[50vh]  bg-[url('./src/assets/LoginLogo.png')] border border-l-blue-300 rounded-lg flex flex-col gap-8 items-center">
+      <section className="bg-[url(Koi_Veterinary_FE/src/assets/y2mate.com - CÁ CHÉP KOI ĐẸP NHẤT shorts cakoidep_1080p.gif)] min-h-svh flex justify-center items-center">
+        <form className="w-[40vw] h-[60vh] bg-[#CCFFFF] bg-[url('./src/assets/LoginLogo.png')] border border-l-blue-300 rounded-lg flex flex-col gap-8 items-center">
           <h2 className="font-semibold text-4xl ">Booking</h2>
 
           <input
@@ -48,8 +48,19 @@ const Booking = () => {
             <option value="ky sinh">Cá bị ký sinh trùng</option>
             <option value="ngu">Cá bị bênh ngủ</option>
           </select>
-          <div className="w-[500px] bg-green-500 p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
-            <button>Explore more</button>
+          <select
+            name="Vet"
+            className="w-[500px] h-[40px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
+            id=""
+          >
+            <option value="">Vet.</option>
+            <option value="">Vet.</option>
+            <option value="">Vet.</option>
+            <option value="">Vet.</option>
+            <option value="">Vet.</option>
+          </select>
+          <div className="w-[500px] bg-[#66FFFF] p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
+            <button>Submit</button>
           </div>
         </form>
       </section>

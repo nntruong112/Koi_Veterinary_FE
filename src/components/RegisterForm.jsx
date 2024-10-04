@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
@@ -181,13 +180,7 @@ const RegisterForm = () => {
               If you have an account, login here and have fun.
             </p>
             <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center w-[50%]">
-              <Button
-                text="Login"
-                textColor="white"
-                onClick={() => {
-                  navigate("/Login");
-                }}
-              />
+              <button onClick={() => navigate("/login")}>Login</button>
             </div>
           </form>
 
