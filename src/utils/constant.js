@@ -23,6 +23,8 @@ export const path = {
   PROFILE: "/my-profile",
   FISH: "/my-fish",
   MY_APPOINTMENT: "/my-appointment",
+  BOOKING: "/booking",
+  INFO: "/info",
 };
 
 // /**

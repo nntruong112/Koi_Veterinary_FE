@@ -1,7 +1,10 @@
 import React from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { assets } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="bg-center bg-cover bg-[url('./src/assets/home.jpg')]">
       <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 mx-11 md:py-[10vw] md:mb-[-30px]">
@@ -14,7 +17,11 @@ const Header = () => {
             Minh City.
           </p>
         </div>
-        <a className="flex items-center gap-3 bg-primary px-8 py-3 rounded-full text-white text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300">
+
+        <a
+          onClick={() => navigate("/booking")}
+          className="flex items-center gap-3 bg-blue-400 px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300"
+        >
           Book Appointment
           <FaArrowRightLong className="w-4 mt-0.5" />
         </a>

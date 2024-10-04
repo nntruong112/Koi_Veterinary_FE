@@ -98,6 +98,9 @@ const About = () => {
                 Enim ipsam netus voluptatem quia voluptas.
               </li>
             </i>
+            <button className="bg-red-500 w-60 h-20 rounded-lg text-2xl flex items-center justify-center hover:bg-red-600">
+              Discover More
+            </button>
           </ul>
         </div>
       </section>
