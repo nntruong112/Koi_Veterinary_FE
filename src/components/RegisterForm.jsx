@@ -6,7 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { register } from "../services/authService";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { validateEmail } from "../utils/validateData";
-import { path } from "../utils/constant";
+import VerifyEmailModal from "./Private/modal/VerifyEmailModal";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -21,11 +21,6 @@ const RegisterForm = () => {
   const toggleShowConfirmPass = () => {
     setShowConfirmPass(!showConfirmPass);
   };
-
-  // const [name, setName] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [email, setEmail] = useState("");
 
   const [user, setUser] = useState({
     lastname: "",
@@ -42,6 +37,8 @@ const RegisterForm = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const validateData = (name, value) => {
     let invalid = true;
@@ -164,7 +161,7 @@ const RegisterForm = () => {
         //Submit form
         const response = await register(user);
         console.log("Response: ", response);
-        navigate(path.LOGIN);
+        setIsModalOpen(true);
       } catch (error) {
         const responseError = error?.response?.data;
         alert(responseError);
@@ -369,6 +366,15 @@ const RegisterForm = () => {
           </form>
         </div>
       </div>
+
+      {/* Modal xác minh */}
+      {isModalOpen && (
+        <VerifyEmailModal
+          isOpen={isModalOpen}
+          email={user.email}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

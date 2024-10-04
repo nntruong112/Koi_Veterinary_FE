@@ -14,7 +14,7 @@ const MyProfile = () => {
           {userInfo?.firstname}
         </p>
         <img src={assets.KoiPool} className="w-28 h-28 rounded-full" />
-        <button className="bg-primary text-white font-semibold p-2">
+        <button className="bg-primary text-white font-semibold p-2 hover:bg-primary/80">
           Upload Photo
         </button>
       </form>
@@ -66,7 +66,7 @@ const MyProfile = () => {
         <div className="flex justify-start">
           <button
             type="submit"
-            className="bg-primary text-white font-semibold p-2 w-28"
+            className="bg-primary text-white font-semibold p-2 w-28 hover:bg-primary/80"
           >
             Edit
           </button>

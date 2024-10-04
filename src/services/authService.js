@@ -25,3 +25,22 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
+
+/**
+ * Verify email by 6-digit code
+ * @param {Object} verification - Đối tượng chứa email và mã code
+ * @param {String} verification.email - Địa chỉ email của user
+ * @param {String} verification.code - Mã xác minh 6 chữ số
+ * @returns
+ */
+export const verifyEmail = createAsyncThunk(
+  "users/verify",
+  async (verification, thunkAPI) => {
+    try {
+      const response = await BASE_URL.post("/users/verify", verification);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
