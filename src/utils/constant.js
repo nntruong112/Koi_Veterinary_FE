@@ -14,15 +14,17 @@ export const path = {
   // ADMIN
   ADMIN: "/admin",
   DASHBOARD: "dashboard",
+  USERS: "users",
   APPOINTMENT: "appointment",
   ADD_DOCTOR: "add-doctor",
   DOCTOR: "doctors",
 
   // USER
-  USERS: "users",
-  PROFILE: "/my-profile",
-  FISH: "/my-fish",
-  MY_APPOINTMENT: "/my-appointment",
+  MEMBER: "/member",
+  PROFILE: "my-profile",
+  FISH: "my-fish",
+  MY_APPOINTMENT: "my-appointment",
+  ADD_FISH: "add-fish",
   BOOKING: "/booking",
   INFO: "/info",
 };

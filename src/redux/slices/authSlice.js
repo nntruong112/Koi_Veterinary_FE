@@ -11,9 +11,11 @@ const authSlice = createSlice({
   },
 
   reducers: {
-    //LOGOUT
+    // LOGOUT
     logout: (state) => {
-      state.data = null;
+      state.status = status.IDLE;
+      state.data = null; // Reset lại token khi logout
+      state.error = null;
     },
   },
 
@@ -25,7 +27,7 @@ const authSlice = createSlice({
 
       .addCase(login.fulfilled, (state, action) => {
         state.status = status.SUCCESSFULLY;
-        state.data = action.payload;
+        state.data = action.payload; //Lưu token khi login thành công
       })
 
       .addCase(login.rejected, (state, action) => {

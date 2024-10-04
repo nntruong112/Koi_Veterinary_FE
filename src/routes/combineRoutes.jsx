@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
-import PublicRoutes from "./publicRoutes";
+import PublicRoutes from "./PublicRoutes";
 
 const routes = createBrowserRouter([...PrivateRoutes, ...PublicRoutes]);
 

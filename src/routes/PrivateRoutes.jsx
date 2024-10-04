@@ -19,12 +19,16 @@ const Doctors = React.lazy(() =>
 );
 
 // USER
+const Member = React.lazy(() => import("../pages/Private/member/Member"));
 const MyProfile = React.lazy(() =>
   import("../pages/Private/member/profile/MyProfile")
 );
 const MyFish = React.lazy(() => import("../pages/Private/member/fish/MyFish"));
 const MyAppointment = React.lazy(() =>
   import("../pages/Private/member/appointment/MyAppointment")
+);
+const AddFish = React.lazy(() =>
+  import("../pages/Private/member/fish/AddFish")
 );
 
 const PrivateRoutes = [
@@ -55,11 +59,30 @@ const PrivateRoutes = [
     ],
   },
 
-  { path: path.PROFILE, element: <LoadLazy children={<MyProfile />} /> },
-  { path: path.FISH, element: <LoadLazy children={<MyFish />} /> },
   {
-    path: path.MY_APPOINTMENT,
-    element: <LoadLazy children={<MyAppointment />} />,
+    path: path.MEMBER,
+    element: <LoadLazy children={<Member />} />,
+    children: [
+      {
+        path: path.PROFILE,
+        element: <LoadLazy children={<MyProfile />} />,
+      },
+
+      {
+        path: path.FISH,
+        element: <LoadLazy children={<MyFish />} />,
+      },
+
+      {
+        path: path.MY_APPOINTMENT,
+        element: <LoadLazy children={<MyAppointment />} />,
+      },
+
+      {
+        path: path.ADD_FISH,
+        element: <LoadLazy children={<AddFish />} />,
+      },
+    ],
   },
 ];
 

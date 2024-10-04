@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { login } from "../services/authService.js";
+import { path } from "../utils/constant.js";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const LoginForm = () => {
           alert("Login successfully");
 
           //Chuyen huong ve trang login
-          navigate("/");
+          navigate(path.HOME);
         }
       } catch (error) {
         const responseError = error?.response?.data?.error;

@@ -7,13 +7,14 @@ import { logout } from "../redux/slices/authSlice";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { getInfoByToken } from "../services/userService";
+import { clearPersistedStore } from "../redux/store/store";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authData = useSelector((state) => state.auth.data); // Lấy token khi login thành công từ Redux
   const token = authData?.token; // Kiểm tra nếu authData tồn tại và lấy token
-  const userInfo = useSelector((state) => state.users.data.result); // Lấy thông tin người dùng từ Redux store
+  const userInfo = useSelector((state) => state.users.data?.result); // Lấy thông tin người dùng từ Redux store
 
   useEffect(() => {
     if (token && !userInfo) {
@@ -32,6 +33,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    clearPersistedStore(); // Xóa thông tin persist khi logout
   };
 
   return (
@@ -87,26 +89,28 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         {token ? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
-            <p>Hi, {userInfo?.name}</p>
+            <p>Hi, {userInfo?.username}</p>
             <IoIosArrowDropdown />
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
               <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                 <p
-                  onClick={() => navigate(path.PROFILE)}
+                  onClick={() => navigate(`${path.MEMBER}/${path.PROFILE}`)}
                   className="hover:text-black cursor-pointer"
                 >
                   My Profile
                 </p>
 
                 <p
-                  onClick={() => navigate(path.FISH)}
+                  onClick={() => navigate(`${path.MEMBER}/${path.FISH}`)}
                   className="hover:text-black cursor-pointer"
                 >
                   My Fish
                 </p>
 
                 <p
-                  onClick={() => navigate(path.MY_APPOINTMENT)}
+                  onClick={() =>
+                    navigate(`${path.MEMBER}/${path.MY_APPOINTMENT}`)
+                  }
                   className="hover:text-black cursor-pointer"
                 >
                   My Appointment

@@ -1,36 +1,53 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import { path } from "../../../../utils/constant";
 
-const LeftBar = ({ currentView, setCurrentView }) => {
+const LeftBar = () => {
   return (
-    <aside className="w-64 h-screen p-6 bg-gray-100">
-      <nav>
-        <ul className="space-y-4">
-          <li>
-            <button
-              onClick={() => setCurrentView("add")}
-              className={`w-full text-left py-2 px-4 rounded-lg transition-colors ${
-                currentView === "add"
-                  ? "bg-primary text-white"
-                  : "hover:bg-primary hover:text-white"
-              }`}
-            >
-              Add Fish
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setCurrentView("view")}
-              className={`w-full text-left py-2 px-4 rounded-lg transition-colors ${
-                currentView === "view"
-                  ? "bg-primary text-white"
-                  : "hover:bg-primary hover:text-white"
-              }`}
-            >
-              View All Fish
-            </button>
-          </li>
-        </ul>
-      </nav>
+    <aside className="flex flex-col gap-2 w-64 min-h-screen bg-gray-100">
+      <NavLink
+        to={path.PROFILE}
+        className={({ isActive }) =>
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
+            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
+          } `
+        }
+      >
+        <p className="text-xl">My Profile</p>
+      </NavLink>
+
+      <NavLink
+        to={path.MY_APPOINTMENT}
+        className={({ isActive }) =>
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
+            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
+          } `
+        }
+      >
+        <p className="text-xl">My Appointment</p>
+      </NavLink>
+
+      <NavLink
+        to={path.FISH}
+        className={({ isActive }) =>
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
+            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
+          } `
+        }
+      >
+        <p className="text-xl">My Fish</p>
+      </NavLink>
+
+      <NavLink
+        to={path.ADD_FISH}
+        className={({ isActive }) =>
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
+            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
+          } `
+        }
+      >
+        <p className="text-xl">Add New Fish</p>
+      </NavLink>
     </aside>
   );
 };

@@ -19,6 +19,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["users"],
 };
 
 const rootReducer = combineReducers({ auth: authReducer, users: userReducer });
@@ -35,3 +36,8 @@ export const store = configureStore({
 });
 
 export let persistor = persistStore(store);
+
+// Thêm hành động để xóa Redux persist khi logout
+export const clearPersistedStore = () => {
+  persistor.purge();
+};

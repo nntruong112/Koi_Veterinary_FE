@@ -3,47 +3,52 @@ import { assets } from "../../../../assets/assets";
 import { useSelector } from "react-redux";
 
 const MyProfile = () => {
-  const userInfo = useSelector((state) => state.users.data.result);
+  const userInfo = useSelector((state) => state.users.data?.result);
   console.log(userInfo);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen">
-      <h2 className="text-2xl font-bold text-center mb-4">My Profile</h2>
-      <form className="p-8 rounded-3xl shadow-lg w-[80vw]">
-        {/* User image */}
-        <div className="flex justify-start gap-6 mb-8">
-          <img src={assets.KoiPool} className="w-20 h-20 rounded-full" />
+    <div className="flex flex-col min-h-screen w-full gap-8 mt-5">
+      <form className="flex flex-col justify-between items-center gap-6 p-8 rounded-3xl shadow-lg w-1/4 h-72 border-gray-200 border">
+        <p className="text-2xl font-bold">
+          {userInfo?.lastname}
+          {userInfo?.firstname}
+        </p>
+        <img src={assets.KoiPool} className="w-28 h-28 rounded-full" />
+        <button className="bg-primary text-white font-semibold p-2">
+          Upload Photo
+        </button>
+      </form>
 
-          <div className="mb-4">
-            <label className="block text-xl font-medium">Username</label>
-            <p className="text-2xl font-semibold">{userInfo?.username}</p>
-          </div>
-        </div>
-
+      <form className="p-8 rounded-3xl shadow-lg border-gray-200 border">
         <div className="grid grid-cols-2">
           <div className="mb-4">
             <label className="block text-xl font-medium">Last name</label>
-            <p className="text-lg font-semibold">{userInfo?.name}</p>
+            <p className="text-lg font-semibold">{userInfo?.lastname}</p>
           </div>
 
           <div className="mb-4">
             <label className="block text-xl font-medium">First Name</label>
-            <p className="text-lg font-semibold">{userInfo?.name}</p>
+            <p className="text-lg font-semibold">{userInfo?.firstname}</p>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-xl font-medium">Username</label>
+            <p className="text-lg font-semibold">{userInfo?.username}</p>
           </div>
 
           <div className="mb-4">
             <label className="block text-xl font-medium">Gender</label>
-            <p className="text-lg font-semibold">{userInfo?.name}</p>
+            <p className="text-lg font-semibold">{userInfo?.lastname}</p>
           </div>
 
           <div className="mb-4">
             <label className="block text-xl font-medium">Date of Birth</label>
-            <p className="text-lg font-semibold">{userInfo?.name}</p>
+            <p className="text-lg font-semibold">{userInfo?.lastname}</p>
           </div>
 
           <div className="mb-4">
             <label className="block text-xl font-medium">Email</label>
-            <p className="text-lg font-semibold">{userInfo?.name}</p>
+            <p className="text-lg font-semibold">{userInfo?.email}</p>
           </div>
 
           <div className="mb-4">
@@ -61,7 +66,7 @@ const MyProfile = () => {
         <div className="flex justify-start">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-primary text-white font-semibold p-2 w-28"
           >
             Edit
           </button>

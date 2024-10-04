@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { register } from "../services/authService";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { validateEmail } from "../utils/validateData";
+import { path } from "../utils/constant";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -27,14 +28,16 @@ const RegisterForm = () => {
   // const [email, setEmail] = useState("");
 
   const [user, setUser] = useState({
-    name: "",
+    lastname: "",
+    firstname: "",
     email: "",
     username: "",
     password: "",
     confirmPassword: "",
   });
 
-  const [nameError, setNameError] = useState("");
+  const [lastnameError, setLastnameError] = useState("");
+  const [firstnameError, setFirstnameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -43,12 +46,21 @@ const RegisterForm = () => {
   const validateData = (name, value) => {
     let invalid = true;
     switch (name) {
-      case "name":
+      case "lastname":
         if (!value) {
-          setNameError("Name must be not blank");
+          setLastnameError("Name must be not blank");
           invalid = false;
         } else {
-          setNameError("");
+          setLastnameError("");
+        }
+        break;
+
+      case "firstname":
+        if (!value) {
+          setFirstnameError("Name must be not blank");
+          invalid = false;
+        } else {
+          setFirstnameError("");
         }
         break;
 
@@ -130,7 +142,8 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const nameValid = validateData("name", user.name);
+    const lastnameValid = validateData("lastname", user.lastname);
+    const firstnameValid = validateData("firstname", user.firstname);
     const emailValid = validateData("email", user.email);
     const usernameValid = validateData("username", user.username);
     const passwordValid = validateData("password", user.password);
@@ -140,7 +153,8 @@ const RegisterForm = () => {
     );
 
     if (
-      nameValid &&
+      lastnameValid &&
+      firstnameValid &&
       emailValid &&
       usernameValid &&
       passwordValid &&
@@ -149,8 +163,8 @@ const RegisterForm = () => {
       try {
         //Submit form
         const response = await register(user);
-
         console.log("Response: ", response);
+        navigate(path.LOGIN);
       } catch (error) {
         const responseError = error?.response?.data;
         alert(responseError);
@@ -200,20 +214,41 @@ const RegisterForm = () => {
               </span>
             </div>
 
-            {/* --------- Full name --------- */}
+            {/* --------- Last name --------- */}
             <div>
               <input
                 type="text"
-                name="name"
-                placeholder="Full Name"
+                name="lastname"
+                placeholder="Last Name"
                 className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
-                  nameError ? "border-red-500" : "border-none"
+                  lastnameError ? "border-red-500" : "border-none"
                 } focus:border-red-500 `}
                 onChange={handleChange}
               />
 
-              {nameError && (
-                <p className="text-red-500 text-sm ml-2 mt-2">{nameError}</p>
+              {lastnameError && (
+                <p className="text-red-500 text-sm ml-2 mt-2">
+                  {lastnameError}
+                </p>
+              )}
+            </div>
+
+            {/* --------- First name --------- */}
+            <div>
+              <input
+                type="text"
+                name="firstname"
+                placeholder="First Name"
+                className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
+                  firstnameError ? "border-red-500" : "border-none"
+                } focus:border-red-500 `}
+                onChange={handleChange}
+              />
+
+              {firstnameError && (
+                <p className="text-red-500 text-sm ml-2 mt-2">
+                  {firstnameError}
+                </p>
               )}
             </div>
 
@@ -290,7 +325,7 @@ const RegisterForm = () => {
                   placeholder="Confirm Password"
                   onChange={handleChange}
                   className={`bg-[#eee] rounded-xl px-5 py-2 w-full border ${
-                    nameError ? "border-red-500" : "border-none"
+                    passwordError ? "border-red-500" : "border-none"
                   } focus:border-red-500`}
                 />
 
