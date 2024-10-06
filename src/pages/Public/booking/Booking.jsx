@@ -59,7 +59,7 @@ const Booking = () => {
             <option value="">Vet.</option>
             <option value="">Vet.</option>
           </select>
-          <div className="w-[500px] bg-[#66FFFF] p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
+          <div className="w-[500px] bg-blue-400 p-3 rounded-lg font-semibold hover:bg-blue-600 transition text-center">
             <button>Submit</button>
           </div>
         </form>
