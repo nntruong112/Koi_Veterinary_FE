@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { login } from "../services/authService.js";
 import { path } from "../utils/constant.js";
+import SuccessModal from "./Private/modal/SuccessModal.jsx";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const LoginForm = () => {
 
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // State cho modal
 
   const validateData = (name, value) => {
     let invalid = true;
@@ -80,11 +82,13 @@ const LoginForm = () => {
         const originalPromiseResult = unwrapResult(resultAction);
 
         if (originalPromiseResult) {
-          //Hien thi thong bao
-          alert("Login successfully");
+          // Hiện thị modal thành công
+          setShowSuccessModal(true);
 
-          //Chuyen huong ve trang login
-          navigate(path.HOME);
+          // Chuyển hướng sau 1 giây
+          setTimeout(() => {
+            navigate(path.HOME);
+          }, 2000);
         }
       } catch (error) {
         const responseError = error?.response?.data?.error;
@@ -214,6 +218,13 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
+      {/* Hiển thị modal khi đăng nhập thành công */}
+      {showSuccessModal && (
+        <SuccessModal
+          message="Login successfully!"
+          onClose={() => setShowSuccessModal(false)}
+        />
+      )}
     </div>
   );
 };

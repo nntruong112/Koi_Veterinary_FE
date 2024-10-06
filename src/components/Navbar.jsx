@@ -34,6 +34,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     clearPersistedStore(); // Xóa thông tin persist khi logout
+    navigate(path.HOME);
   };
 
   return (
@@ -89,8 +90,12 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         {token ? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
-            <p>Hi, {userInfo?.username}</p>
+            <p>
+              Hi, {userInfo?.lastname}
+              {userInfo?.firstname}
+            </p>
             <IoIosArrowDropdown />
+
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
               <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                 <p
