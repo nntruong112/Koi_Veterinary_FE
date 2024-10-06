@@ -54,7 +54,7 @@ const Contact = () => {
       <div className="sm:ml-72 sm:pl-4 mt-4 ">
         <p>Booking slots:</p>
         <div className="flex gap-3 items-center w-full  mt-4">
-          <div className="text-center py-6 min-w-16 rounded-full cursor-pointer bg-teal-400 border border-gray-200">
+          <div className="text-center py-6 min-w-16 rounded-full cursor-pointer bg-blue-500 border border-gray-200">
             <p>Day of Week</p>
             <p>Date</p>
           </div>
@@ -84,7 +84,7 @@ const Contact = () => {
           </div>
         </div>
         <div className="flex items-center gap-3 w-full overflow-x-auto mt-4">
-          <p className="text-sm font-light  flex-shrink-0 px-5 py-2 rounded-full  bg-teal-400 cursor-pointer text-[#949494] border border-[#B4B4B4]">
+          <p className="text-sm font-light  flex-shrink-0 px-5 py-2 rounded-full  bg-blue-500 cursor-pointer text-[#949494] border border-[#B4B4B4]">
             12:00 pm
           </p>
           <p className="text-sm font-light  flex-shrink-0 px-5 py-2 rounded-full cursor-pointer text-[#949494] border border-[#B4B4B4]">
@@ -111,7 +111,7 @@ const Contact = () => {
         </div>
         <button
           onClick={() => navigate("/booking")}
-          className="bg-teal-600 text-white text-sm font-light px-20 py-3 rounded-full my-6"
+          className="bg-blue-500 text-white text-sm font-light px-20 py-3 rounded-full my-6"
         >
           Book an appointment
         </button>

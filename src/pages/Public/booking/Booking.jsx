@@ -49,17 +49,15 @@ const Booking = () => {
             <option value="ngu">Cá bị bênh ngủ</option>
           </select>
           <select
-            name="Vet"
+            name="Location"
             className="w-[500px] h-[40px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
             id=""
           >
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
+            <option value="">Location.</option>
+            <option value="">Center.</option>
+            <option value="">Home.</option>
           </select>
-          <div className="w-[500px] bg-[#66FFFF] p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
+          <div className="w-[500px] bg-blue-500 p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
             <button>Submit</button>
           </div>
         </form>

@@ -68,7 +68,7 @@ const ContactForm = () => {
             className="w-[500px] p-2 rounded-md resize-y text-lg bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
           ></textarea>
 
-          <div className="w-[500px] bg-green-500 text-white p-3 rounded-lg font-semibold hover:bg-green-600 transition text-center">
+          <div className="w-[500px] bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition text-center">
             <button>Submit</button>
           </div>
         </form>
