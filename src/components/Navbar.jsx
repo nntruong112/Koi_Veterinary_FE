@@ -34,6 +34,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     clearPersistedStore(); // Xóa thông tin persist khi logout
+    navigate(path.HOME);
   };
 
   return (
