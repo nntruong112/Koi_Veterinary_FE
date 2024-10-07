@@ -53,7 +53,7 @@ describe("LoginForm", () => {
 
     // Kiểm tra thông báo lỗi cho username và password
     expect(screen.getByText(/username must be not blank/i)).toBeInTheDocument();
-    expect(screen.getByText(/ /i)).toBeInTheDocument();
+    expect(screen.getByText(/password blank /i)).toBeInTheDocument();
   });
 
   it("toggles password visibility", () => {
