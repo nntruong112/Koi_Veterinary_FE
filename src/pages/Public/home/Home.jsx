@@ -50,7 +50,10 @@ const Home = () => {
           </p>
         </div>
         <div className="  flex items-center flex-col gap-6 text-2xl text-center w-1/2 font-bold mb-1 text-[#3d3c3c]">
-          <img src={assets.KoiPool} />
+          <h2 className="font-bold">
+            Koi Health Center: <br /> Comprehensive Care for Koi Fish Health
+          </h2>
+          <img src={assets.RatingFb} />
         </div>
       </section>
       <Footer />

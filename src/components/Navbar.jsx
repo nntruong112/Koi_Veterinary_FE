@@ -61,13 +61,13 @@ const Navbar = () => {
           <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
         </NavLink>
 
-        <NavLink to={path.WORK}>
+        {/* <NavLink to={path.WORK}>
           <li className="py-1">Work</li>
           <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
-        </NavLink>
+        </NavLink> */}
 
         <NavLink to={path.TEAM}>
-          <li className="py-1">Team</li>
+          <li className="py-1">All Vet</li>
           <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
         </NavLink>
 

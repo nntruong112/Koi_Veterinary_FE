@@ -8,7 +8,9 @@ import KoiPool from "./yeu-cau-ho-ca-koi.jpg";
 import About_1 from "./About1.jpg";
 import Feedback from "./Feedback.png";
 import Vet1 from "./vet1.jpg";
+import Vet2 from "./vet2.png";
 import koihealth from "./koihealth.jpg";
+import RatingFb from "./Rating-Fb.png";
 
 export const assets = {
   Logo,
@@ -22,4 +24,6 @@ export const assets = {
   Feedback,
   Vet1,
   koihealth,
+  RatingFb,
+  Vet2
 };

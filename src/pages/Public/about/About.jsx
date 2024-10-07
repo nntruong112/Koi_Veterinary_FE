@@ -4,9 +4,11 @@ import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { TiTick } from "react-icons/ti";
 import { FaTasks, FaChartLine, FaNetworkWired, FaRocket } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
   const [currentImage, setCurrentImage] = useState(assets.About_1);
+  const navigate = useNavigate();
 
   const images = {
     workflow: assets.About_1,
@@ -98,7 +100,10 @@ const About = () => {
                 Enim ipsam netus voluptatem quia voluptas.
               </li>
             </i>
-            <button className="bg-red-500 w-60 h-20 rounded-lg text-2xl flex items-center justify-center hover:bg-red-600">
+            <button
+              onClick={() => navigate("/work")}
+              className="bg-blue-400 w-60 h-20 rounded-lg text-2xl flex items-center justify-center hover:bg-blue-600"
+            >
               Discover More
             </button>
           </ul>
