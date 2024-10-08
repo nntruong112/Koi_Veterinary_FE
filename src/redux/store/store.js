@@ -22,7 +22,10 @@ const persistConfig = {
   blacklist: ["users"],
 };
 
-const rootReducer = combineReducers({ auth: authReducer, users: userReducer });
+const rootReducer = combineReducers({
+  auth: authReducer,
+  users: userReducer,
+});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({

@@ -102,7 +102,7 @@ const About = () => {
             </i>
             <button
               onClick={() => navigate("/work")}
-              className="bg-blue-400 w-60 h-20 rounded-lg text-2xl flex items-center justify-center hover:bg-blue-600"
+              className="bg-primary w-60 h-20 rounded-lg text-2xl flex items-center justify-center hover:bg-primary/90 text-white"
             >
               Discover More
             </button>

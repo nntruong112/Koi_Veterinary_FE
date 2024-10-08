@@ -32,3 +32,19 @@ export const updateInfoById = createAsyncThunk(
     }
   }
 );
+
+export const addNewFish = createAsyncThunk(
+  "fishes/create",
+  async ({ fishData, token }, thunkAPI) => {
+    try {
+      const response = await BASE_URL.post("fishes/create", fishData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);

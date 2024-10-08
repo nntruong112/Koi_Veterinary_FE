@@ -17,7 +17,7 @@ const Navbar = () => {
   const userInfo = useSelector((state) => state.users.data?.result); // Lấy thông tin người dùng từ Redux store
 
   useEffect(() => {
-    if (token && !userInfo) {
+    if (token) {
       // Kiểm tra nếu có token và chưa có thông tin người dùng
       const fetchUserInfo = async () => {
         try {
@@ -29,7 +29,7 @@ const Navbar = () => {
       };
       fetchUserInfo();
     }
-  }, [token, userInfo, dispatch]);
+  }, [token, dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());
