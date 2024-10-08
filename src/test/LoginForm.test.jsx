@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import configureStore from "redux-mock-store"; // Để mock Redux store
@@ -53,7 +53,7 @@ describe("LoginForm", () => {
 
     // Kiểm tra thông báo lỗi cho username và password
     expect(screen.getByText(/username must be not blank/i)).toBeInTheDocument();
-    expect(screen.getByText(/password blank /i)).toBeInTheDocument();
+    expect(screen.getByText(/password must be not blank/i)).toBeInTheDocument();
   });
 
   it("toggles password visibility", () => {
@@ -77,8 +77,8 @@ describe("LoginForm", () => {
     expect(passwordInput).toHaveAttribute("type", "text");
   });
 
-  it("calls login function when form is submitted with valid data", async () => {
-    const mockDispatch = vi.fn(() => Promise.resolve()); // Giả lập thành công
+  it("calls login function and displays success modal when form is submitted with valid data", async () => {
+    const mockDispatch = vi.fn(() => Promise.resolve({ payload: true })); // Giả lập thành công
     store.dispatch = mockDispatch;
 
     render(
@@ -91,7 +91,7 @@ describe("LoginForm", () => {
 
     // Điền thông tin hợp lệ vào form
     fireEvent.change(screen.getByPlaceholderText(/username/i), {
-      target: { value: "vuong" },
+      target: { value: "thienloc" },
     });
     fireEvent.change(screen.getByPlaceholderText(/password/i), {
       target: { value: "123456789" },
@@ -103,19 +103,23 @@ describe("LoginForm", () => {
 
     // Kiểm tra xem hàm dispatch đã được gọi chưa
     expect(mockDispatch).toHaveBeenCalled();
+
+    // Kiểm tra xem modal thông báo thành công có xuất hiện không
+    waitFor(() => {
+      expect(screen.getByText(/Login successfully!/i)).toBeInTheDocument();
+    });
   });
 
-  // it("displays error message when login fails", async () => {
-  //   // Giả lập hành động login thất bại
+  // it("displays alert when login fails", async () => {
+  //   // Mock alert
+  //   window.alert = vi.fn();
+
   //   const mockDispatch = vi.fn(() =>
   //     Promise.reject({
   //       response: { data: { error: "Invalid credentials" } },
   //     })
   //   );
   //   store.dispatch = mockDispatch;
-
-  //   // // Theo dõi window.alert
-  //   // const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
 
   //   render(
   //     <Provider store={store}>
@@ -125,18 +129,22 @@ describe("LoginForm", () => {
   //     </Provider>
   //   );
 
-  //   // Điền thông tin hợp lệ vào form
   //   fireEvent.change(screen.getByPlaceholderText(/username/i), {
-  //     target: { value: "vuong" },
+  //     target: { value: "thienloc" },
   //   });
   //   fireEvent.change(screen.getByPlaceholderText(/password/i), {
-  //     target: { value: "123456789" },
+  //     target: { value: "saipassword" },
   //   });
 
-  //   // Bấm vào nút "Login"
   //   const loginButton = screen.getByRole("button", { name: /login/i });
   //   fireEvent.click(loginButton);
 
   //   expect(mockDispatch).toHaveBeenCalled();
+
+  //   await waitFor(() => {
+  //     expect(window.alert).toHaveBeenCalledWith(
+  //       "Login failed: Invalid credentials"
+  //     );
+  //   });
   // });
 });

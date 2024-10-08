@@ -7,12 +7,14 @@ import { register } from "../services/authService";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { validateEmail } from "../utils/validateData";
 import VerifyEmailModal from "./Private/modal/VerifyEmailModal";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Thêm trạng thái loading
 
   const toggleShowPass = () => {
     setShowPass(!showPass);
@@ -157,14 +159,17 @@ const RegisterForm = () => {
       passwordValid &&
       confirmPasswordValid
     ) {
+      setIsLoading(true); // Bắt đầu loading
+
       try {
         //Submit form
-        const response = await register(user);
-        console.log("Response: ", response);
+        await register(user);
         setIsModalOpen(true);
       } catch (error) {
         const responseError = error?.response?.data;
         alert(responseError);
+      } finally {
+        setIsLoading(false); // Kết thúc loading
       }
     }
   };
@@ -346,8 +351,13 @@ const RegisterForm = () => {
             <button
               type="submit"
               className="bg-primary rounded-full px-8 py-3 mx-20 mt-5 md:block font-medium text-center w-[50%] text-white"
+              disabled={isLoading} // Vô hiệu hóa nút khi đang loading
             >
-              Register
+              {isLoading ? (
+                <ClipLoader size={20} color={"#ffffff"} loading={isLoading} /> // Hiển thị spinner
+              ) : (
+                "Register"
+              )}
             </button>
 
             <span className="text-center text-sm">

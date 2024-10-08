@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import { assets } from "../../../../assets/assets";
 import { useDispatch, useSelector } from "react-redux";
 import { updateInfoById } from "../../../../services/userService";
-import { path } from "../../../../utils/constant";
-import { useNavigate } from "react-router-dom";
 import SuccessModal from "../../../../components/Private/modal/SuccessModal";
 
 const MyProfile = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.users.data?.result);
   console.log(userInfo);
