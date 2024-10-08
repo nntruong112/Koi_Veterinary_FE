@@ -31,13 +31,14 @@ const AddFish = () => {
     // Thêm userId vào fishInfo trước khi gửi yêu cầu
     const fishData = {
       ...fishInfo,
-      userId: userId, // Gán userId vào fishData
+      age: Number(fishInfo.age),
+      customerId: userId, // Gán userId vào fishData
     };
 
     console.log(fishData);
 
     try {
-      await dispatch(addNewFish({ fishData, token }));
+      await dispatch(addNewFish({ fishData: fishData, token }));
       setFishInfo({ species: "", age: "" }); // Reset form sau khi thêm thành công
     } catch (error) {
       const responseError = error?.response?.data;
