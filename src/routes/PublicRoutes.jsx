@@ -2,6 +2,7 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import NotFound from "../pages/Public/notFound/NotFound";
+import { Route } from "react-router-dom";
 
 const Home = React.lazy(() => import("../pages/Public/home/Home"));
 const Login = React.lazy(() => import("../pages/Public/login/Login"));
@@ -21,6 +22,9 @@ const LoginRole = React.lazy(() =>
   import("../pages/Public/loginRole/LoginRole")
 );
 
+const Appointment = React.lazy(() =>
+  import("../pages/Public/Appointment/appointment")
+);
 const PublicRoutes = [
   { path: path.HOME, element: <LoadLazy children={<Home />} /> },
   { path: path.LOGIN, element: <LoadLazy children={<Login />} /> },
@@ -36,6 +40,10 @@ const PublicRoutes = [
   { path: path.TEAM, element: <LoadLazy children={<Team />} /> },
   { path: path.BOOKING, element: <LoadLazy children={<Booking />} /> },
   { path: path.INFO, element: <LoadLazy children={<Info />} /> },
+  { path: path.APPOINTMENT, element: <LoadLazy children={<Appointment />} /> },
+
+  //   { path: path.FEATURES, element: <Register /> },
+  //   { path: path.PRICING, element: <Register /> },
   { path: path.CONTACT, element: <LoadLazy children={<Contact />} /> },
   { path: path.LOGIN_ROLE, element: <LoadLazy children={<LoginRole />} /> },
   { path: "*", element: <LoadLazy children={<NotFound />} /> },
