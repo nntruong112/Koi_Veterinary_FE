@@ -7,7 +7,7 @@ import AboutImage from "./AboutImage.png";
 import KoiPool from "./yeu-cau-ho-ca-koi.jpg";
 import About_1 from "./About1.jpg";
 import Feedback from "./Feedback.png";
-import Vet1 from "./vet1.jpg";
+import Vet1 from "./vet1.png";
 import Vet2 from "./vet2.png";
 import Vet3 from "./vet3.png";
 import Vet4 from "./vet4.png";
@@ -17,7 +17,6 @@ import Vet7 from "./vet7.png";
 import Vet8 from "./vet8.png";
 import Vet9 from "./vet9.png";
 import Vet10 from "./vet10.png";
-
 import koihealth from "./koihealth.jpg";
 import RatingFb from "./Rating-Fb.png";
 
