@@ -9,67 +9,51 @@ import { path } from "../../../../utils/constant";
 
 const SideBar = () => {
   return (
-    <div className="min-h-screen bg-white border-r">
+    <aside className="flex flex-col gap-2 w-64 min-h-screen bg-gray-100">
       <NavLink
         to={path.DASHBOARD}
         className={({ isActive }) =>
-          `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
             isActive ? "bg-gray-200 border-r-4 border-primary" : ""
           } `
         }
       >
-        <MdOutlineSpaceDashboard className="text-4xl" />
-        <p className="text-2xl">Dashboard</p>
+        <p className="text-xl">Overview</p>
       </NavLink>
 
       <NavLink
         to={path.USERS}
         className={({ isActive }) =>
-          `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
             isActive ? "bg-gray-200 border-r-4 border-primary" : ""
           } `
         }
       >
-        <FaRegUser className="text-4xl" />
-        <p className="text-2xl">Users</p>
-      </NavLink>
-
-      <NavLink
-        to={path.APPOINTMENT}
-        className={({ isActive }) =>
-          `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
-          } `
-        }
-      >
-        <GrSchedules className="text-4xl" />
-        <p className="text-2xl">Appointment</p>
-      </NavLink>
-
-      <NavLink
-        to={path.ADDDOCTOR}
-        className={({ isActive }) =>
-          `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
-          } `
-        }
-      >
-        <CiSquarePlus className="text-4xl" />
-        <p className="text-2xl">Add Doctor</p>
+        <p className="text-xl">Users</p>
       </NavLink>
 
       <NavLink
         to={path.DOCTOR}
         className={({ isActive }) =>
-          `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
             isActive ? "bg-gray-200 border-r-4 border-primary" : ""
           } `
         }
       >
-        <FaUserDoctor className="text-4xl" />
-        <p className="text-2xl">Doctor List</p>
+        <p className="text-xl">Doctors</p>
       </NavLink>
-    </div>
+
+      <NavLink
+        to={path.ADD_DOCTOR}
+        className={({ isActive }) =>
+          `flex items-center gap-3 p-2 md:px-9 md:min-w-60 cursor-pointer ${
+            isActive ? "bg-gray-200 border-r-4 border-primary" : ""
+          } `
+        }
+      >
+        <p className="text-xl">Add Doctor</p>
+      </NavLink>
+    </aside>
   );
 };
 

@@ -25,5 +25,5 @@ export const assets = {
   Vet1,
   koihealth,
   RatingFb,
-  Vet2
+  Vet2,
 };

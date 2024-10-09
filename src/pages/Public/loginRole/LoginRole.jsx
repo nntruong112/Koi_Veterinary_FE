@@ -1,10 +1,10 @@
 import React from "react";
-import LoginForm from "../../../components/LoginForm";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
+import LoginRoleForm from "../../../components/LoginRoleForm";
 import { assets } from "../../../assets/assets";
 
-const Login = () => {
+const LoginRole = () => {
   return (
     <>
       <Navbar />
@@ -14,11 +14,11 @@ const Login = () => {
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <LoginForm />
+        <LoginRoleForm />
       </div>
       <Footer />
     </>
   );
 };
 
-export default Login;
+export default LoginRole;

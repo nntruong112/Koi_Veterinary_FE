@@ -17,6 +17,9 @@ const Work = React.lazy(() => import("../pages/Public/work/Work"));
 const Team = React.lazy(() => import("../pages/Public/team/Team"));
 const Booking = React.lazy(() => import("../pages/Public/booking/Booking"));
 const Info = React.lazy(() => import("../pages/Public/infovet/Info"));
+const LoginRole = React.lazy(() =>
+  import("../pages/Public/loginRole/LoginRole")
+);
 
 const PublicRoutes = [
   { path: path.HOME, element: <LoadLazy children={<Home />} /> },
@@ -33,10 +36,8 @@ const PublicRoutes = [
   { path: path.TEAM, element: <LoadLazy children={<Team />} /> },
   { path: path.BOOKING, element: <LoadLazy children={<Booking />} /> },
   { path: path.INFO, element: <LoadLazy children={<Info />} /> },
-
-  //   { path: path.FEATURES, element: <Register /> },
-  //   { path: path.PRICING, element: <Register /> },
   { path: path.CONTACT, element: <LoadLazy children={<Contact />} /> },
+  { path: path.LOGIN_ROLE, element: <LoadLazy children={<LoginRole />} /> },
   { path: "*", element: <LoadLazy children={<NotFound />} /> },
 ];
 

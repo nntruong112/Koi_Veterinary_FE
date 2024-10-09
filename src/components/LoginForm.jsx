@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { login } from "../services/authService.js";
 import { path } from "../utils/constant.js";
 import SuccessModal from "./Private/modal/SuccessModal.jsx";
+import { toast } from "react-toastify";
+import { logout } from "../redux/slices/authSlice.js";
+import { getInfoByToken } from "../services/userService.js";
+import { assets } from "../assets/assets.js";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -81,30 +85,44 @@ const LoginForm = () => {
 
         const originalPromiseResult = unwrapResult(resultAction);
 
-        if (originalPromiseResult) {
-          // Hiện thị modal thành công
-          setShowSuccessModal(true);
+        if (originalPromiseResult.token) {
+          const userInfoAction = await dispatch(getInfoByToken()); // Gọi thunk để lấy thông tin người dùng
+          const userInfo = unwrapResult(userInfoAction); // Đợi kết quả và unwrap
 
-          // Chuyển hướng sau 1 giây
-          setTimeout(() => {
-            navigate(path.HOME);
-          }, 2000);
+          const roles = userInfo.result.roles;
+
+          if (roles && roles.includes("USER")) {
+            // Hiện thị modal thành công
+            setShowSuccessModal(true);
+
+            // Chuyển hướng sau 2 giây
+            setTimeout(() => {
+              navigate(path.HOME);
+            }, 2000);
+          } else {
+            dispatch(logout());
+            toast.error("You don't have permission to access!");
+          }
         }
       } catch (error) {
-        const responseError = error?.response?.data?.error;
-        alert("Login failed: " + responseError);
+        toast.error("Access denied!");
       }
     }
   };
 
   return (
-    <div className="flex justify-center items-center rounded-lg my-32 bg-white max-w-[50vw] min-h-[70vh]">
-      <div className="bg-[url('./src/assets/LoginLogo.png')] bg-contain bg-center min-h-[70vh] w-[50vw]">
+    <div className="flex justify-center items-center rounded-lg bg-white max-w-[50vw] min-h-[70vh] relative overflow-hidden">
+      <div className="min-h-[70vh] w-[50vw] bg-white relative">
+        <img
+          src={assets.LoginLogo}
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
         <div className="flex flex-row ">
           {/* --------------- LEFT SIDE ---------------- */}
           <form
             onSubmit={handleLogin}
-            className="flex flex-col gap-6 bg-white px-8 w-1/2 min-h-[70vh] rounded-lg"
+            className="flex flex-col gap-6 bg-white px-8 w-1/2 min-h-[70vh] rounded-lg z-10"
           >
             <div className=" flex flex-col items-center justify-center gap-3 pt-8">
               <b className="text-4xl font-bold">Login</b>
@@ -181,24 +199,30 @@ const LoginForm = () => {
             </div>
 
             {/* ------- BUTTON LOGIN --------- */}
-            <div className="rounded-full px-8 py-3 mx-20 mt-5 md:block font-medium text-center text-white w-[50%] bg-primary">
+            <div className="rounded-full px-8 py-3  md:block font-medium text-center text-white w-full bg-primary">
               <button type="submit">Login</button>
             </div>
 
-            <span className="text-center text-sm">
-              <hr />
-              or use another account
-              <hr />
-            </span>
+            <div className="flex flex-row justify-center items-center text-center text-sm">
+              <p>or</p>
+            </div>
 
-            <div className="flex justify-center items-center gap-8">
-              <FaFacebook className="text-blue-700 text-[30px] cursor-pointer" />
-              <FcGoogle className="text-[33px] cursor-pointer" />
+            <div className="flex justify-center items-center gap-8 border-2 p-1 rounded-2xl hover:bg-gray-200 cursor-pointer">
+              <FcGoogle className="text-[30px] " />
+              <p>Login by Google</p>
+            </div>
+
+            <div
+              onClick={() => navigate(path.LOGIN_ROLE)}
+              className="flex justify-center items-center gap-8 border-2 p-1 mb-4 rounded-2xl hover:bg-gray-200 cursor-pointer"
+            >
+              <RiAdminFill className="text-[30px] text-primary" />
+              <p>Login for Admin, Vet or Staff</p>
             </div>
           </form>
 
           {/* --------------- RIGHT SIDE ---------------- */}
-          <form className="flex flex-col justify-center items-center gap-5 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40">
+          <form className="flex flex-col justify-center items-center gap-5 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40 z-10">
             <b className="text-4xl font-bold text-black">
               Start your <br />
               journey now

@@ -14,7 +14,7 @@ const authSlice = createSlice({
     // LOGOUT
     logout: (state) => {
       state.status = status.IDLE;
-      state.data = null; // Reset lại token khi logout
+      state.data = null;
       state.error = null;
     },
   },
@@ -27,7 +27,7 @@ const authSlice = createSlice({
 
       .addCase(login.fulfilled, (state, action) => {
         state.status = status.SUCCESSFULLY;
-        state.data = action.payload; //Lưu token khi login thành công
+        state.data = action.payload;
       })
 
       .addCase(login.rejected, (state, action) => {

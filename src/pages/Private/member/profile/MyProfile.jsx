@@ -7,8 +7,6 @@ import SuccessModal from "../../../../components/Private/modal/SuccessModal";
 const MyProfile = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.users.data?.result);
-  console.log(userInfo);
-  const token = useSelector((state) => state.auth.data?.token);
 
   const [isEdit, setIsEdit] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false); // State cho modal
@@ -31,13 +29,13 @@ const MyProfile = () => {
       setFormData({
         lastname: userInfo.lastname || "",
         firstname: userInfo.firstname || "",
-        // username: userInfo.username || "",
+        username: userInfo.username || "",
         // gender: userInfo.gender || "",
-        // dob: userInfo.dob || "",
+        dob: userInfo.dob || "",
         name: userInfo.name || "",
         email: userInfo.email || "",
-        // address: userInfo.address || "",
-        // phone: userInfo.phone || "",
+        address: userInfo.address || "",
+        phone: userInfo.phone || "",
       });
     }
   }, [userInfo]);
@@ -59,8 +57,8 @@ const MyProfile = () => {
 
     try {
       const userId = userInfo?.id; // Lấy id người dùng từ userInfo
-      console.log(userId);
-      await dispatch(updateInfoById({ userId, updateData: formData, token })); // Gọi hàm update
+
+      await dispatch(updateInfoById({ userId, updateData: formData })); // Gọi hàm update
 
       setShowSuccessModal(true); // Hiện thị modal thành công
 
@@ -91,7 +89,7 @@ const MyProfile = () => {
         className="p-8 rounded-3xl shadow-lg border-gray-200 border"
       >
         <div className="grid grid-cols-2 gap-4">
-          {/* Edit */}
+          {/* Update profile */}
           {isEdit ? (
             <>
               <div className="mb-4">
@@ -140,7 +138,12 @@ const MyProfile = () => {
                 <label className="block text-xl font-medium">
                   Date of Birth
                 </label>
-                <input type="date" name="dob" className="border p-2 w-full" />
+                <input
+                  type="date"
+                  name="dob"
+                  value={formData.dob}
+                  className="border p-2 w-full"
+                />
               </div>
 
               <div className="mb-4">
@@ -159,17 +162,23 @@ const MyProfile = () => {
                 <input
                   type="text"
                   name="address"
+                  value={formData.address}
                   className="border p-2 w-full"
                 />
               </div>
 
               <div className="mb-4">
                 <label className="block text-xl font-medium">Phone</label>
-                <input type="text" name="phone" className="border p-2 w-full" />
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  className="border p-2 w-full"
+                />
               </div>
             </>
           ) : (
-            // View
+            // View profile
             <>
               <div className="mb-4">
                 <label className="block text-xl font-medium">Last name</label>
@@ -221,7 +230,7 @@ const MyProfile = () => {
           <button
             type="button"
             onClick={isEdit ? handleSubmit : handleEditClick}
-            className="bg-primary text-white font-semibold p-2 w-28 hover:bg-primary/80"
+            className="bg-primary text-white font-semibold p-2 w-28 hover:bg-primary/80 mt-6"
           >
             {isEdit ? "Save" : "Edit"}
           </button>

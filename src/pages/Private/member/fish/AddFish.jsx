@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { addNewFish } from "../../../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const AddFish = () => {
   const dispatch = useDispatch();
 
   // Lấy userId từ Redux store
-  const userId = useSelector((state) => state.users.data?.result?.userId);
-
-  const token = useSelector((state) => state.auth.data?.token);
+  const userId = useSelector((state) => state.users.data?.result.userId);
 
   const [fishInfo, setFishInfo] = useState({
     species: "",
@@ -38,11 +37,11 @@ const AddFish = () => {
     console.log(fishData);
 
     try {
-      await dispatch(addNewFish({ fishData: fishData, token }));
+      await dispatch(addNewFish(fishData));
       setFishInfo({ species: "", age: "" }); // Reset form sau khi thêm thành công
+      toast.success("Added successfully");
     } catch (error) {
-      const responseError = error?.response?.data;
-      alert(responseError);
+      toast.error("Added fail!");
     }
   };
 

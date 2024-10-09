@@ -1,6 +1,7 @@
 import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 // ADMIN
 const Admin = React.lazy(() => import("../pages/Private/admin/Admin"));
@@ -34,27 +35,51 @@ const AddFish = React.lazy(() =>
 const PrivateRoutes = [
   {
     path: path.ADMIN,
-    element: <LoadLazy children={<Admin />} />,
+    element: (
+      <ProtectedRoutes allowedRoles={["ADMIN"]}>
+        <LoadLazy children={<Admin />} />
+      </ProtectedRoutes>
+    ),
     children: [
       {
-        path: path.DASHBOARD,
-        element: <LoadLazy children={<Dashboard />} />,
+        index: true,
+        element: (
+          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+            <LoadLazy children={<Dashboard />} />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: path.USERS,
-        element: <LoadLazy children={<Users />} />,
+        element: (
+          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+            <LoadLazy children={<Users />} />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: path.APPOINTMENT,
-        element: <LoadLazy children={<Appointment />} />,
+        element: (
+          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+            <LoadLazy children={<Appointment />} />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: path.ADD_DOCTOR,
-        element: <LoadLazy children={<AddDoctors />} />,
+        element: (
+          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+            <LoadLazy children={<AddDoctors />} />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: path.DOCTOR,
-        element: <LoadLazy children={<Doctors />} />,
+        element: (
+          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+            <LoadLazy children={<Doctors />} />
+          </ProtectedRoutes>
+        ),
       },
     ],
   },

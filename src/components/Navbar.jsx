@@ -1,38 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
 import { path } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
 import { IoIosArrowDropdown } from "react-icons/io";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { getInfoByToken } from "../services/userService";
+
 import { clearPersistedStore } from "../redux/store/store";
+import { clearUser } from "../redux/slices/userSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const authData = useSelector((state) => state.auth.data); // Lấy token khi login thành công từ Redux
-  const token = authData?.token; // Kiểm tra nếu authData tồn tại và lấy token
-  const userInfo = useSelector((state) => state.users.data?.result); // Lấy thông tin người dùng từ Redux store
-
-  useEffect(() => {
-    if (token) {
-      // Kiểm tra nếu có token và chưa có thông tin người dùng
-      const fetchUserInfo = async () => {
-        try {
-          const userInfoAction = await dispatch(getInfoByToken(token)); // Gọi thunk để lấy thông tin người dùng
-          unwrapResult(userInfoAction); // Đợi kết quả và unwrap
-        } catch (error) {
-          console.error("Failed to fetch user info: ", error);
-        }
-      };
-      fetchUserInfo();
-    }
-  }, [token, dispatch]);
+  const userInfo = useSelector((state) => state.users?.data?.result); // Lấy thông tin người dùng từ Redux store
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearUser());
     clearPersistedStore(); // Xóa thông tin persist khi logout
     navigate(path.HOME);
   };
@@ -61,11 +45,6 @@ const Navbar = () => {
           <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
         </NavLink>
 
-        {/* <NavLink to={path.WORK}>
-          <li className="py-1">Work</li>
-          <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
-        </NavLink> */}
-
         <NavLink to={path.TEAM}>
           <li className="py-1">All Vet</li>
           <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
@@ -88,12 +67,9 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-4">
-        {token ? (
+        {userInfo ? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
-            <p>
-              Hi, {userInfo?.lastname}
-              {userInfo?.firstname}
-            </p>
+            <p>Hi, {userInfo?.username}</p>
             <IoIosArrowDropdown />
 
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">

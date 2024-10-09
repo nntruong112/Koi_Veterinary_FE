@@ -3,13 +3,9 @@ import BASE_URL from "../api/axiosInstance";
 
 export const getInfoByToken = createAsyncThunk(
   "users/getInfoByToken",
-  async (token, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const response = await BASE_URL.get("users/myInfo", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await BASE_URL.get("users/myInfo");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -19,13 +15,9 @@ export const getInfoByToken = createAsyncThunk(
 
 export const updateInfoById = createAsyncThunk(
   "users/updateInfoById",
-  async ({ userId, updateData, token }, thunkAPI) => {
+  async ({ userId, updateData }, thunkAPI) => {
     try {
-      const response = await BASE_URL.put(`users/${userId}`, updateData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await BASE_URL.put(`users/${userId}`, updateData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -35,13 +27,21 @@ export const updateInfoById = createAsyncThunk(
 
 export const addNewFish = createAsyncThunk(
   "fishes/create",
-  async ({ fishData, token }, thunkAPI) => {
+  async (fishData, thunkAPI) => {
     try {
-      const response = await BASE_URL.post("fishes/create", fishData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await BASE_URL.post("fishes/create", fishData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getMyFish = createAsyncThunk(
+  "fishes/myFish",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("fishes/myFish");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

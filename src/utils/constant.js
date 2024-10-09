@@ -10,6 +10,7 @@ export const path = {
   FEATURES: "/features",
   PRICING: "/pricing",
   CONTACT: "/contact",
+  LOGIN_ROLE: "/login-role",
 
   // ADMIN
   ADMIN: "/admin",
@@ -28,14 +29,3 @@ export const path = {
   BOOKING: "/booking",
   INFO: "/info",
 };
-
-// /**
-//  * HTTP method
-//  */
-// const GET = "get";
-// const POST = "post";
-// const PATCH = "patch";
-// const PUT = "put";
-// const DELETE = "delete";
-
-// export { GET, POST, PATCH, PUT, DELETE };
