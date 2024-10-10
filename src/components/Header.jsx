@@ -10,7 +10,7 @@ const Header = () => {
     <section className="relative">
       <div className="absolute inset-0">
         <img
-          src={assets.Background}
+          src={assets.GifLogin}
           alt="Background"
           className="w-full h-full object-cover"
         />

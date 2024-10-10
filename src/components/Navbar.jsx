@@ -22,7 +22,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-around bg-gradient-to-r from-white via-purple-300 to-cyan-300 text-xl py-4">
+    <div className="flex items-center justify-around bg-gradient-to-r from-cyan-100 via-purple-300 to-cyan-300 text-xl py-4">
       <img
         onClick={() => navigate(path.HOME)}
         className="w-28 cursor-pointer"

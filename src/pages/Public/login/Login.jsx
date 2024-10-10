@@ -10,7 +10,7 @@ const Login = () => {
       <Navbar />
       <div className="relative w-full min-h-screen flex justify-center items-center">
         <img
-          src={assets.BackgroundLogin}
+          src={assets.GifLogin}
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover"
         />

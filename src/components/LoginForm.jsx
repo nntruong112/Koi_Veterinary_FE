@@ -116,13 +116,13 @@ const LoginForm = () => {
         <img
           src={assets.LoginLogo}
           alt="Background"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="flex flex-row ">
           {/* --------------- LEFT SIDE ---------------- */}
           <form
             onSubmit={handleLogin}
-            className="flex flex-col gap-6 bg-white px-8 w-1/2 min-h-[70vh] rounded-lg z-10"
+            className="flex flex-col gap-6 bg-white px-8 w-1/2 min-h-[70vh] z-10"
           >
             <div className=" flex flex-col items-center justify-center gap-3 pt-8">
               <b className="text-4xl font-bold">Login</b>
@@ -222,12 +222,12 @@ const LoginForm = () => {
           </form>
 
           {/* --------------- RIGHT SIDE ---------------- */}
-          <form className="flex flex-col justify-center items-center gap-5 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40 z-10">
-            <b className="text-4xl font-bold text-black">
+          <form className="flex flex-col justify-center items-center gap-5 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/50 to-gray-600/50 z-10">
+            <b className="text-4xl font-bold text-white">
               Start your <br />
               journey now
             </b>
-            <p className="font-normal text-black">
+            <p className="font-normal text-white">
               If you don't have an account yet, join us and start your journey.
             </p>
             <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center text-white w-[50%] bg-primary">

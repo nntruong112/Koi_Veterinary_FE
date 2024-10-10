@@ -7,11 +7,16 @@ const AddFish = () => {
   const dispatch = useDispatch();
 
   // Lấy userId từ Redux store
-  const userId = useSelector((state) => state.users.data?.result.userId);
+  const userId = useSelector((state) => state.users.data?.result?.userId);
 
   const [fishInfo, setFishInfo] = useState({
     species: "",
     age: "",
+    size: "",
+    weight: "",
+    gender: "",
+    color: "",
+    // image: "",
   });
 
   //lay gia tri trong tung o input
@@ -31,14 +36,14 @@ const AddFish = () => {
     const fishData = {
       ...fishInfo,
       age: Number(fishInfo.age),
-      customerId: userId, // Gán userId vào fishData
+      customerId: userId,
+      size: Number(fishInfo.age),
+      weight: Number(fishInfo.age),
     };
-
-    console.log(fishData);
 
     try {
       await dispatch(addNewFish(fishData));
-      setFishInfo({ species: "", age: "" }); // Reset form sau khi thêm thành công
+      setFishInfo(fishInfo); // Reset form sau khi thêm thành công
       toast.success("Added successfully");
     } catch (error) {
       toast.error("Added fail!");
@@ -49,7 +54,7 @@ const AddFish = () => {
     <div className="mt-10">
       <form className="space-y-6" onSubmit={handleAddFish}>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-lg font-medium text-gray-700 mb-1">
             Species
           </label>
           <input
@@ -64,7 +69,7 @@ const AddFish = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-lg font-medium text-gray-700 mb-1">
             Age
           </label>
           <input
@@ -74,6 +79,66 @@ const AddFish = () => {
             placeholder="Enter age"
             onChange={handleChange}
             value={fishInfo.age}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-lg font-medium text-gray-700 mb-1">
+            Size
+          </label>
+          <input
+            type="text"
+            name="size"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter age"
+            onChange={handleChange}
+            value={fishInfo.size}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-lg font-medium text-gray-700 mb-1">
+            Weight
+          </label>
+          <input
+            type="text"
+            name="weight"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter age"
+            onChange={handleChange}
+            value={fishInfo.weight}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-lg font-medium text-gray-700 mb-1">
+            Gender
+          </label>
+          <input
+            type="text"
+            name="gender"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter age"
+            onChange={handleChange}
+            value={fishInfo.gender}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-lg font-medium text-gray-700 mb-1">
+            Color
+          </label>
+          <input
+            type="text"
+            name="color"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter age"
+            onChange={handleChange}
+            value={fishInfo.color}
             required
           />
         </div>

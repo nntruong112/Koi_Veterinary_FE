@@ -7,8 +7,9 @@ import Navbar from "../../../components/Navbar";
 const Pricing = () => {
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
-  const username = useSelector((state) => state.users.data?.result?.username); // Lấy thông tin người dùng từ Redux store
-  const token = useSelector((state) => state.auth.data.token); // Lấy token từ Redux
+  const username = useSelector((state) => state.users.data?.result?.username);
+  const token = useSelector((state) => state.auth.data?.token);
+
   const stompClientRef = useRef(null);
   console.log(token);
 

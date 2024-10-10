@@ -8,6 +8,7 @@ import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { validateEmail } from "../utils/validateData";
 import VerifyEmailModal from "./Private/modal/VerifyEmailModal";
 import ClipLoader from "react-spinners/ClipLoader";
+import { assets } from "../assets/assets";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -180,18 +181,23 @@ const RegisterForm = () => {
   });
 
   return (
-    <div className="flex justify-center items-center rounded-lg my-20 bg-white max-w-[50vw] min-h-[70vh]">
-      <div className="bg-[url('./src/assets/LoginLogo.png')] bg-contain bg-center min-h-[70vh] w-[50vw]">
-        <div className="flex flex-row ">
+    <div className="flex justify-center items-center rounded-lg bg-white max-w-[50vw] min-h-[70vh] relative overflow-hidden">
+      <div className="min-h-[70vh] w-[50vw] relative">
+        <img
+          src={assets.LoginLogo}
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="flex flex-row">
           {/* --------------- LEFT SIDE ---------------- */}
-          <form className="flex flex-col justify-center items-center gap-8 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/40 to-gray-600/40">
-            <b className="text-4xl font-bold text-black">
+          <form className="flex flex-col justify-center items-center gap-8 px-8 w-1/2 min-h-[70vh] bg-gradient-to-b from-gray-300/50 to-gray-600/50 z-10">
+            <b className="text-4xl font-bold text-white">
               Hello
               <br />
               friends
             </b>
-            <p className="font-normal text-black text-center">
-              If you have an account, login here and have fun.
+            <p className="font-normal text-white text-center">
+              If you have an account, login here.
             </p>
             <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center text-white w-[50%] bg-primary">
               <button
@@ -206,11 +212,11 @@ const RegisterForm = () => {
 
           {/* --------------- RIGHT SIDE ---------------- */}
           <form
-            className="flex flex-col gap-6 bg-white px-8 py-4 w-1/2 min-h-[70vh] rounded-lg"
+            className="flex flex-col gap-6 bg-white px-8 py-4 w-1/2 min-h-[70vh] z-10"
             onSubmit={handleRegister}
           >
             <div className=" flex flex-col items-center justify-center gap-3 pt-8">
-              <b className="text-4xl font-bold">Login</b>
+              <b className="text-4xl font-bold">Register</b>
               <span className="font-normal text-gray-500">
                 Please register to book appointment.
               </span>

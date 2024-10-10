@@ -2,15 +2,19 @@ import React from "react";
 import RegisterForm from "../../../components/RegisterForm";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
+import { assets } from "../../../assets/assets";
 
 const Register = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-center bg-cover bg-[url('./src/assets/BgLogin.jpg')] min-h-svh">
-        <div className="flex justify-center">
-          <RegisterForm />
-        </div>
+      <div className="relative w-full min-h-screen flex justify-center items-center">
+        <img
+          src={assets.GifLogin}
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <RegisterForm />
       </div>
       <Footer />
     </>

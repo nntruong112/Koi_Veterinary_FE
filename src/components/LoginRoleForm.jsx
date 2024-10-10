@@ -83,6 +83,7 @@ const LoginRoleForm = () => {
         const resultAction = await dispatch(login(user));
 
         const originalPromiseResult = unwrapResult(resultAction);
+        console.log(originalPromiseResult);
 
         if (originalPromiseResult.token) {
           const userInfoAction = await dispatch(getInfoByToken()); // Gọi thunk để lấy thông tin người dùng
@@ -90,6 +91,7 @@ const LoginRoleForm = () => {
           const userInfo = unwrapResult(userInfoAction); // Đợi kết quả và unwrap
 
           const roles = userInfo.result.roles;
+          console.log(roles);
 
           if (roles && roles.includes("ADMIN")) {
             // Hiện thị modal thành công

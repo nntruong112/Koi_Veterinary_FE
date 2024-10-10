@@ -41,7 +41,7 @@ export const getMyFish = createAsyncThunk(
   "fishes/myFish",
   async (_, thunkAPI) => {
     try {
-      const response = await BASE_URL.get("fishes/myFish");
+      const response = await BASE_URL.get("fishes");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

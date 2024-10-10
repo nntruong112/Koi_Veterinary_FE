@@ -7,7 +7,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gradient-to-r from-white via-purple-300 to-cyan-300">
+    <div className="bg-gradient-to-r from-cyan-100 via-purple-300 to-cyan-300">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-0 text-sm md:mx-10">
         {/* ------- Left Section -------- */}
         <div className="mt-5">
