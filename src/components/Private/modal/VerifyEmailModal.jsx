@@ -53,7 +53,7 @@ const VerifyEmailModal = ({ isOpen, onClose, email }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/50 bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50 bg-opacity-50 z-20">
       <div className="bg-white p-6 rounded-3xl shadow-lg text-center w-[30%] h-[40%] text-primary flex flex-col justify-between items-center">
         <div>
           <h2 className="text-3xl mb-3 font-bold text-center bg-primary text-transparent bg-clip-text">

@@ -1,6 +1,6 @@
 import Logo from "./Logo.png";
 import LoginLogo from "./LoginLogo.png";
-import Background from "./Background.png";
+import Background from "./HeaderBackground.jpg";
 import ArrowIcon from "./arrow_icon.svg";
 import BackgroundLogin from "./BgLogin.jpg";
 import AboutImage from "./AboutImage.png";
@@ -19,6 +19,7 @@ import Vet9 from "./vet9.png";
 import Vet10 from "./vet10.png";
 import koihealth from "./koihealth.jpg";
 import RatingFb from "./Rating-Fb.png";
+import GifLogin from "./koi swim.gif";
 
 export const assets = {
   Logo,
@@ -42,6 +43,7 @@ export const assets = {
   Vet8,
   Vet9,
   Vet10,
+  GifLogin,
 };
 export const vets = [
   {
