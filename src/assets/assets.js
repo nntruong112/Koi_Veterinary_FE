@@ -42,119 +42,126 @@ export const assets = {
   Vet8,
   Vet9,
   Vet10,
-
-
 };
-export const vet = [
+export const vets = [
   {
-_id:'01',
-name: 'Dr. Sins',
-image: Vet1,
-experience: '5 Years',
-about: 'Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-fees: 15,
-address: {
-  line1: 'Fpt University',
-}
-},
-{
-  _id:'02',
-  name: 'Dr. Olympia',
-  image: Vet2,
-  experience: '2 Years',
-  about: 'Dr. Olympia has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-  fees: 15,
-  address: {
-    line1: 'Fpt University',
-  }
-  },
-  {
-    _id:'03',
-    name: 'Dr. Murphy',
-    image: Vet3,
-    experience: '8 Years',
-    about: 'Dr. Murphy has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
+    _id: "01",
+    name: "Dr. Sins",
+    image: Vet1,
+    experience: "5 Years",
+    about:
+      "Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 15,
     address: {
-      line1: 'Fpt University',
-    }
+      line1: "Fpt University",
     },
-    {
-      _id:'04',
-      name: 'Dr. Michael',
-      image: Vet4,
-      experience: '10 Years',
-      about: 'Dr. Michael has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-      fees: 15,
-      address: {
-        line1: 'Fpt University',
-      }
-      },
-      {
-        _id:'05',
-        name: 'Dr. Ronnie',
-        image: Vet5,
-        experience: '5 Years',
-        about: 'Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 15,
-        address: {
-          line1: 'Fpt University',
-        }
-        },
-        {
-          _id:'06',
-          name: 'Dr. Nguyen',
-          image: Vet6,
-          experience: '5 Years',
-          about: 'Dr. Johnny Nguyen has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-          fees: 15,
-          address: {
-            line1: 'Fpt University',
-          }
-          },
-          {
-            _id:'07',
-            name: 'Dr. Ralp',
-            image: Vet7,
-            experience: '5 Years',
-            about: 'Dr. Ralp Rangnick has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-            fees: 15,
-            address: {
-              line1: 'Fpt University',
-            }
-            },
-            {
-              _id:'08',
-              name: 'Dr. Charlton',
-              image: Vet8,
-              experience: '7 Years',
-              about: 'Dr. Bolt Charlton has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-              fees: 15,
-              address: {
-                line1: 'Fpt University',
-              }
-              },
-              {
-                _id:'09',
-                name: 'Dr. Galio',
-                image: Vet9,
-                experience: '9 Years',
-                about: 'Dr. Galio Quilton has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-                fees: 15,
-                address: {
-                  line1: 'Fpt University',
-                }
-                },
-                {
-                  _id:'10',
-                  name: 'Dr. Shamina',
-                  image: Vet10,
-                  experience: '5 Years',
-                  about: 'Dr. Shamina Zelf has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-                  fees: 15,
-                  address: {
-                    line1: 'Fpt University',
-                  }
-                  },
-                  
-]
+  },
+  {
+    _id: "02",
+    name: "Dr. Olympia",
+    image: Vet2,
+    experience: "2 Years",
+    about:
+      "Dr. Olympia has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "03",
+    name: "Dr. Murphy",
+    image: Vet3,
+    experience: "8 Years",
+    about:
+      "Dr. Murphy has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "04",
+    name: "Dr. Michael",
+    image: Vet4,
+    experience: "10 Years",
+    about:
+      "Dr. Michael has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "05",
+    name: "Dr. Ronnie",
+    image: Vet5,
+    experience: "5 Years",
+    about:
+      "Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "06",
+    name: "Dr. Nguyen",
+    image: Vet6,
+    experience: "5 Years",
+    about:
+      "Dr. Johnny Nguyen has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "07",
+    name: "Dr. Ralp",
+    image: Vet7,
+    experience: "5 Years",
+    about:
+      "Dr. Ralp Rangnick has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "08",
+    name: "Dr. Charlton",
+    image: Vet8,
+    experience: "7 Years",
+    about:
+      "Dr. Bolt Charlton has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "09",
+    name: "Dr. Galio",
+    image: Vet9,
+    experience: "9 Years",
+    about:
+      "Dr. Galio Quilton has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+  {
+    _id: "10",
+    name: "Dr. Shamina",
+    image: Vet10,
+    experience: "5 Years",
+    about:
+      "Dr. Shamina Zelf has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Johnny Sins has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+    fees: 15,
+    address: {
+      line1: "Fpt University",
+    },
+  },
+];

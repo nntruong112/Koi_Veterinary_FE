@@ -13,11 +13,11 @@ const Work = () => {
           </p>
           <div className="flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light">
             <p>
-              At Aquatic Pet Vet, we firmly believe that all pets are entitled
-              to quality veterinary care, and we want to extend this idea to
-              your aquatic pets. Our mission is to support your fish by
-              providing high-quality veterinary care so that your fish will
-              enjoy a happy, healthy life as part of the family
+              At Koi Have Sex, we firmly believe that all pets are entitled to
+              quality veterinary care, and we want to extend this idea to your
+              aquatic pets. Our mission is to support your fish by providing
+              high-quality veterinary care so that your fish will enjoy a happy,
+              healthy life as part of the family
             </p>
           </div>
         </div>
