@@ -45,7 +45,7 @@ export const assets = {
   Vet10,
   GifLogin,
 };
-export const vet = [
+export const vets = [
   {
     _id: "01",
     name: "Dr. Sins",
