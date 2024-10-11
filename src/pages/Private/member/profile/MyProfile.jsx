@@ -10,12 +10,13 @@ import { unwrapResult } from "@reduxjs/toolkit";
 
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../../firebase/firebaseConfig";
+import { toast } from "react-toastify";
+import { updateData } from "../../../../redux/slices/userSlice";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.users.data?.result);
-  const image = useSelector((state) => state.users.data?.result);
-  console.log(image);
+  const image = useSelector((state) => state.users.data?.result?.image);
 
   const [isEdit, setIsEdit] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false); // State cho modal
@@ -71,18 +72,31 @@ const MyProfile = () => {
       const imageRef = ref(storage, `profileImages/${file.name}`);
       await uploadBytes(imageRef, file);
       const url = await getDownloadURL(imageRef);
-      console.log(url);
+      const userId = userInfo?.userId;
 
-      // Chỉ cần lưu URL vào trạng thái mà không gọi updateInfoById ở đây
-      setFormData((prevData) => ({
-        ...prevData,
-        image: url,
-      }));
+      // Cập nhật ảnh trên backend
+      const updatedImage = await dispatch(
+        updateInfoById({
+          userId,
+          updateData: { ...formData, image: url },
+        })
+      );
+      const result = unwrapResult(updatedImage);
 
-      setUploading(false);
-      return url; // Trả về URL
+      if (result) {
+        // Cập nhật URL ảnh vào formData để hiển thị ngay
+        setFormData((prevData) => ({ ...prevData, image: url }));
+
+        const newInfo = await dispatch(getInfoByToken());
+
+        unwrapResult(newInfo);
+
+        toast.success("Upload image successfully");
+
+        setUploading(false);
+      }
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Lỗi khi upload ảnh:", error);
       setUploading(false);
     }
   };
@@ -95,8 +109,12 @@ const MyProfile = () => {
       const userId = userInfo?.userId; // Lấy id người dùng từ userInfo
 
       const updatedInfo = await dispatch(
-        updateInfoById({ userId, updateData: formData })
+        updateInfoById({
+          userId,
+          updateData: { ...formData, image: formData.image },
+        })
       );
+
       const result = unwrapResult(updatedInfo);
 
       if (result) {
@@ -104,12 +122,9 @@ const MyProfile = () => {
 
         unwrapResult(newInfo);
 
-        setShowSuccessModal(true); // Hiện thị modal thành công
+        toast.success("Update succesfully");
 
-        setTimeout(() => {
-          setShowSuccessModal(false); // Ẩn modal
-          setIsEdit(false); // Đóng chế độ chỉnh sửa
-        }, 1000);
+        setIsEdit(false);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -135,12 +150,9 @@ const MyProfile = () => {
           id="image-upload-input"
           type="file"
           accept="image/*"
-          onChange={async (e) => {
+          onChange={(e) => {
             const file = e.target.files[0];
-            if (file) {
-              const url = await handleImageUpload(file);
-              setFormData({ ...formData, image: url });
-            }
+            if (file) handleImageUpload(file);
           }}
           style={{ display: "none" }}
         />
@@ -153,7 +165,6 @@ const MyProfile = () => {
           {uploading ? "Uploading..." : "Upload Photo"}
         </button>
       </form>
-
       <form
         onSubmit={handleSubmit}
         className="p-8 rounded-3xl shadow-lg border-gray-200 border"
@@ -311,14 +322,6 @@ const MyProfile = () => {
           </button>
         </div>
       </form>
-
-      {/* Hiển thị modal khi đăng nhập thành công */}
-      {showSuccessModal && (
-        <SuccessModal
-          message="Update successfully!"
-          onClose={() => setShowSuccessModal(false)}
-        />
-      )}
     </div>
   );
 };
