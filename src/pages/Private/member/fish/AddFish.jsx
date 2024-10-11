@@ -37,13 +37,20 @@ const AddFish = () => {
       ...fishInfo,
       age: Number(fishInfo.age),
       customerId: userId,
-      size: Number(fishInfo.age),
-      weight: Number(fishInfo.age),
+      size: Number(fishInfo.size),
+      weight: Number(fishInfo.weight),
     };
 
     try {
       await dispatch(addNewFish(fishData));
-      setFishInfo(fishInfo); // Reset form sau khi thêm thành công
+      setFishInfo({
+        species: "",
+        age: "",
+        size: "",
+        weight: "",
+        gender: "",
+        color: "",
+      });
       toast.success("Added successfully");
     } catch (error) {
       toast.error("Added fail!");
@@ -91,7 +98,7 @@ const AddFish = () => {
             type="text"
             name="size"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter age"
+            placeholder="Enter size"
             onChange={handleChange}
             value={fishInfo.size}
             required
@@ -106,7 +113,7 @@ const AddFish = () => {
             type="text"
             name="weight"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter age"
+            placeholder="Enter weight"
             onChange={handleChange}
             value={fishInfo.weight}
             required
@@ -121,7 +128,7 @@ const AddFish = () => {
             type="text"
             name="gender"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter age"
+            placeholder="Enter gender"
             onChange={handleChange}
             value={fishInfo.gender}
             required
@@ -136,7 +143,7 @@ const AddFish = () => {
             type="text"
             name="color"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter age"
+            placeholder="Enter color"
             onChange={handleChange}
             value={fishInfo.color}
             required
