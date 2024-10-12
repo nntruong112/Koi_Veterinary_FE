@@ -21,27 +21,31 @@ const MyFish = () => {
   }, [dispatch]);
 
   return (
-    <div className="grid grid-cols-3 gap-10 py-10">
-      {fishList.map((fish, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-start border rounded-lg p-4 bg-gray-200 shadow-lg"
-        >
-          <img
-            src={assets.KoiPool}
-            alt="Fish"
-            className="w-full h-40 object-cover"
-          />
-          <p className="mt-4 font-semibold text-gray-700">
-            Species: {fish.species}
-          </p>
-          <p className="mt-4 text-gray-700">Age: {fish.age}</p>
-          <p className="text-gray-600">Size: {fish.size}</p>
-          <p className="text-gray-600">Weight: {fish.weight}</p>
-          <p className="text-gray-700">Gender: {fish.gender}</p>
-          <p className="text-gray-600">Color: {fish.color}</p>
-        </div>
-      ))}
+    <div>
+      <button className="bg-red-500 hover:bg-red-600">Delete Fish</button>
+      <button>Delete All Fish</button>
+      <div className="grid grid-cols-3 gap-10 py-10">
+        {fishList.map((fish, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-start border rounded-lg p-4 bg-gray-200 shadow-lg"
+          >
+            <img
+              src={assets.KoiPool}
+              alt="Fish"
+              className="w-full h-40 object-cover"
+            />
+            <p className="mt-4 font-semibold text-gray-700">
+              Species: {fish.species}
+            </p>
+            <p className="mt-4 text-gray-700">Age: {fish.age}</p>
+            <p className="text-gray-600">Size: {fish.size}</p>
+            <p className="text-gray-600">Weight: {fish.weight}</p>
+            <p className="text-gray-700">Gender: {fish.gender}</p>
+            <p className="text-gray-600">Color: {fish.color}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

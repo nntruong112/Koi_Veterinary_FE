@@ -5,7 +5,7 @@ import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 
 const Appointment = () => {
-  const { vet } = useContext(AppContext);
+  const { vets } = useContext(AppContext);
   return (
     <>
       <Navbar />
@@ -13,7 +13,7 @@ const Appointment = () => {
         <p className="pb-3 mt-12 font-medium border-b">
           My Appointments
           <div>
-            {vet.slice(0, 4).map((item, index) => (
+            {vets.slice(0, 4).map((item, index) => (
               <div
                 className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap py-2 border-b"
                 key={index}

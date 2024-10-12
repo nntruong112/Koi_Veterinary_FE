@@ -20,66 +20,107 @@ const Booking = () => {
           service area.
         </p>
       </div>
-      <section className="bg-[url(Koi_Veterinary_FE/src/assets/y2mate.com - CÁ CHÉP KOI ĐẸP NHẤT shorts cakoidep_1080p.gif)] min-h-svh flex justify-center items-center">
-        <form className="w-[40vw] h-[68vh] bg-[#CCFFFF] bg-[url('./src/assets/LoginLogo.png')] border border-l-blue-300 rounded-lg flex flex-col gap-8 items-center">
-          <h2 className="font-semibold text-4xl ">Booking</h2>
-
-          <input
-            type="text"
-            name="Name"
-            placeholder="Your Name"
-            required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none  "
-          />
-
-          <input
-            type="email"
-            name="Email"
-            placeholder="Email Address"
-            required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
-          />
-
-          <input
-            type="tel"
-            name="Phone"
-            placeholder="Phone"
-            required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none  "
-          />
-
-          <select
-            className="w-[500px] h-[40px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
-            required
-          >
-            <option value="problem">Choose your problem</option>
-            <option value="nam">Thân cá bị nấm</option>
-            <option value="vi trung">Cá bị vi khuẩn làm ngẹt đường thở</option>
-            <option value="ky sinh">Cá bị ký sinh trùng</option>
-            <option value="ngu">Cá bị bênh ngủ</option>
-          </select>
-          <textarea
-            name="Describe Your Fish Issue"
-            placeholder="Or Describe Your Fish Issue"
-            rows="5"
-            className="w-[500px] p-2 rounded-md resize-y text-lg bg-transparent border border-solid focus:outline-none  placeholder:text-black"
-          ></textarea>
-          <select
-            name="Vet"
-            className="w-[500px] h-[40px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
-            id=""
-          >
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-          </select>
-          <div className="w-[500px] bg-blue-400 p-3 rounded-lg font-semibold hover:bg-blue-600 transition text-center">
-            <button>Submit</button>
+      <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="text-2xl py-4 px-6 bg-blue-600 text-white text-center font-bold uppercase">
+          Book an Appointment
+        </div>
+      </div>
+      <div>
+        <form className="py-4 px-6" action="" method="POST">
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" for="name">
+              Name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" for="email">
+              Email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" for="phone">
+              Phone Number
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="phone"
+              type="tel"
+              placeholder="Enter your phone number"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" for="date">
+              Date
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="date"
+              type="date"
+              placeholder="Select a date"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" for="time">
+              Time
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="time"
+              type="time"
+              placeholder="Select a time"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" for="service">
+              Service
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="service"
+              name="service"
+            >
+              <option value="">Select a service</option>
+              <option value="Surgery">Surgery</option>
+              <option value="Ich">Ich(parasite)</option>
+              <option value="Dropsy">Dropsy(bacteria)</option>
+              <option value="Fluke">Fluke(worms)</option>
+              <option value="Fish Lice">Fish Lice(parasite)</option>
+              <option value="Costia">Costia(parasite)</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              form="message"
+            >
+              Message
+            </label>
+            <textarea
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="message"
+              rows="4"
+              placeholder="Enter any additional information"
+            ></textarea>
+          </div>
+          <div className="flex items-center justify-center mb-4">
+            <button className="bg-blue-400 text-white py-2 px-4 rounded hover:bg-blue-500 focus:outline-none focus:shadow-outline">
+              Book Appointment
+            </button>
           </div>
         </form>
-      </section>
+      </div>
       <Footer />
     </>
   );
