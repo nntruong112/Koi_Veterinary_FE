@@ -26,7 +26,7 @@ const MyProfile = React.lazy(() =>
 );
 const MyFish = React.lazy(() => import("../pages/Private/member/fish/MyFish"));
 const MyAppointment = React.lazy(() =>
-  import("../pages/Private/member/appointment/MyAppointment")
+  import("../pages/Private/member/myAppointment/MyAppointment")
 );
 const AddFish = React.lazy(() =>
   import("../pages/Private/member/fish/AddFish")
