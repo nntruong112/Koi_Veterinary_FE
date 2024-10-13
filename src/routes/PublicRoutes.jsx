@@ -16,7 +16,7 @@ const Pricing = React.lazy(() => import("../pages/Public/pricing/Pricing"));
 const Contact = React.lazy(() => import("../pages/Public/contact/Contact"));
 const Work = React.lazy(() => import("../pages/Public/work/Work"));
 const Team = React.lazy(() => import("../pages/Public/team/Team"));
-
+const Booking = React.lazy(() => import("../pages/Public/booking/Booking"));
 const Info = React.lazy(() => import("../pages/Public/infovet/Info"));
 const LoginRole = React.lazy(() =>
   import("../pages/Public/loginRole/LoginRole")
@@ -38,7 +38,10 @@ const PublicRoutes = [
   { path: path.FEATURES, element: <LoadLazy children={<Features />} /> },
   { path: path.PRICING, element: <LoadLazy children={<Pricing />} /> },
   { path: path.TEAM, element: <LoadLazy children={<Team />} /> },
-  
+  {
+    path: path.BOOKING,
+    element: <LoadLazy children={<Booking />} />,
+  },
   { path: path.INFO, element: <LoadLazy children={<Info />} /> },
   {
     path: path.APPOINTMENT_BOOKING,

@@ -2,9 +2,22 @@ import React from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useSelector } from "react-redux";
+import { path } from "../utils/constant";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const navigate = useNavigate();
+  const role = useSelector((state) => state.users.data?.result?.roles);
+
+  const bookClick = () => {
+    if (role && role === "USER") {
+      navigate(path.BOOKING);
+    } else {
+      navigate(path.LOGIN);
+      toast.warn("Please login to book appointment with us!");
+    }
+  };
 
   return (
     <section className="relative">
@@ -28,7 +41,7 @@ const Header = () => {
         </div>
 
         <a
-          onClick={() => navigate("/booking")}
+          onClick={bookClick}
           className="flex items-center gap-3 bg-primary px-8 py-3 rounded-full text-white text-sm m-auto md:m-0 hover:scale-105 transition-all duration-200 cursor-pointer"
         >
           Book Appointment

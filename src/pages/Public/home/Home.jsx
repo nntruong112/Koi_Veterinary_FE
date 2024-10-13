@@ -8,7 +8,7 @@ import AdminNavbar from "../../../components/Private/admin/adminNavbar/AdminNavb
 
 const Home = () => {
   const roles = useSelector((state) => state.users.data?.result?.roles);
-  console.log(roles);
+
   return (
     <>
       {roles === "ADMIN" ? <AdminNavbar /> : <Navbar />}

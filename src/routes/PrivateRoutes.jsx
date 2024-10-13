@@ -33,7 +33,6 @@ const AddFish = React.lazy(() =>
 );
 
 // BOOKING
-const Booking = React.lazy(() => import("../pages/Public/booking/Booking"));
 
 const PrivateRoutes = [
   {
@@ -134,15 +133,6 @@ const PrivateRoutes = [
         ),
       },
     ],
-  },
-
-  {
-    path: path.BOOKING,
-    element: (
-      <ProtectedRoutes allowedRoles="USER">
-        <LoadLazy children={<Booking />} />
-      </ProtectedRoutes>
-    ),
   },
 ];
 
