@@ -8,6 +8,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../../firebase/firebaseConfig";
 import { toast } from "react-toastify";
 import { unwrapResult } from "@reduxjs/toolkit";
+import TextInput from "../../../../components/Private/member/inputForm.jsx/TextInput";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -66,20 +67,24 @@ const MyProfile = () => {
         imageUrl = await getDownloadURL(imageRef);
       }
 
-      const userId = userInfo?.userId;
       const updatedInfo = await dispatch(
         updateInfoById({
-          userId,
-          updateData: { ...formData, image: imageUrl },
+          ...formData,
+          image: imageUrl,
         })
       );
+
       unwrapResult(updatedInfo);
 
-      dispatch(getInfoByToken());
+      if (updateInfoById) {
+        const newInfo = await dispatch(getInfoByToken());
 
-      toast.success("Update successfully");
+        unwrapResult(newInfo);
 
-      setIsEdit(false);
+        toast.success("Update successfully");
+
+        setIsEdit(false);
+      }
     } catch (error) {
       console.error("Error while updating: ", error);
       toast.error("Update failed!");
@@ -190,25 +195,25 @@ const MyProfile = () => {
   );
 };
 
-const TextInput = ({
-  label,
-  name,
-  value,
-  disabled,
-  onChange,
-  type = "text",
-}) => (
-  <div className="mb-4">
-    <label className="block text-xl font-medium mb-3">{label}</label>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-      className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-    />
-  </div>
-);
+// const TextInput = ({
+//   label,
+//   name,
+//   value,
+//   disabled,
+//   onChange,
+//   type = "text",
+// }) => (
+//   <div className="mb-4">
+//     <label className="block text-xl font-medium mb-3">{label}</label>
+//     <input
+//       type={type}
+//       name={name}
+//       value={value}
+//       onChange={onChange}
+//       disabled={disabled}
+//       className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+//     />
+//   </div>
+// );
 
 export default MyProfile;

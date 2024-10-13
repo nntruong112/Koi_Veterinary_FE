@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addNewFish,
+  getAllUsers,
   getInfoByToken,
   getMyFish,
+  getVetByRole,
   updateInfoById,
 } from "../../services/userService";
 import * as status from "../../utils/status";
@@ -52,13 +54,13 @@ const userSlice = createSlice({
       });
 
     builder
-      // update user info
+      // add new fish
       .addCase(addNewFish.pending, (state) => {
         state.status = status.PENDING;
       })
       .addCase(addNewFish.fulfilled, (state, action) => {
         state.status = status.SUCCESSFULLY;
-        state.data = { ...state.data, fish: action.payload }; // Thêm cá vào data
+        state.data = { ...state.data, fish: action.payload };
       })
       .addCase(addNewFish.rejected, (state, action) => {
         state.status = status.FAILED;
@@ -66,15 +68,44 @@ const userSlice = createSlice({
       });
 
     builder
-      // update user info
+      // get my fish
       .addCase(getMyFish.pending, (state) => {
         state.status = status.PENDING;
       })
       .addCase(getMyFish.fulfilled, (state, action) => {
         state.status = status.SUCCESSFULLY;
-        state.data = { ...state.data, myFish: action.payload }; // Thay thế dữ liệu cá
+        state.data = { ...state.data, myFish: action.payload };
       })
       .addCase(getMyFish.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get all users
+      .addCase(getAllUsers.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = action.payload;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get vet info
+      .addCase(getVetByRole.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getVetByRole.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, vets: action.payload };
+      })
+      .addCase(getVetByRole.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

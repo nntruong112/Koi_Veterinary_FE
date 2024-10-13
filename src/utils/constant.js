@@ -28,4 +28,5 @@ export const path = {
   ADD_FISH: "add-fish",
   BOOKING: "/booking",
   INFO: "/info/:vetId",
+  APPOINTMENT_BOOKING: "/appointment-booking",
 };

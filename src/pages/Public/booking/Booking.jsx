@@ -1,85 +1,161 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
+import InfoForm from "../../../components/Private/member/booking/InfoForm";
+import VetForm from "../../../components/Private/member/booking/VetForm";
+import ConfirmForm from "../../../components/Private/member/booking/ConfirmForm";
+import {
+  resetBookingData,
+  setCurrentStep,
+  updateBookingData,
+} from "../../../redux/slices/bookingSlice";
+import { bookingAppointment } from "../../../services/userService";
+import { toast } from "react-toastify";
 
 const Booking = () => {
+  const dispatch = useDispatch();
+  const currentStep = useSelector((state) => state.booking?.currentStep);
+  const bookingInfo = useSelector((state) => state.booking.data);
+  const customerId = useSelector((state) => state.users.data?.result?.userId);
+
+  const steps = [
+    {
+      title: "Fill appointment form",
+      content: (
+        <InfoForm
+          updateFormData={(data) => dispatch(updateBookingData(data))}
+        />
+      ),
+    },
+    {
+      title: "Choose vet and time",
+      content: (
+        <VetForm updateFormData={(data) => dispatch(updateBookingData(data))} />
+      ),
+    },
+    {
+      title: "Confirm Appointment Information",
+      content: <ConfirmForm appointmentData={bookingInfo} />,
+    },
+  ];
+
+  const bookingData = {
+    ...bookingInfo,
+    customerId: customerId,
+    status: "on-going",
+  };
+
+  console.log(bookingData);
+
+  const handleSubmit = async () => {
+    // Kiểm tra thông tin trước khi gửi
+    if (!bookingInfo || !customerId) {
+      toast.error("Please complete all required fields!");
+      return;
+    }
+
+    try {
+      await dispatch(bookingAppointment(bookingData));
+
+      dispatch(resetBookingData());
+      toast.success("Booking added successfully");
+    } catch (error) {
+      console.error("Error when submit: ", error);
+      toast.error(error.response?.data?.message || "Booking failed!");
+    }
+  };
+
+  const handleNext = () => {
+    if (currentStep === 0) {
+      // Kiểm tra thông tin ở bước 1 (InfoForm)
+      const { appointmentDate, appointmentType, location, fishId } =
+        bookingInfo;
+      if (!appointmentDate || !appointmentType || !location || !fishId) {
+        toast.error("Please complete all required fields in this step!");
+        return;
+      }
+    } else if (currentStep === 1) {
+      // Kiểm tra thông tin ở bước 2 (VetForm)
+      const { veterinarianId, startTime, endTime } = bookingInfo;
+      if (!veterinarianId || !startTime || !endTime) {
+        toast.error("Please complete all required fields in this step!");
+        return;
+      }
+    }
+
+    if (currentStep < steps.length - 1) {
+      dispatch(setCurrentStep(currentStep + 1));
+    } else {
+      handleSubmit();
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 0) {
+      dispatch(setCurrentStep(currentStep - 1));
+    }
+  };
+
   return (
     <>
       <Navbar />
-      <h1 className="text-5xl font-bold mt-8 mb-8 text-[#071e55] text-center">
-        BOOKING FOR YOUR SERVICES.
-      </h1>
-      <div className="text-center justify-center ">
-        <p className="text-xl font-normal mb-8 text-[#7c8595] ">
-          If you have a pressing concern, please call our office directly at
-          (123) 456-7890. <br />
-          Our phones and emails are answered 9am-3pm PST Monday through
-          Saturday, but are closed most major holidays. <br />
-          For clients in District 2, District 1 and Binh Thanh, please fill out
-          this form. We partner with the Koi Center to see clients in that
-          service area.
-        </p>
+      <div className="flex items-center justify-center mt-8 ml-80">
+        <ol className="flex items-center w-full">
+          {steps.map((step, index) => (
+            <li
+              key={index}
+              className={`relative w-full mb-6 ${
+                index <= currentStep ? "text-blue-600" : "text-gray-400"
+              }`}
+            >
+              <div className="flex items-center">
+                <div
+                  className={`z-10 flex items-center justify-center w-6 h-6 ${
+                    index <= currentStep ? "bg-blue-200" : "bg-gray-200"
+                  } rounded-full ring-0 ring-white`}
+                >
+                  <span
+                    className={`flex w-3 h-3 ${
+                      index <= currentStep ? "bg-blue-600" : "bg-gray-900"
+                    } rounded-full`}
+                  ></span>
+                </div>
+                {index < steps.length - 1 && (
+                  <div className="flex w-full bg-gray-200 h-0.5"></div>
+                )}
+              </div>
+              <div className="mt-3">
+                <h3 className="font-medium text-gray-900">{step.title}</h3>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
-      <section className="bg-[url(Koi_Veterinary_FE/src/assets/y2mate.com - CÁ CHÉP KOI ĐẸP NHẤT shorts cakoidep_1080p.gif)] min-h-svh flex justify-center items-center">
-        <form className="w-[40vw] h-[68vh] bg-[#CCFFFF] bg-[url('./src/assets/LoginLogo.png')] border border-l-blue-300 rounded-lg flex flex-col gap-8 items-center">
-          <h2 className="font-semibold text-4xl ">Booking</h2>
 
-          <input
-            type="text"
-            name="Name"
-            placeholder="Your Name"
-            required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none  "
-          />
+      <div className="flex flex-col justify-center">
+        <div className="mx-20">{steps[currentStep]?.content}</div>
 
-          <input
-            type="email"
-            name="Email"
-            placeholder="Email Address"
-            required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
-          />
-
-          <input
-            type="tel"
-            name="Phone"
-            placeholder="Phone"
-            required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none  "
-          />
-
-          <select
-            className="w-[500px] h-[40px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
-            required
+        <div className="flex items-center justify-center gap-20 w-full mb-5 text-white">
+          <button
+            type="button"
+            onClick={handleBack}
+            disabled={currentStep === 0}
+            className="bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition cursor-pointer"
           >
-            <option value="problem">Choose your problem</option>
-            <option value="nam">Thân cá bị nấm</option>
-            <option value="vi trung">Cá bị vi khuẩn làm ngẹt đường thở</option>
-            <option value="ky sinh">Cá bị ký sinh trùng</option>
-            <option value="ngu">Cá bị bênh ngủ</option>
-          </select>
-          <textarea
-            name="Describe Your Fish Issue"
-            placeholder="Or Describe Your Fish Issue"
-            rows="5"
-            className="w-[500px] p-2 rounded-md resize-y text-lg bg-transparent border border-solid focus:outline-none  placeholder:text-black"
-          ></textarea>
-          <select
-            name="Vet"
-            className="w-[500px] h-[40px] p-2 rounded-md bg-transparent border border-solid focus:outline-none "
-            id=""
+            Back
+          </button>
+
+          <button
+            type="button"
+            onClick={handleNext}
+            className="bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition"
           >
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-            <option value="">Vet.</option>
-          </select>
-          <div className="w-[500px] bg-blue-400 p-3 rounded-lg font-semibold hover:bg-blue-600 transition text-center">
-            <button>Submit</button>
-          </div>
-        </form>
-      </section>
+            {currentStep === steps.length - 1 ? "Submit" : "Next"}
+          </button>
+        </div>
+      </div>
+
       <Footer />
     </>
   );

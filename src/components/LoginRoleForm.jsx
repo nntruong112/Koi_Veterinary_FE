@@ -11,6 +11,7 @@ import SuccessModal from "./Private/modal/SuccessModal.jsx";
 import { getInfoByToken } from "../services/userService.js";
 import { toast } from "react-toastify";
 import { logout } from "../redux/slices/authSlice.js";
+import { clearUser } from "../redux/slices/userSlice.js";
 
 const LoginRoleForm = () => {
   const navigate = useNavigate();
@@ -83,7 +84,6 @@ const LoginRoleForm = () => {
         const resultAction = await dispatch(login(user));
 
         const originalPromiseResult = unwrapResult(resultAction);
-        console.log(originalPromiseResult);
 
         if (originalPromiseResult.token) {
           const userInfoAction = await dispatch(getInfoByToken()); // Gọi thunk để lấy thông tin người dùng
@@ -91,7 +91,6 @@ const LoginRoleForm = () => {
           const userInfo = unwrapResult(userInfoAction); // Đợi kết quả và unwrap
 
           const roles = userInfo.result.roles;
-          console.log(roles);
 
           if (roles && roles.includes("ADMIN")) {
             // Hiện thị modal thành công
@@ -100,9 +99,10 @@ const LoginRoleForm = () => {
             // Chuyển hướng sau 2 giây
             setTimeout(() => {
               navigate(path.ADMIN);
-            }, 2000);
+            }, 1000);
           } else {
             dispatch(logout());
+            dispatch(clearUser());
             toast.error("You don't have permission to access!");
           }
         }

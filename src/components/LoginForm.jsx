@@ -86,8 +86,8 @@ const LoginForm = () => {
         const originalPromiseResult = unwrapResult(resultAction);
 
         if (originalPromiseResult.token) {
-          const userInfoAction = await dispatch(getInfoByToken()); // Gọi thunk để lấy thông tin người dùng
-          const userInfo = unwrapResult(userInfoAction); // Đợi kết quả và unwrap
+          const userInfoAction = await dispatch(getInfoByToken());
+          const userInfo = unwrapResult(userInfoAction);
 
           const roles = userInfo.result.roles;
 
@@ -98,7 +98,7 @@ const LoginForm = () => {
             // Chuyển hướng sau 2 giây
             setTimeout(() => {
               navigate(path.HOME);
-            }, 2000);
+            }, 1000);
           } else {
             dispatch(logout());
             toast.error("You don't have permission to access!");

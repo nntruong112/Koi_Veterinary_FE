@@ -32,19 +32,23 @@ const AddFish = React.lazy(() =>
   import("../pages/Private/member/fish/AddFish")
 );
 
+// BOOKING
+const Booking = React.lazy(() => import("../pages/Public/booking/Booking"));
+
 const PrivateRoutes = [
   {
     path: path.ADMIN,
     element: (
-      <ProtectedRoutes allowedRoles={["ADMIN"]}>
+      <ProtectedRoutes allowedRoles="ADMIN">
         <LoadLazy children={<Admin />} />
       </ProtectedRoutes>
     ),
+
     children: [
       {
         index: true,
         element: (
-          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+          <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<Dashboard />} />
           </ProtectedRoutes>
         ),
@@ -52,7 +56,7 @@ const PrivateRoutes = [
       {
         path: path.USERS,
         element: (
-          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+          <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<Users />} />
           </ProtectedRoutes>
         ),
@@ -60,7 +64,7 @@ const PrivateRoutes = [
       {
         path: path.APPOINTMENT,
         element: (
-          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+          <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<Appointment />} />
           </ProtectedRoutes>
         ),
@@ -68,7 +72,7 @@ const PrivateRoutes = [
       {
         path: path.ADD_DOCTOR,
         element: (
-          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+          <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<AddDoctors />} />
           </ProtectedRoutes>
         ),
@@ -76,7 +80,7 @@ const PrivateRoutes = [
       {
         path: path.DOCTOR,
         element: (
-          <ProtectedRoutes allowedRoles={["ADMIN"]}>
+          <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<Doctors />} />
           </ProtectedRoutes>
         ),
@@ -84,30 +88,61 @@ const PrivateRoutes = [
     ],
   },
 
+  // USER
   {
     path: path.MEMBER,
-    element: <LoadLazy children={<Member />} />,
+    element: (
+      <ProtectedRoutes allowedRoles="USER">
+        <LoadLazy children={<Member />} />
+      </ProtectedRoutes>
+    ),
+
     children: [
       {
         path: path.PROFILE,
-        element: <LoadLazy children={<MyProfile />} />,
+        element: (
+          <ProtectedRoutes allowedRoles="USER">
+            <LoadLazy children={<MyProfile />} />
+          </ProtectedRoutes>
+        ),
       },
 
       {
         path: path.FISH,
-        element: <LoadLazy children={<MyFish />} />,
+        element: (
+          <ProtectedRoutes allowedRoles="USER">
+            <LoadLazy children={<MyFish />} />
+          </ProtectedRoutes>
+        ),
       },
 
       {
         path: path.MY_APPOINTMENT,
-        element: <LoadLazy children={<MyAppointment />} />,
+        element: (
+          <ProtectedRoutes allowedRoles="USER">
+            <LoadLazy children={<MyAppointment />} />
+          </ProtectedRoutes>
+        ),
       },
 
       {
         path: path.ADD_FISH,
-        element: <LoadLazy children={<AddFish />} />,
+        element: (
+          <ProtectedRoutes allowedRoles="USER">
+            <LoadLazy children={<AddFish />} />
+          </ProtectedRoutes>
+        ),
       },
     ],
+  },
+
+  {
+    path: path.BOOKING,
+    element: (
+      <ProtectedRoutes allowedRoles="USER">
+        <LoadLazy children={<Booking />} />
+      </ProtectedRoutes>
+    ),
   },
 ];
 

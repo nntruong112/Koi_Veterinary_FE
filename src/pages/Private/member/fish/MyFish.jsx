@@ -4,6 +4,9 @@ import { getMyFish } from "../../../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { PiSelectionAllFill } from "react-icons/pi";
 import { MdDelete } from "react-icons/md";
+import { FaLongArrowAltRight } from "react-icons/fa";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const MyFish = () => {
   const dispatch = useDispatch();
@@ -11,8 +14,14 @@ const MyFish = () => {
   const [selectedFishIds, setSelectedFishIds] = useState([]); // Mảng để lưu ID cá đã chọn
   const [selectAll, setSelectAll] = useState(false); // Trạng thái cho nút select all
 
+  // Thêm trạng thái cho phân trang
+  const [currentPage, setCurrentPage] = useState(1);
+  const [fishPerPage] = useState(6); // Số lượng cá mỗi trang
+
   useEffect(() => {
-    dispatch(getMyFish());
+    const myFish = dispatch(getMyFish());
+
+    unwrapResult(myFish);
   }, [dispatch]);
 
   // Hàm để xử lý chọn cá
@@ -38,9 +47,16 @@ const MyFish = () => {
 
   // Hàm để xử lý xóa cá đã chọn
   const handleDeleteSelected = () => {
-    // TODO: Xử lý xóa cá đã chọn ở đây
     console.log("Delete fish IDs:", selectedFishIds);
   };
+
+  // Tính toán chỉ số cá hiển thị trên trang
+  const indexOfLastFish = currentPage * fishPerPage;
+  const indexOfFirstFish = indexOfLastFish - fishPerPage;
+  const currentFishList = fishList.slice(indexOfFirstFish, indexOfLastFish); // Lấy danh sách cá theo trang
+
+  // Tính số lượng trang
+  const totalPages = Math.ceil(fishList.length / fishPerPage);
 
   return (
     <div>
@@ -64,7 +80,7 @@ const MyFish = () => {
       </div>
 
       <div className="grid grid-cols-3 gap-10 py-10">
-        {fishList.map((fish) => (
+        {currentFishList.map((fish) => (
           <div
             key={fish.fishId} // Sử dụng fishId của cá làm key
             className={`flex flex-col items-start border rounded-lg p-4 bg-gray-200 shadow-lg ${
@@ -78,9 +94,9 @@ const MyFish = () => {
               className="mb-2"
             />
             <img
-              src={assets.KoiPool}
+              src={fish.image || assets.KoiPool}
               alt="Fish"
-              className="w-full h-40 object-cover"
+              className="w-full h-40 object-contain"
             />
             <p className="mt-4 font-semibold text-gray-700">
               Species: {fish.species}
@@ -92,6 +108,31 @@ const MyFish = () => {
             <p className="text-gray-600">Color: {fish.color}</p>
           </div>
         ))}
+      </div>
+
+      {/* Các nút phân trang */}
+      <div className="flex justify-center items-center gap-4 py-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="flex items-center justify-center px-3 h-8 gap-1 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          <FaLongArrowAltLeft />
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="flex items-center justify-center px-3 h-8 gap-1 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          Next
+          <FaLongArrowAltRight />
+        </button>
       </div>
     </div>
   );

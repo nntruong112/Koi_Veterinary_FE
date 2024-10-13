@@ -14,7 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app); // Khởi tạo Firestore
+const db = getFirestore(app);
 const storage = getStorage(app);
 
 export { db, storage };

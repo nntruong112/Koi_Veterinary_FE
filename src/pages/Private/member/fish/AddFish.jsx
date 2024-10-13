@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { addNewFish } from "../../../../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../../firebase/firebaseConfig";
 
 const AddFish = () => {
   const dispatch = useDispatch();
 
-  // Lấy userId từ Redux store
   const userId = useSelector((state) => state.users.data?.result?.userId);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [fishInfo, setFishInfo] = useState({
     species: "",
@@ -16,6 +18,7 @@ const AddFish = () => {
     weight: "",
     gender: "",
     color: "",
+    image: "",
   });
 
   // Lấy giá trị trong từng ô input
@@ -24,16 +27,29 @@ const AddFish = () => {
     setFishInfo((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) setSelectedImage(file);
+  };
+
   const handleAddFish = async (e) => {
     e.preventDefault();
 
-    // Thêm userId vào fishInfo trước khi gửi yêu cầu
+    let imageUrl = "";
+    if (selectedImage) {
+      const imageRef = ref(storage, `fishImages/${selectedImage.name}`); // Đổi đường dẫn lưu ảnh
+      await uploadBytes(imageRef, selectedImage);
+      imageUrl = await getDownloadURL(imageRef);
+    }
+
+    // Thêm userId và imageUrl vào fishInfo trước khi gửi yêu cầu
     const fishData = {
       ...fishInfo,
       age: Number(fishInfo.age),
       customerId: userId,
       size: Number(fishInfo.size),
       weight: Number(fishInfo.weight),
+      image: imageUrl, // Thêm URL của hình ảnh vào fishData
     };
 
     try {
@@ -45,7 +61,9 @@ const AddFish = () => {
         weight: "",
         gender: "",
         color: "",
+        image: "",
       });
+      setSelectedImage(null); // Reset hình ảnh đã chọn
       toast.success("Added successfully");
     } catch (error) {
       console.log("Error while adding: ", error);
@@ -61,6 +79,7 @@ const AddFish = () => {
     { label: "Weight", name: "weight", type: "text" },
     { label: "Gender", name: "gender", type: "text" },
     { label: "Color", name: "color", type: "text" },
+    { label: "Image", name: "image", type: "file", required: true }, // Thêm trường input cho hình ảnh
   ];
 
   return (
@@ -77,15 +96,26 @@ const AddFish = () => {
               <label className="block text-lg font-medium text-gray-700 mb-1">
                 {label}
               </label>
-              <input
-                type={type}
-                name={name}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                placeholder={`Enter ${label.toLowerCase()}`}
-                onChange={handleChange}
-                value={fishInfo[name]}
-                required={required}
-              />
+              {type === "file" ? (
+                <input
+                  type={type}
+                  name={name}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  placeholder={`Select ${label.toLowerCase()}`}
+                  onChange={handleImageSelect} // Gọi hàm handleImageSelect cho trường hình ảnh
+                  required={required}
+                />
+              ) : (
+                <input
+                  type={type}
+                  name={name}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  placeholder={`Enter ${label.toLowerCase()}`}
+                  onChange={handleChange}
+                  value={fishInfo[name]}
+                  required={required}
+                />
+              )}
             </div>
           ))}
         </div>
