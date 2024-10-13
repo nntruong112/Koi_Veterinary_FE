@@ -13,7 +13,7 @@ const Contact = () => {
   const { vet } = useContext(AppContext);
   const [vetInfo, setVetInfo] = useState(null);
   const fetchVetInfo = async () => {
-    const vetInfo = vet.find((vet) => vet._id === vetId);
+    const vetInfo = vet.find((vets) => vets._id === vetId);
     setVetInfo(vetInfo);
     console.log(vetInfo);
   };
