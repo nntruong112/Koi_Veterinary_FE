@@ -42,9 +42,16 @@ const MyAppointment = () => {
       console.error("Error cancelling appointment:", error);
     }
   };
-
-  if (loading) return <p>Loading appointments...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading)
+    return (
+      <p className="text-center mt-12 text-lg font-light">
+        Loading appointments...
+      </p>
+    );
+  if (error)
+    return (
+      <p className="text-center text-red-500 font-semibold">Error: {error}</p>
+    );
 
   return (
     <div>
@@ -52,60 +59,59 @@ const MyAppointment = () => {
       <div>
         {appointments.map((item) => (
           <div
-            className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap py-2 border-b"
+            className="p-6 bg-gray-50 border border-gray-200 rounded-xl shadow-md transition-transform transform hover:scale-105"
             key={item.appointmentId}
           >
-            <div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center">
               <img
-                className="w-32 bg-indigo-50"
+                className="w-24 h-24 rounded-full bg-gray-200 object-cover sm:mr-6 mb-4 sm:mb-0"
                 src={item.image || "defaultImageURL"}
                 alt="Vet"
               />
+              <div className="flex-1 text-gray-700">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-sm">
+                  {/* <p>
+                    <strong>Appointment ID:</strong> {item.appointmentId}
+                  </p> */}
+                  <p>
+                    <strong>Date:</strong> {item.appointmentDate}
+                  </p>
+                  <p>
+                    <strong>Type:</strong> {item.appointmentType}
+                  </p>
+                  <p>
+                    <strong>Status:</strong> {item.status}
+                  </p>
+                  <p>
+                    <strong>Time:</strong> {item.startTime} - {item.endTime}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {item.location}
+                  </p>
+                  <p>
+                    <strong>Customer:</strong> {item.userInfo?.username}
+                  </p>
+                  <p>
+                    <strong>Veterinarian:</strong> {item.veterinarian?.name}
+                  </p>
+                  <p>
+                    <strong>Fish:</strong> {item.fish?.species}
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex-1 text-sm text-gray-400">
-              <p>
-                <strong>Appointment ID:</strong> {item.appointmentId}
-              </p>
-              <p>
-                <strong>Date:</strong> {item.appointmentDate}
-              </p>
-              <p>
-                <strong>Type:</strong> {item.appointmentType}
-              </p>
-              <p>
-                <strong>Status:</strong> {item.status}
-              </p>
-              <p>
-                <strong>Start Time:</strong> {item.startTime}
-              </p>
-              <p>
-                <strong>End Time:</strong> {item.endTime}
-              </p>
-              <p>
-                <strong>Location:</strong> {item.location}
-              </p>
-              <p>
-                <strong>Customer:</strong> {item.userInfo?.username}
-              </p>
-              <p>
-                <strong>Veterinarian:</strong> {item.veterinarian?.name}
-              </p>
-              <p>
-                <strong>Fish:</strong> {item.fish?.species}
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 justify-center">
+            <div className="flex justify-end space-x-3 mt-4">
               <button
-                className="text-sm text-center sm:min-w-48 py-2 border hover:bg-blue-500 transition-all duration-300"
+                className="py-2 px-4 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-colors"
                 onClick={() => handlePay(item.appointmentId)}
               >
                 Pay
               </button>
               <button
-                className="text-sm text-center sm:min-w-48 py-2 border hover:bg-red-500 transition-all duration-300"
+                className="py-2 px-4 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-colors"
                 onClick={() => handleCancel(item.appointmentId)}
               >
-                Cancel Appointment
+                Cancel
               </button>
             </div>
           </div>
