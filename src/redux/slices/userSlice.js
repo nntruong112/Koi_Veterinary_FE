@@ -99,4 +99,5 @@ const userSlice = createSlice({
 });
 
 export const { clearUser, updateData } = userSlice.actions;
+
 export default userSlice.reducer;

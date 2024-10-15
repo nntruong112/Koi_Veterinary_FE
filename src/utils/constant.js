@@ -40,4 +40,5 @@ export const path = {
   STAFF_PROFILE: "staff-profile",
   BOOKING_CONFIRM: "booking-confirm",
   ALL_FEEDBACK: "all-feedback",
+  PAYMENT_PAGE: "paymentPage",
 };
