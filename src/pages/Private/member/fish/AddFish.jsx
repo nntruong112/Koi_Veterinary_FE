@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../../firebase/firebaseConfig";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const AddFish = () => {
   const dispatch = useDispatch();
-
   const userId = useSelector((state) => state.users.data?.result?.userId);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [fishInfo, setFishInfo] = useState({
     species: "",
@@ -21,7 +22,6 @@ const AddFish = () => {
     image: "",
   });
 
-  // Lấy giá trị trong từng ô input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFishInfo((prevState) => ({ ...prevState, [name]: value }));
@@ -29,20 +29,23 @@ const AddFish = () => {
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
-    if (file) setSelectedImage(file);
+    if (file) {
+      setSelectedImage(file);
+    }
   };
 
   const handleAddFish = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
+
     let imageUrl = "";
     if (selectedImage) {
-      const imageRef = ref(storage, `fishImages/${selectedImage.name}`); // Đổi đường dẫn lưu ảnh
+      const imageRef = ref(storage, `fishImages/${selectedImage.name}`);
       await uploadBytes(imageRef, selectedImage);
       imageUrl = await getDownloadURL(imageRef);
     }
 
-    // Thêm userId và imageUrl vào fishInfo trước khi gửi yêu cầu
     const fishData = {
       ...fishInfo,
       age: Number(fishInfo.age),
@@ -63,15 +66,17 @@ const AddFish = () => {
         color: "",
         image: "",
       });
-      setSelectedImage(null); // Reset hình ảnh đã chọn
+      setSelectedImage(null);
+      e.target.reset();
       toast.success("Added successfully");
     } catch (error) {
       console.log("Error while adding: ", error);
       toast.error("Added fail!");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Các field của cá
   const fields = [
     { label: "Species", name: "species", type: "text", required: true },
     { label: "Age", name: "age", type: "text" },
@@ -120,9 +125,14 @@ const AddFish = () => {
         </div>
         <button
           type="submit"
+          disabled={isLoading}
           className="w-full mt-6 bg-blue-500 text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition-colors"
         >
-          Add Fish
+          {isLoading ? (
+            <ClipLoader size={20} color={"#ffffff"} loading={isLoading} />
+          ) : (
+            "Add Fish"
+          )}
         </button>
       </form>
     </div>

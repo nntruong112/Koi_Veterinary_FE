@@ -27,11 +27,17 @@ const MyFish = () => {
   const [fishPerPage] = useState(6);
 
   useEffect(() => {
+    const myFish = dispatch(getMyFish());
+    unwrapResult(myFish);
+  }, [dispatch]);
+
+  useEffect(() => {
     if (location.state?.updated) {
       const myFish = dispatch(getMyFish());
       unwrapResult(myFish);
+      navigate(location.pathname, { replace: true, state: {} });
     }
-  }, [dispatch, location.state]);
+  }, [dispatch, location.state, navigate, location.pathname]);
 
   const handleDeleteClick = (fishId) => {
     setSelectedFishId(fishId);
