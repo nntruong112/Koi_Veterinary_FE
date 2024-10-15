@@ -21,6 +21,10 @@ import koihealth from "./koihealth.jpg";
 import RatingFb from "./Rating-Fb.png";
 import GifLogin from "./koi swim.gif";
 import DefaultAvatar from "./DefaultAvatar.png";
+import Home from "./home.jpg";
+import Diagnostics from "./Diagnostics.png";
+import Procedures from "./Procedures.png";
+import well from "./well.png";
 
 export const assets = {
   Logo,
@@ -46,6 +50,10 @@ export const assets = {
   Vet10,
   GifLogin,
   DefaultAvatar,
+  Home,
+  Procedures,
+  well,
+  Diagnostics,
 };
 export const vets = [
   {

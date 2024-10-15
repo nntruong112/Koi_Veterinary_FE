@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
+import { assets } from "../../../assets/assets";
 
 const Work = () => {
   return (
@@ -32,6 +33,7 @@ const Work = () => {
         </p>
         <div className="flex flex-col md:flex-row mt-16">
           <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10">
+            <img src={assets.well} />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
               Wellness & Sick Visits
             </h2>
@@ -44,8 +46,9 @@ const Work = () => {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10">
+            <img src={assets.Diagnostics} />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
-              Diagnostics{" "}
+              Diagnostics
             </h2>
             <p className="text-[15px] text-[#7c8595]">
               Basic cytology, parasite screening, and ultrasound may be
@@ -56,6 +59,7 @@ const Work = () => {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10">
+            <img src={assets.Procedures} />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
               Procedures
             </h2>
