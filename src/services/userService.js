@@ -26,7 +26,7 @@ export const getAllUsers = createAsyncThunk(
 );
 
 export const getVetByRole = createAsyncThunk(
-  "users/role",
+  "users/role/vet",
   async (_, thunkAPI) => {
     try {
       const response = await BASE_URL.get(`users/role/VET`);
@@ -83,6 +83,30 @@ export const getMyFish = createAsyncThunk(
 
       const response = await BASE_URL.get(`fishes/own_by_users_id/${userId}`);
       return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateFishInfo = createAsyncThunk(
+  "fishes/updateFishInfo",
+  async ({ fishId, updateData }, thunkAPI) => {
+    try {
+      const response = await BASE_URL.put(`fishes/${fishId}`, updateData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const deleteMyFish = createAsyncThunk(
+  "fishes/fishId",
+  async (fishId, thunkAPI) => {
+    try {
+      await BASE_URL.delete(`fishes/${fishId}`);
+      return fishId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }

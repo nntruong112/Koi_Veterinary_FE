@@ -1,16 +1,15 @@
 import React, { useState, useContext } from "react";
-import { assets } from "../../../assets/assets";
 // import { vets } from "../../../assets/assets";
-import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
+import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 const Team = () => {
   const navigate = useNavigate();
   const { vets } = useContext(AppContext);
   return (
     <>
-      <Navbar />
+      <RolesNavbar />
 
       <div className="text-5xl font-bold mt-8 mb-8 text-[#071e55] text-center">
         OUR VET

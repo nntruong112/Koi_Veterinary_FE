@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TextInput from "../inputForm.jsx/TextInput";
+import { getMyFish } from "../../../../services/userService";
 
 const InfoForm = ({ updateFormData }) => {
-  // Lấy danh sách cá từ Redux store
-  const fishList = useSelector((state) => state.users.data?.myFish);
+  const dispatch = useDispatch();
+  const fishList = useSelector((state) => state.users.data?.myFish) || [];
+
+  useEffect(() => {
+    dispatch(getMyFish());
+  }, [dispatch]);
 
   // Trạng thái để lưu ID cá được chọn
   const [selectedFishId, setSelectedFishId] = useState(null);
@@ -80,7 +85,7 @@ const InfoForm = ({ updateFormData }) => {
                   <img
                     src={fish.image} // Đường dẫn tới hình ảnh cá từ Firestore
                     alt={fish.species}
-                    className="w-36 h-52 object-cover mb-2 pt-3"
+                    className="w-36 h-52 object-contain mb-2 pt-3"
                   />
                   <span>{fish.species}</span>
                 </div>

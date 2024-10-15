@@ -2,6 +2,7 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import ProtectedRoutes from "./ProtectedRoutes";
+import { element } from "prop-types";
 
 // ADMIN
 const Admin = React.lazy(() => import("../pages/Private/admin/Admin"));
@@ -12,12 +13,8 @@ const Users = React.lazy(() => import("../pages/Private/admin/users/Users"));
 const Appointment = React.lazy(() =>
   import("../pages/Private/admin/appointment/Appointment")
 );
-const AddDoctors = React.lazy(() =>
-  import("../pages/Private/admin/doctors/AddDoctors")
-);
-const Doctors = React.lazy(() =>
-  import("../pages/Private/admin/doctors/Doctors")
-);
+const AddVet = React.lazy(() => import("../pages/Private/admin/vets/AddVets"));
+const Vets = React.lazy(() => import("../pages/Private/admin/vets/Vets"));
 
 // USER
 const Member = React.lazy(() => import("../pages/Private/member/Member"));
@@ -31,12 +28,33 @@ const MyAppointment = React.lazy(() =>
 const HealthRecordPage = React.lazy(() =>
   import("../pages/Private/admin/healthrecord/HealthRecord")
 );
-
 const AddFish = React.lazy(() =>
   import("../pages/Private/member/fish/AddFish")
 );
+const UpdateFish = React.lazy(() =>
+  import("../pages/Private/member/fish/UpdateFish")
+);
 
-// BOOKING
+// VET
+const Vet = React.lazy(() => import("../pages/Private/vet/Vet"));
+const VetProfile = React.lazy(() =>
+  import("../pages/Private/vet/vetProfile/VetProfile")
+);
+const Schedule = React.lazy(() =>
+  import("../pages/Private/vet/schedule/Schedule")
+);
+
+// STAFF
+const Staff = React.lazy(() => import("../pages/Private/staff/Staff"));
+const StaffProfile = React.lazy(() =>
+  import("../pages/Private/staff/staffProfile/StaffProfile")
+);
+const BookingConfirm = React.lazy(() =>
+  import("../pages/Private/staff/bookingConfirm/BookingConfirm")
+);
+const AllFeedback = React.lazy(() =>
+  import("../pages/Private/staff/allFeedback/AllFeedback")
+);
 
 const PrivateRoutes = [
   {
@@ -73,18 +91,18 @@ const PrivateRoutes = [
         ),
       },
       {
-        path: path.ADD_DOCTOR,
+        path: path.ADD_VET,
         element: (
           <ProtectedRoutes allowedRoles="ADMIN">
-            <LoadLazy children={<AddDoctors />} />
+            <LoadLazy children={<AddVet />} />
           </ProtectedRoutes>
         ),
       },
       {
-        path: path.DOCTOR,
+        path: path.VETS,
         element: (
           <ProtectedRoutes allowedRoles="ADMIN">
-            <LoadLazy children={<Doctors />} />
+            <LoadLazy children={<Vets />} />
           </ProtectedRoutes>
         ),
       },
@@ -125,6 +143,16 @@ const PrivateRoutes = [
             <LoadLazy children={<MyFish />} />
           </ProtectedRoutes>
         ),
+        children: [
+          {
+            path: path.UPDATE_FISH,
+            element: (
+              <ProtectedRoutes allowedRoles="USER">
+                <LoadLazy children={<UpdateFish />} />
+              </ProtectedRoutes>
+            ),
+          },
+        ],
       },
 
       {
@@ -149,6 +177,70 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="USER">
             <LoadLazy children={<AddFish />} />
+          </ProtectedRoutes>
+        ),
+      },
+    ],
+  },
+
+  {
+    path: path.VET,
+    element: (
+      <ProtectedRoutes allowedRoles="VET">
+        <LoadLazy children={<Vet />} />
+      </ProtectedRoutes>
+    ),
+
+    children: [
+      {
+        index: true,
+        element: (
+          <ProtectedRoutes allowedRoles="VET">
+            <LoadLazy children={<VetProfile />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.SCHEDULE,
+        element: (
+          <ProtectedRoutes allowedRoles="VET">
+            <LoadLazy children={<Schedule />} />
+          </ProtectedRoutes>
+        ),
+      },
+    ],
+  },
+
+  {
+    path: path.STAFF,
+    element: (
+      <ProtectedRoutes allowedRoles="STAFF">
+        <LoadLazy children={<Staff />} />
+      </ProtectedRoutes>
+    ),
+
+    children: [
+      {
+        index: true,
+        element: (
+          <ProtectedRoutes allowedRoles="STAFF">
+            <LoadLazy children={<StaffProfile />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.BOOKING_CONFIRM,
+        element: (
+          <ProtectedRoutes allowedRoles="STAFF">
+            <LoadLazy children={<BookingConfirm />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.ALL_FEEDBACK,
+        element: (
+          <ProtectedRoutes allowedRoles="STAFF">
+            <LoadLazy children={<AllFeedback />} />
           </ProtectedRoutes>
         ),
       },

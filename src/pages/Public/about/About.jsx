@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { assets } from "../../../assets/assets";
-import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { TiTick } from "react-icons/ti";
 import { FaTasks, FaChartLine, FaNetworkWired, FaRocket } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 
 const About = () => {
   const [currentImage, setCurrentImage] = useState(assets.About_1);
@@ -17,7 +17,7 @@ const About = () => {
   };
   return (
     <>
-      <Navbar />
+      <RolesNavbar />
       {/* ------------- SECTION 1 ------------------- */}
       <section className="text-center py-8 bg-[#f1faff]">
         <h1 className="text-5xl font-bold mt-0 mb-8 text-[#071e55]">

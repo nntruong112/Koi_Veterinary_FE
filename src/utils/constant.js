@@ -20,6 +20,8 @@ export const path = {
   ADD_DOCTOR: "add-doctor",
   DOCTOR: "doctors",
   HEALTH_RECORD: "health-record",
+  ADD_VET: "add-vet",
+  VETS: "vets",
 
   // USER
   MEMBER: "/member",
@@ -30,5 +32,17 @@ export const path = {
   BOOKING: "/booking",
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
+  UPDATE_FISH: "update-fish",
+
+  // VET
+  VET: "/vet",
+  VET_PROFILE: "vet-profile",
+  SCHEDULE: "schedule",
+
+  // STAFF
+  STAFF: "/staff",
+  STAFF_PROFILE: "staff-profile",
+  BOOKING_CONFIRM: "booking-confirm",
+  ALL_FEEDBACK: "all-feedback",
   PAYMENT_PAGE: "paymentPage",
 };

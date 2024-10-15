@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { Suspense } from "react";
 import PacmanLoader from "react-spinners/PacmanLoader";
 
@@ -19,11 +18,6 @@ const LoadLazy = ({ children }) => {
       {children}
     </Suspense>
   );
-};
-
-// Khai báo kiểu dữ liệu cho props
-LoadLazy.propTypes = {
-  children: PropTypes.node.isRequired, // `children` phải là node và bắt buộc
 };
 
 export default LoadLazy;

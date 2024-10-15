@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { verifyEmail } from "../../../services/authService"; // Import API verifyEmail
 import { useNavigate } from "react-router-dom";
 import { path } from "../../../utils/constant";
+import toast from "react-toastify";
 
 const VerifyEmailModal = ({ isOpen, onClose, email }) => {
   const navigate = useNavigate();
@@ -37,8 +38,7 @@ const VerifyEmailModal = ({ isOpen, onClose, email }) => {
         const resultAction = await dispatch(verifyEmail(verification)); // Gửi yêu cầu xác minh
 
         if (resultAction.payload) {
-          // Kiểm tra xem xác minh thành công
-          alert("Verification successful!");
+          toast.success("Verification successful!");
           navigate(path.LOGIN);
           onClose();
         } else {
