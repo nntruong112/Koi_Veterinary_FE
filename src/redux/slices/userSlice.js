@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addNewFish,
-  getAllUsers,
+  deleteMyFish,
   getInfoByToken,
   getMyFish,
   getVetByRole,
+  updateFishInfo,
   updateInfoById,
 } from "../../services/userService";
 import * as status from "../../utils/status";
@@ -20,6 +21,14 @@ const userSlice = createSlice({
   reducers: {
     clearUser: (state) => {
       state.data = null;
+    },
+
+    setFishUpdateData: (state, action) => {
+      state.data = { ...state.data, fishUpdateData: action.payload };
+    },
+
+    clearFishUpdateData: (state) => {
+      state.data.fishUpdateData = null;
     },
   },
 
@@ -68,6 +77,23 @@ const userSlice = createSlice({
       });
 
     builder
+      // update user info
+      .addCase(updateFishInfo.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(updateFishInfo.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        // Cập nhật myFish với dữ liệu mới
+        state.data.myFish = state.data.myFish.map((fish) =>
+          fish.fishId === action.payload.fishId ? action.payload : fish
+        );
+      })
+      .addCase(updateFishInfo.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
       // get my fish
       .addCase(getMyFish.pending, (state) => {
         state.status = status.PENDING;
@@ -77,6 +103,22 @@ const userSlice = createSlice({
         state.data = { ...state.data, myFish: action.payload };
       })
       .addCase(getMyFish.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // delete my fish
+      .addCase(deleteMyFish.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(deleteMyFish.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data.myFish = state.data.myFish.filter(
+          (fish) => fish.fishId !== action.payload
+        );
+      })
+      .addCase(deleteMyFish.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });
@@ -98,6 +140,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearUser, updateData } = userSlice.actions;
+export const { clearUser, setFishUpdateData, clearFishUpdateData } =
+  userSlice.actions;
 
 export default userSlice.reducer;

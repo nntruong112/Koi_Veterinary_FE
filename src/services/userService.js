@@ -89,6 +89,30 @@ export const getMyFish = createAsyncThunk(
   }
 );
 
+export const updateFishInfo = createAsyncThunk(
+  "fishes/updateFishInfo",
+  async ({ fishId, updateData }, thunkAPI) => {
+    try {
+      const response = await BASE_URL.put(`fishes/${fishId}`, updateData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const deleteMyFish = createAsyncThunk(
+  "fishes/fishId",
+  async (fishId, thunkAPI) => {
+    try {
+      await BASE_URL.delete(`fishes/${fishId}`);
+      return fishId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const bookingAppointment = createAsyncThunk(
   "appointments/create",
   async (appointmentData, thunkAPI) => {

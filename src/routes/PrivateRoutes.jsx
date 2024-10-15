@@ -2,6 +2,7 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import ProtectedRoutes from "./ProtectedRoutes";
+import { element } from "prop-types";
 
 // ADMIN
 const Admin = React.lazy(() => import("../pages/Private/admin/Admin"));
@@ -27,9 +28,11 @@ const MyAppointment = React.lazy(() =>
 const PaymentPage = React.lazy(() =>
   import("../pages/Private/member/myAppointment/paymentPage")
 );
-
 const AddFish = React.lazy(() =>
   import("../pages/Private/member/fish/AddFish")
+);
+const UpdateFish = React.lazy(() =>
+  import("../pages/Private/member/fish/UpdateFish")
 );
 
 // VET
@@ -132,6 +135,16 @@ const PrivateRoutes = [
             <LoadLazy children={<MyFish />} />
           </ProtectedRoutes>
         ),
+        children: [
+          {
+            path: path.UPDATE_FISH,
+            element: (
+              <ProtectedRoutes allowedRoles="USER">
+                <LoadLazy children={<UpdateFish />} />
+              </ProtectedRoutes>
+            ),
+          },
+        ],
       },
 
       {

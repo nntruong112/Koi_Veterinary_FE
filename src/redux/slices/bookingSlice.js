@@ -9,7 +9,7 @@ const bookingSlice = createSlice({
     status: status.IDLE,
     data: {},
     currentStep: 0,
-    error: null, // Thêm state cho lỗi
+    error: null,
   },
 
   reducers: {

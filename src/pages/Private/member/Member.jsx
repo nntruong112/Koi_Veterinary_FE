@@ -10,7 +10,7 @@ const Member = () => {
       <Navbar />
       <div className="flex flex-row gap-5">
         <LeftBar />
-        <main className="w-full px-10 pb-10">
+        <main className="w-full pl-10">
           <Outlet />
         </main>
       </div>

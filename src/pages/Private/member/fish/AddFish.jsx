@@ -49,7 +49,7 @@ const AddFish = () => {
       customerId: userId,
       size: Number(fishInfo.size),
       weight: Number(fishInfo.weight),
-      image: imageUrl, // Thêm URL của hình ảnh vào fishData
+      image: imageUrl,
     };
 
     try {
@@ -79,7 +79,7 @@ const AddFish = () => {
     { label: "Weight", name: "weight", type: "text" },
     { label: "Gender", name: "gender", type: "text" },
     { label: "Color", name: "color", type: "text" },
-    { label: "Image", name: "image", type: "file", required: true }, // Thêm trường input cho hình ảnh
+    { label: "Image", name: "image", type: "file", required: true },
   ];
 
   return (
@@ -102,8 +102,7 @@ const AddFish = () => {
                   name={name}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                   placeholder={`Select ${label.toLowerCase()}`}
-                  onChange={handleImageSelect} // Gọi hàm handleImageSelect cho trường hình ảnh
-                  required={required}
+                  onChange={handleImageSelect}
                 />
               ) : (
                 <input
