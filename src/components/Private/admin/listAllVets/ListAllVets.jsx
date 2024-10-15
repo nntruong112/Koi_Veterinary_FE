@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { unwrapResult } from "@reduxjs/toolkit";
-import { getUserByRole } from "../../../../services/adminService";
+import { getVetByRole } from "../../../../services/userService";
 
-const ListAllUser = () => {
+const ListAllVets = () => {
   const dispatch = useDispatch();
-  const userList =
-    useSelector((state) => state.admin.data?.users?.result) || [];
+  const userList = useSelector((state) => state.users.data?.vets?.result) || [];
+  console.log(userList);
 
   useEffect(() => {
-    const userListAction = dispatch(getUserByRole());
+    const userListAction = dispatch(getVetByRole());
 
     unwrapResult(userListAction);
   }, [dispatch]);
@@ -20,7 +20,7 @@ const ListAllUser = () => {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-y-scroll">
         <thead className="text-lg text-gray-700 uppercase dark:text-gray-400 border-b">
           <tr>
-            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">User Id</th>
+            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Vet Id</th>
             <th className="px-6 py-3">Last Name</th>
             <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
               First Name
@@ -68,4 +68,4 @@ const ListAllUser = () => {
   );
 };
 
-export default ListAllUser;
+export default ListAllVets;

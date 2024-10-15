@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { path } from "../utils/constant";
 
 const ProtectedRoutes = ({ children, allowedRoles }) => {
-  const roles = useSelector((state) => state.users.data?.result?.roles); // Lấy thông tin người dùng từ Redux store
-  console.log(roles);
+  const roles = useSelector((state) => state.users.data?.result?.roles);
 
   // Kiểm tra quyền truy cập
-  const hasAccessRole = roles === allowedRoles; // So sánh trực tiếp
+  const hasAccessRole = roles === allowedRoles;
 
   if (roles && !hasAccessRole) {
     return <Navigate to={path.HOME} replace />;

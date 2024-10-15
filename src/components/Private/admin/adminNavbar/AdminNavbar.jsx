@@ -1,14 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { FaUser } from "react-icons/fa";
-import { GiCirclingFish } from "react-icons/gi";
-import { RiCalendarScheduleFill } from "react-icons/ri";
-import { VscSignOut } from "react-icons/vsc";
-import { AiOutlineClose } from "react-icons/ai";
-import { logout } from "../../../../redux/slices/authSlice";
-import { clearUser } from "../../../../redux/slices/userSlice";
-import { clearPersistedStore } from "../../../../redux/store/store";
+import { useSelector } from "react-redux";
 import { path } from "../../../../utils/constant";
 import { assets } from "../../../../assets/assets";
 
@@ -16,6 +8,32 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const userInfo = useSelector((state) => state.users?.data?.result);
+  const roles = useSelector((state) => state.users.data?.result?.roles);
+
+  const handleClick = () => {
+    switch (roles) {
+      case "ADMIN":
+        navigate(path.ADMIN);
+        break;
+      case "STAFF":
+        navigate(path.STAFF);
+        break;
+      case "VET":
+        navigate(path.VET);
+        break;
+    }
+  };
+
+  const getLabel = () => {
+    switch (roles) {
+      case "ADMIN":
+        return "Admin Panel";
+      case "STAFF":
+        return "Staff Panel";
+      case "VET":
+        return "Vet Panel";
+    }
+  };
 
   return (
     <div className="relative">
@@ -53,15 +71,17 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {userInfo ? (
             <button
-              onClick={() => navigate(path.ADMIN)}
+              onClick={handleClick}
               className="flex items-center justify-center gap-4 p-2 cursor-pointer"
             >
               <img
                 src={userInfo.image || assets.DefaultAvatar}
-                className="w-10 h-10 rounded-full"
+                className="w-12 h-12 rounded-full"
                 alt="Admin Avatar"
               />
-              <span>Admin Panel</span>
+              <span className="border border-black rounded-full p-3 bg-white/10">
+                {getLabel()}
+              </span>
             </button>
           ) : (
             <button

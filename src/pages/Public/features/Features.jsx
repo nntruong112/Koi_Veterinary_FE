@@ -1,16 +1,16 @@
 import React from "react";
-import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { PiUsersThreeFill } from "react-icons/pi";
 import { IoIosNotifications } from "react-icons/io";
 import { IoAccessibility, IoChatbubbles } from "react-icons/io5";
 import { FaPiggyBank } from "react-icons/fa";
+import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 
 const Features = () => {
   return (
     <>
-      <Navbar />
+      <RolesNavbar />
 
       {/* ------------- SECTION 1 ------------ */}
       <section className="text-center py-8 bg-[#f1faff]">

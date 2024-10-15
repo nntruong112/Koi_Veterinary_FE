@@ -1,8 +1,7 @@
 import React from "react";
-import { MdSpaceDashboard } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
-import { IoAddCircle } from "react-icons/io5";
+import { GiConfirmed } from "react-icons/gi";
+import { MdFeedback } from "react-icons/md";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { path } from "../../../../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,14 +11,15 @@ import { clearPersistedStore } from "../../../../redux/store/store";
 import { VscSignOut } from "react-icons/vsc";
 import { assets } from "../../../../assets/assets.js";
 
-const SideBar = () => {
+const StaffSideBar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.users?.data?.result);
 
   const isDashboardActive =
-    location.pathname === path.ADMIN || location.pathname === path.DASHBOARD;
+    location.pathname === path.STAFF ||
+    location.pathname === path.STAFF_PROFILE;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -35,63 +35,33 @@ const SideBar = () => {
           <div className="flex items-center justify-start gap-4 p-2">
             <img
               src={userInfo?.image || assets.DefaultAvatar}
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 rounded-full border border-black"
               alt="Admin Avatar"
             />
-            <span>Admin</span>
+            <span>Staff</span>
           </div>
 
           <hr className="my-2 h-0.5 bg-black dark:bg-gray-700" />
 
           <li>
             <NavLink
-              to={path.ADMIN}
+              to={path.STAFF}
               className={`flex items-center p-2 rounded-lg group ${
                 isDashboardActive
                   ? "text-white bg-blue-500 dark:bg-blue-700"
                   : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
             >
-              <MdSpaceDashboard />
-              <span className="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to={path.USERS}
-              className={({ isActive }) =>
-                `flex items-center p-2 rounded-lg group ${
-                  isActive
-                    ? "text-white bg-blue-500 dark:bg-blue-700"
-                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`
-              }
-            >
-              <FaUser />
-              <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to={path.VETS}
-              className={({ isActive }) =>
-                `flex items-center p-2 rounded-lg group ${
-                  isActive
-                    ? "text-white bg-blue-500 dark:bg-blue-700"
-                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`
-              }
-            >
               <FaUserDoctor />
-              <span className="flex-1 ms-3 whitespace-nowrap">Vets</span>
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Staff Profile
+              </span>
             </NavLink>
           </li>
 
           <li>
             <NavLink
-              to={path.ADD_VET}
+              to={path.BOOKING_CONFIRM}
               className={({ isActive }) =>
                 `flex items-center p-2 rounded-lg group ${
                   isActive
@@ -100,8 +70,28 @@ const SideBar = () => {
                 }`
               }
             >
-              <IoAddCircle />
-              <span className="flex-1 ms-3 whitespace-nowrap">Add New Vet</span>
+              <GiConfirmed />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Booking Confirm
+              </span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={path.ALL_FEEDBACK}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <MdFeedback />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                All Feedback
+              </span>
             </NavLink>
           </li>
 
@@ -120,4 +110,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default StaffSideBar;

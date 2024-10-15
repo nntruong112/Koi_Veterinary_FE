@@ -26,7 +26,7 @@ export const getAllUsers = createAsyncThunk(
 );
 
 export const getVetByRole = createAsyncThunk(
-  "users/role",
+  "users/role/vet",
   async (_, thunkAPI) => {
     try {
       const response = await BASE_URL.get(`users/role/VET`);

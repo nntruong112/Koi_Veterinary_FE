@@ -12,9 +12,12 @@ import {
 } from "../../../redux/slices/bookingSlice";
 import { bookingAppointment } from "../../../services/userService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { path } from "../../../utils/constant";
 
 const Booking = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currentStep = useSelector((state) => state.booking?.currentStep);
   const bookingInfo = useSelector((state) => state.booking.data);
   const customerId = useSelector((state) => state.users.data?.result?.userId);
@@ -46,10 +49,7 @@ const Booking = () => {
     status: "on-going",
   };
 
-  console.log(bookingData);
-
   const handleSubmit = async () => {
-    // Kiểm tra thông tin trước khi gửi
     if (!bookingInfo || !customerId) {
       toast.error("Please complete all required fields!");
       return;
@@ -68,7 +68,6 @@ const Booking = () => {
 
   const handleNext = () => {
     if (currentStep === 0) {
-      // Kiểm tra thông tin ở bước 1 (InfoForm)
       const { appointmentDate, appointmentType, location, fishId } =
         bookingInfo;
       if (!appointmentDate || !appointmentType || !location || !fishId) {
@@ -76,7 +75,6 @@ const Booking = () => {
         return;
       }
     } else if (currentStep === 1) {
-      // Kiểm tra thông tin ở bước 2 (VetForm)
       const { veterinarianId, startTime, endTime } = bookingInfo;
       if (!veterinarianId || !startTime || !endTime) {
         toast.error("Please complete all required fields in this step!");
@@ -100,6 +98,21 @@ const Booking = () => {
   return (
     <>
       <Navbar />
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="text-5xl font-bold mt-5 mb-8 text-[#071e55]">
+          Booking An Appointment
+        </h1>
+        <p className="text-xl font-normal text-[#7c8595]">
+          If you had appointments,
+          <button
+            onClick={() => navigate(`${path.MEMBER}/${path.MY_APPOINTMENT}`)}
+            className="mx-1 rounded-full p-3 hover:text-primary underline decoration-solid"
+          >
+            click here
+          </button>
+          to view appointments
+        </p>
+      </div>
       <div className="flex items-center justify-center mt-8 ml-80">
         <ol className="flex items-center w-full">
           {steps.map((step, index) => (

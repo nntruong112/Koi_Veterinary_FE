@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { assets } from "../../../assets/assets";
+import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 
 const Testimonials = () => {
   return (
     <>
-      <Navbar />
+      <RolesNavbar />
 
       <main className="flex flex-col justify-evenly ">
         <h1 className="text-center text-4xl font-bold mt-8 text-[#071e55]">

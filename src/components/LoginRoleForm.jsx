@@ -92,11 +92,12 @@ const LoginRoleForm = () => {
 
           const roles = userInfo.result.roles;
 
-          if (roles && roles.includes("ADMIN")) {
-            // Hiện thị modal thành công
+          if (
+            roles &&
+            (roles === "ADMIN" || roles === "STAFF" || roles === "VET")
+          ) {
             setShowSuccessModal(true);
 
-            // Chuyển hướng sau 2 giây
             setTimeout(() => {
               navigate(path.ADMIN);
             }, 1000);

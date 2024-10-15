@@ -17,8 +17,8 @@ export const path = {
   DASHBOARD: "dashboard",
   USERS: "users",
   APPOINTMENT: "appointment",
-  ADD_DOCTOR: "add-doctor",
-  DOCTOR: "doctors",
+  ADD_VET: "add-vet",
+  VETS: "vets",
 
   // USER
   MEMBER: "/member",
@@ -29,4 +29,15 @@ export const path = {
   BOOKING: "/booking",
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
+
+  // VET
+  VET: "/vet",
+  VET_PROFILE: "vet-profile",
+  SCHEDULE: "schedule",
+
+  // STAFF
+  STAFF: "/staff",
+  STAFF_PROFILE: "staff-profile",
+  BOOKING_CONFIRM: "booking-confirm",
+  ALL_FEEDBACK: "all-feedback",
 };

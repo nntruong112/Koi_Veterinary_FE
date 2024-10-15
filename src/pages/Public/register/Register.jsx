@@ -1,13 +1,13 @@
 import React from "react";
 import RegisterForm from "../../../components/RegisterForm";
-import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { assets } from "../../../assets/assets";
+import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 
 const Register = () => {
   return (
     <>
-      <Navbar />
+      <RolesNavbar />
       <div className="relative w-full min-h-screen flex justify-center items-center">
         <img
           src={assets.GifLogin}

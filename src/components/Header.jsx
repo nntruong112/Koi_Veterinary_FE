@@ -13,6 +13,9 @@ const Header = () => {
   const bookClick = () => {
     if (role && role === "USER") {
       navigate(path.BOOKING);
+    } else if (role && role === "ADMIN") {
+      navigate(path.LOGIN);
+      toast.warn("Please login by user account to book appointment!");
     } else {
       navigate(path.LOGIN);
       toast.warn("Please login to book appointment with us!");

@@ -1,17 +1,13 @@
 import React from "react";
 import Header from "../../../components/Header";
-import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { assets } from "../../../assets/assets";
-import { useSelector } from "react-redux";
-import AdminNavbar from "../../../components/Private/admin/adminNavbar/AdminNavbar";
+import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 
 const Home = () => {
-  const roles = useSelector((state) => state.users.data?.result?.roles);
-
   return (
     <>
-      {roles === "ADMIN" ? <AdminNavbar /> : <Navbar />}
+      <RolesNavbar />
       <Header />
       <section className="flex justify-normal py-8 bg-[#f5f2f2]">
         <div className="flex items-center flex-col gap-6 text-2xl text-center w-1/2  mb-1 text-[#3d3c3c]">

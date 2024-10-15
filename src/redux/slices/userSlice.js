@@ -82,20 +82,6 @@ const userSlice = createSlice({
       });
 
     builder
-      // get all users
-      .addCase(getAllUsers.pending, (state) => {
-        state.status = status.PENDING;
-      })
-      .addCase(getAllUsers.fulfilled, (state, action) => {
-        state.status = status.SUCCESSFULLY;
-        state.data = action.payload;
-      })
-      .addCase(getAllUsers.rejected, (state, action) => {
-        state.status = status.FAILED;
-        state.error = action.error.message;
-      });
-
-    builder
       // get vet info
       .addCase(getVetByRole.pending, (state) => {
         state.status = status.PENDING;

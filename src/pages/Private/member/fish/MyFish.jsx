@@ -28,9 +28,9 @@ const MyFish = () => {
   const handleFishSelect = (fishId) => {
     setSelectedFishIds((prevSelected) => {
       if (prevSelected.includes(fishId)) {
-        return prevSelected.filter((id) => id !== fishId); // Bỏ chọn nếu đã chọn
+        return prevSelected.filter((id) => id !== fishId);
       }
-      return [...prevSelected, fishId]; // Thêm vào danh sách đã chọn
+      return [...prevSelected, fishId];
     });
   };
 
@@ -82,9 +82,9 @@ const MyFish = () => {
       <div className="grid grid-cols-3 gap-10 py-10">
         {currentFishList.map((fish) => (
           <div
-            key={fish.fishId} // Sử dụng fishId của cá làm key
+            key={fish.fishId}
             className={`flex flex-col items-start border rounded-lg p-4 bg-gray-200 shadow-lg ${
-              selectedFishIds.includes(fish.fishId) ? "border-blue-500" : ""
+              selectedFishIds.includes(fish.fishId) ? "border-primary" : ""
             }`}
           >
             <input
