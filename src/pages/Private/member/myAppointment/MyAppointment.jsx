@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const MyAppointment = () => {
   const [appointments, setAppointments] = useState([]);
@@ -25,7 +26,9 @@ const MyAppointment = () => {
       await axios.put(`http://localhost:8080/appointments/${appointmentId}`, {
         status: "Paid",
       });
-      alert("Payment Successful");
+      alert("Payment Successful"); // Display alert first
+      // Redirect to the payment page with appointmentId
+      Navigate(`/pay/${appointmentId}`);
     } catch (error) {
       console.error("Error making payment:", error);
     }

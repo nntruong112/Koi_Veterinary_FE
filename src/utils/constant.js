@@ -29,4 +29,5 @@ export const path = {
   BOOKING: "/booking",
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
+  PAYMENT_PAGE: "paymentPage",
 };
