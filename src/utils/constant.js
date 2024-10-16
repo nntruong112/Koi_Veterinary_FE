@@ -17,6 +17,9 @@ export const path = {
   DASHBOARD: "dashboard",
   USERS: "users",
   APPOINTMENT: "appointment",
+  ADD_DOCTOR: "add-doctor",
+  DOCTOR: "doctors",
+  HEALTH_RECORD: "health-record",
   ADD_VET: "add-vet",
   VETS: "vets",
 
