@@ -56,6 +56,8 @@ const AllFeedback = React.lazy(() =>
   import("../pages/Private/staff/allFeedback/AllFeedback")
 );
 
+const Chat = React.lazy(() => import("../pages/Private/member/chat/Chat"));
+
 const PrivateRoutes = [
   {
     path: path.ADMIN,
@@ -237,6 +239,11 @@ const PrivateRoutes = [
         ),
       },
     ],
+  },
+
+  {
+    path: path.CHAT,
+    element: <LoadLazy children={<Chat />} />,
   },
 ];
 

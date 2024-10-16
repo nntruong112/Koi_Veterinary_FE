@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { verifyEmail } from "../../../services/authService"; // Import API verifyEmail
 import { useNavigate } from "react-router-dom";
 import { path } from "../../../utils/constant";
-import toast from "react-toastify";
+import { toast } from "react-toastify";
 
 const VerifyEmailModal = ({ isOpen, onClose, email }) => {
   const navigate = useNavigate();

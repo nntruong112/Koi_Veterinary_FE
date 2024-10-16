@@ -97,7 +97,7 @@ const MyFish = () => {
                 className="flex flex-col items-start border rounded-lg p-4 bg-gray-200 shadow-lg"
               >
                 <img
-                  src={fish.image || assets.KoiPool}
+                  src={fish.image || assets.DefaultKoiFish}
                   alt="Fish"
                   className="w-full h-40 object-contain"
                 />

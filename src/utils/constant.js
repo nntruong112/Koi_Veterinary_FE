@@ -30,6 +30,7 @@ export const path = {
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
   UPDATE_FISH: "update-fish",
+  CHAT: "/chat",
 
   // VET
   VET: "/vet",
