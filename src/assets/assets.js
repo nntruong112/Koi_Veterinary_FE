@@ -21,14 +21,11 @@ import koihealth from "./koihealth.jpg";
 import RatingFb from "./Rating-Fb.png";
 import GifLogin from "./koi swim.gif";
 import DefaultAvatar from "./DefaultAvatar.png";
-<<<<<<< HEAD
 import DefaultKoiFish from "./Default-Koi-Fish.png";
-=======
 import Home from "./home.jpg";
 import Diagnostics from "./Diagnostics.png";
 import Procedures from "./Procedures.png";
 import well from "./well.png";
->>>>>>> 03f8ac58c74ff2f248bfd48c602505ed3d328454
 
 export const assets = {
   Logo,

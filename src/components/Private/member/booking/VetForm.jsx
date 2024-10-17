@@ -51,7 +51,15 @@ const VetForm = ({ updateFormData }) => {
     updateFormData({ startTime: time }); // Cập nhật dữ liệu lên cha
   };
 
+  // const handleEndTimeChange = (time) => {
+  //   setEndTime(time);
+  //   updateFormData({ endTime: time }); // Cập nhật dữ liệu lên cha
+  // };
   const handleEndTimeChange = (time) => {
+    if (time === startTime) {
+      alert("End time cannot be the same as start time!");
+      return;
+    }
     setEndTime(time);
     updateFormData({ endTime: time }); // Cập nhật dữ liệu lên cha
   };
