@@ -22,6 +22,7 @@ export const path = {
 
   ADD_VET: "add-vet",
   VETS: "vets",
+  ALL_APPOINTMENT: "all-appointment",
 
   // USER
   MEMBER: "/member",

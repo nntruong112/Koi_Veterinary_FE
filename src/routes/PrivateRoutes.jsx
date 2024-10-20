@@ -2,7 +2,6 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import ProtectedRoutes from "./ProtectedRoutes";
-import { element } from "prop-types";
 
 // ADMIN
 const Admin = React.lazy(() => import("../pages/Private/admin/Admin"));
@@ -10,11 +9,11 @@ const Dashboard = React.lazy(() =>
   import("../pages/Private/admin/dashboard/Dashboard")
 );
 const Users = React.lazy(() => import("../pages/Private/admin/users/Users"));
-const Appointment = React.lazy(() =>
-  import("../pages/Private/admin/appointment/Appointment")
-);
 const AddVet = React.lazy(() => import("../pages/Private/admin/vets/AddVets"));
 const Vets = React.lazy(() => import("../pages/Private/admin/vets/Vets"));
+const AppointmentList = React.lazy(() =>
+  import("../pages/Private/admin/appointmentList/AppointmentList")
+);
 
 // USER
 const Member = React.lazy(() => import("../pages/Private/member/Member"));
@@ -88,14 +87,6 @@ const PrivateRoutes = [
         ),
       },
       {
-        path: path.APPOINTMENT,
-        element: (
-          <ProtectedRoutes allowedRoles="ADMIN">
-            <LoadLazy children={<Appointment />} />
-          </ProtectedRoutes>
-        ),
-      },
-      {
         path: path.ADD_VET,
         element: (
           <ProtectedRoutes allowedRoles="ADMIN">
@@ -108,6 +99,14 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<Vets />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.ALL_APPOINTMENT,
+        element: (
+          <ProtectedRoutes allowedRoles="ADMIN">
+            <LoadLazy children={<AppointmentList />} />
           </ProtectedRoutes>
         ),
       },
@@ -188,6 +187,7 @@ const PrivateRoutes = [
     ],
   },
 
+  //VET
   {
     path: path.VET,
     element: (
@@ -224,6 +224,7 @@ const PrivateRoutes = [
     ],
   },
 
+  //STAFF
   {
     path: path.STAFF,
     element: (

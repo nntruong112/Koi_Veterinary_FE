@@ -82,6 +82,17 @@ const MyFish = () => {
   const currentFishList = fishList.slice(indexOfFirstFish, indexOfLastFish);
   const totalPages = Math.ceil(fishList.length / fishPerPage);
 
+  // Hàm chuyển trang và cuộn lên đầu trang
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Cuộn lên đầu trang
+  };
+
   return (
     <div
       className={`flex ${
@@ -133,7 +144,7 @@ const MyFish = () => {
           {/* Pagination buttons */}
           <div className="flex justify-center items-center gap-4 py-4">
             <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              onClick={goToPreviousPage}
               disabled={currentPage === 1}
               className="flex items-center justify-center px-3 h-8 gap-1 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
@@ -144,9 +155,7 @@ const MyFish = () => {
               Page {currentPage} of {totalPages}
             </span>
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
+              onClick={goToNextPage}
               disabled={currentPage === totalPages}
               className="flex items-center justify-center px-3 h-8 gap-1 text-lg font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >

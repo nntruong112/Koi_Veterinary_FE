@@ -16,23 +16,18 @@ const ListAllUser = () => {
   }, [dispatch]);
 
   return (
-    <div className="relative overflow-x-auto sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-y-scroll">
-        <thead className="text-lg text-gray-700 uppercase dark:text-gray-400 border-b">
+    <div className="relative overflow-x-auto rounded-2xl p-5">
+      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-fixed">
+        <thead className="text-sm text-gray-700 uppercase dark:text-gray-400 border-b bg-gray-200">
           <tr>
-            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">User Id</th>
-            <th className="px-6 py-3">Last Name</th>
-            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-              First Name
-            </th>
-            <th className="px-6 py-3">Username</th>
-            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Email</th>
-            <th className="px-6 py-3">Phone</th>
-            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Address</th>
-            <th className="px-6 py-3">Gender</th>
-            <th className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-              Date Of Birth
-            </th>
+            <th className="px-3 py-3 rounded-tl-2xl">Last Name</th>
+            <th className="px-3 py-3">First Name</th>
+            <th className="px-3 py-3">Username</th>
+            <th className="px-3 py-3 w-64">Email</th>
+            <th className="px-3 py-3 w-56">Address</th>
+            <th className="px-3 py-3">Phone</th>
+            <th className="px-3 py-3">Gender</th>
+            <th className="px-3 py-3 rounded-tr-2xl">Birthday</th>
           </tr>
         </thead>
         <tbody>
@@ -41,23 +36,18 @@ const ListAllUser = () => {
               key={user.userId}
               className="border-b border-gray-200 dark:border-gray-700"
             >
-              <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                {user.userId}
-              </td>
-              <td className="px-6 py-4">{user.lastname}</td>
-              <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                {user.firstname}
-              </td>
-              <td className="px-6 py-4">{user.username}</td>
-              <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+              <td className="px-3 py-4 whitespace-normal">{user.lastname}</td>
+              <td className="px-3 py-4 whitespace-normal">{user.firstname}</td>
+              <td className="px-3 py-4 whitespace-normal">{user.username}</td>
+              <td className="px-3 py-4 whitespace-normal break-words">
                 {user.email}
               </td>
-              <td className="px-6 py-4">{user.phone}</td>
-              <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+              <td className="px-3 py-4 whitespace-normal break-words">
                 {user.address}
               </td>
-              <td className="px-6 py-4">{user.gender}</td>
-              <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+              <td className="px-3 py-4 whitespace-normal">{user.phone}</td>
+              <td className="px-3 py-4 whitespace-normal">{user.gender}</td>
+              <td className="px-3 py-4 whitespace-normal">
                 {user.dateOfBirth}
               </td>
             </tr>

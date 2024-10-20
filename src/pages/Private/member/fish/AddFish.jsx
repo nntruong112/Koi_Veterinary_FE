@@ -88,8 +88,8 @@ const AddFish = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-screen w-full gap-4">
-      <p className="text-3xl font-bold mt-4">Add your a new fish</p>
+    <div className="flex flex-col items-center min-h-screen w-full gap-4 mb-5 pr-4">
+      <p className="text-3xl font-bold mt-4">Add a new fish</p>
 
       <form
         onSubmit={handleAddFish}

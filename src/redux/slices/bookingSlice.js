@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import * as status from "../../utils/status";
 import { bookingAppointment } from "../../services/userService";
 
@@ -7,7 +6,10 @@ const bookingSlice = createSlice({
   name: "booking",
   initialState: {
     status: status.IDLE,
-    data: {},
+    data: {
+      bookingData: {},
+      invoiceData: {},
+    },
     currentStep: 0,
     error: null,
   },
@@ -15,25 +17,44 @@ const bookingSlice = createSlice({
   reducers: {
     updateBookingData: (state, action) => {
       state.status = status.SUCCESSFULLY;
-      // Cập nhật các field mới vào `data`
-      state.data = { ...state.data, ...action.payload };
+      // Cập nhật các field mới vào booking data
+      state.data = {
+        ...state.data,
+        bookingData: {
+          ...state.data.bookingData,
+          ...action.payload,
+        },
+      };
     },
 
     resetBookingData: (state) => {
       state.status = status.SUCCESSFULLY;
-      state.data = {};
-      state.currentStep = 0; // Reset current step
+      state.data = {
+        bookingData: {},
+        invoiceData: {},
+      };
+      state.currentStep = 0;
     },
 
     setCurrentStep: (state, action) => {
       state.status = status.SUCCESSFULLY;
       state.currentStep = action.payload;
     },
+
+    updateInvoiceData: (state, action) => {
+      state.status = status.SUCCESSFULLY;
+      state.data = {
+        ...state.data,
+        invoiceData: {
+          ...state.data.invoiceData,
+          ...action.payload,
+        },
+      };
+    },
   },
 
   extraReducers: (builder) => {
     builder
-
       .addCase(bookingAppointment.pending, (state) => {
         state.status = status.PENDING;
       })
@@ -48,7 +69,11 @@ const bookingSlice = createSlice({
   },
 });
 
-export const { updateBookingData, resetBookingData, setCurrentStep } =
-  bookingSlice.actions;
+export const {
+  updateBookingData,
+  resetBookingData,
+  setCurrentStep,
+  updateInvoiceData,
+} = bookingSlice.actions;
 
 export default bookingSlice.reducer;

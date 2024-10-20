@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../utils/status";
-import { createVetAccount, getUserByRole } from "../../services/adminService";
+import {
+  createVetAccount,
+  getAllAppointmentType,
+  getUserByRole,
+} from "../../services/adminService";
 
 const adminSlice = createSlice({
   name: "admin",
@@ -39,6 +43,21 @@ const adminSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(createVetAccount.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get all appointment type
+      .addCase(getAllAppointmentType.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getAllAppointmentType.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, typeList: action.payload };
+      })
+      .addCase(getAllAppointmentType.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });
