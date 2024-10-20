@@ -19,7 +19,7 @@ export const path = {
   APPOINTMENT: "appointment",
   ADD_DOCTOR: "add-doctor",
   DOCTOR: "doctors",
-  HEALTH_RECORD: "health-record",
+
   ADD_VET: "add-vet",
   VETS: "vets",
   ALL_APPOINTMENT: "all-appointment",
@@ -41,6 +41,7 @@ export const path = {
   VET: "/vet",
   VET_PROFILE: "vet-profile",
   SCHEDULE: "schedule",
+  HEALTH_RECORD: "health-record",
 
   // STAFF
   STAFF: "/staff",

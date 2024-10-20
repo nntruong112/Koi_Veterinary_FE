@@ -70,7 +70,23 @@ const VetSideBar = () => {
               <span className="flex-1 ms-3 whitespace-nowrap">Schedule</span>
             </NavLink>
           </li>
-
+          <li>
+            <NavLink
+              to={path.HEALTH_RECORD}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <RiCalendarScheduleFill />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Health Record
+              </span>
+            </NavLink>
+          </li>
           <hr className="my-2 h-0.5 bg-black dark:bg-gray-700" />
 
           <li
