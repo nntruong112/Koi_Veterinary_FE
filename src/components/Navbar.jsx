@@ -11,6 +11,7 @@ import { GiCirclingFish } from "react-icons/gi";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import { VscSignOut } from "react-icons/vsc";
 import { AiOutlineClose } from "react-icons/ai";
+import { resetBookingData } from "../redux/slices/bookingSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Navbar = () => {
     setMenuOpen(false);
     dispatch(logout());
     dispatch(clearUser());
+    dispatch(resetBookingData());
     clearPersistedStore();
     navigate(path.HOME);
   };
@@ -65,7 +67,7 @@ const Navbar = () => {
             <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
           </NavLink>
           <NavLink to={path.FEATURES}>
-            <li className="py-1">FAP</li>
+            <li className="py-1">FAQ</li>
             <hr className="border-none outline-none h-0.5 bg-black w-3/5 m-auto hidden" />
           </NavLink>
           <NavLink to={path.WORK}>

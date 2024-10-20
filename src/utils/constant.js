@@ -22,6 +22,7 @@ export const path = {
   HEALTH_RECORD: "health-record",
   ADD_VET: "add-vet",
   VETS: "vets",
+  ALL_APPOINTMENT: "all-appointment",
 
   // USER
   MEMBER: "/member",

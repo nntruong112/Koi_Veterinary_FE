@@ -53,7 +53,7 @@ const SideBar = () => {
               }`}
             >
               <MdSpaceDashboard />
-              <span className="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
+              <span className="flex-1 ms-3 whitespace-nowrap">Overview</span>
             </NavLink>
           </li>
 
@@ -102,6 +102,24 @@ const SideBar = () => {
             >
               <IoAddCircle />
               <span className="flex-1 ms-3 whitespace-nowrap">Add New Vet</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={path.ALL_APPOINTMENT}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <IoAddCircle />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Appointments
+              </span>
             </NavLink>
           </li>
 

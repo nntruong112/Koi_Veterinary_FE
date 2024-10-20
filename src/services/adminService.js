@@ -24,3 +24,15 @@ export const createVetAccount = createAsyncThunk(
     }
   }
 );
+
+export const getAllAppointmentType = createAsyncThunk(
+  "appointment_types",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("appointment_types");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
