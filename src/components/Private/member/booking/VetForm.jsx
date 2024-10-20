@@ -280,7 +280,7 @@ const VetForm = ({ updateFormData }) => {
 
             <div className="flex items-center justify-between">
               <p>Payment method:</p>
-              <p>{formatPrice(invoiceData.paymentMethod)}</p>
+              <p>{invoiceData.paymentMethod || "none"}</p>
             </div>
           </div>
         </section>

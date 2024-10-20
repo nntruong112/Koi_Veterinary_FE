@@ -133,6 +133,7 @@ import { getAppointmentByUserId } from "../../../../services/userService";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { path } from "../../../../utils/constant";
 import { FaArrowLeft } from "react-icons/fa6";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const MyAppointment = () => {
   const dispatch = useDispatch();
@@ -140,6 +141,7 @@ const MyAppointment = () => {
 
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isOutletOpen, setIsOutletOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const appointmentList =
     useSelector((state) => state.users.data.myAppointment) || [];
 
@@ -156,10 +158,12 @@ const MyAppointment = () => {
   const handleBackToList = () => {
     setSelectedAppointment(null);
     setIsOutletOpen(false);
+    setIsLoading(false);
   };
 
   const handlePay = () => {
     setIsOutletOpen(true);
+    setIsLoading(true);
     navigate(path.PAYMENT_PAGE, {
       state: { appointmentId: selectedAppointment.appointmentId },
     });
@@ -214,7 +218,11 @@ const MyAppointment = () => {
               onClick={handlePay}
               className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
             >
-              Pay
+              {isLoading ? (
+                <ClipLoader size={20} color={"#ffffff"} loading={isLoading} />
+              ) : (
+                "Pay"
+              )}
             </button>
             <button className="mt-4 mr-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-600/80">
               Cancel
@@ -238,6 +246,7 @@ const MyAppointment = () => {
             <th className="px-3 py-3">Start time</th>
             <th className="px-3 py-3">End time</th>
             <th className="px-3 py-3">Status</th>
+            <th className="px-3 py-3">Payment status</th>
             <th className="px-3 py-3 rounded-tr-2xl">Action</th>
           </tr>
         </thead>
@@ -264,6 +273,11 @@ const MyAppointment = () => {
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.status}
+              </td>
+              <td className="px-3 py-4 whitespace-normal">
+                <p className="bg-red-500 w-16 rounded-full text-white p-2 text-sm text-center ml-5">
+                  {appointment.paymentStatus}
+                </p>
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 <button

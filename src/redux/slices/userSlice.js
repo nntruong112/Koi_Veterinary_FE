@@ -79,7 +79,7 @@ const userSlice = createSlice({
       });
 
     builder
-      // update user info
+      // update user fish
       .addCase(updateFishInfo.pending, (state) => {
         state.status = status.PENDING;
       })

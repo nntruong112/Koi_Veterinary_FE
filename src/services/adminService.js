@@ -25,11 +25,39 @@ export const createVetAccount = createAsyncThunk(
   }
 );
 
+export const getAllAppointment = createAsyncThunk(
+  "appointments/getAllAppointment",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("appointments");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const getAllAppointmentType = createAsyncThunk(
-  "appointment_types",
+  "appointment_types/getAllAppointmentType",
   async (_, thunkAPI) => {
     try {
       const response = await BASE_URL.get("appointment_types");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const confirmAppointment = createAsyncThunk(
+  "appointments/confirm",
+  async ({ appointmentId, updateData }, thunkAPI) => {
+    try {
+      const response = await BASE_URL.put(
+        `appointments/${appointmentId}`,
+        updateData
+      );
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data);

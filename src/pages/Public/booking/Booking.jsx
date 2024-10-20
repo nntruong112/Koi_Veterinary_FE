@@ -6,21 +6,16 @@ import InfoForm from "../../../components/Private/member/booking/InfoForm";
 import VetForm from "../../../components/Private/member/booking/VetForm";
 import ConfirmForm from "../../../components/Private/member/booking/ConfirmForm";
 import {
-  resetBookingData,
   setCurrentStep,
   updateBookingData,
 } from "../../../redux/slices/bookingSlice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { path } from "../../../utils/constant";
 import { TiTick } from "react-icons/ti";
-import PayForm from "../../../components/Private/member/booking/PayForm";
 
 const Booking = () => {
   const dispatch = useDispatch();
   const currentStep = useSelector((state) => state.booking?.currentStep);
   const bookingInfo = useSelector((state) => state.booking.data.bookingData);
-  const customerId = useSelector((state) => state.users.data?.result?.userId);
 
   const steps = [
     {

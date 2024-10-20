@@ -9,7 +9,7 @@ const Staff = () => {
       <AdminNavbar />
       <div className="flex flex-row gap-1">
         <StaffSideBar />
-        <main className="w-full px-10 pb-10">
+        <main className="w-full px-5">
           <Outlet />
         </main>
       </div>

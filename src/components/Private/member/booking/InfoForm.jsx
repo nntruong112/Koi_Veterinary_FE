@@ -89,7 +89,7 @@ const InfoForm = ({ updateFormData }) => {
           <select
             name="appointmentType"
             onChange={handleTypeChange}
-            value={formData.appointmentTypeId || ""}
+            value={formData.appointmentTypeId}
             className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option selected disabled>
@@ -100,7 +100,7 @@ const InfoForm = ({ updateFormData }) => {
                 key={type.appointmentTypeId}
                 value={type.appointmentTypeId}
               >
-                {type.appointmentService}
+                {type.appointmentService || ""}
               </option>
             ))}
           </select>
