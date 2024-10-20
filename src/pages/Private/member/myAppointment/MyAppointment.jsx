@@ -260,7 +260,7 @@ const MyAppointment = () => {
                 {appointment.appointmentDate}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.appointmentType.appointmentService}
+                {appointment.appointmentType?.appointmentService}
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.location}
