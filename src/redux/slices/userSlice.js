@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addNewFish,
   deleteMyFish,
+  getAppointmentByUserId,
+  getAppointmentType,
   getInfoByToken,
   getMyFish,
   getVetByRole,
@@ -134,6 +136,36 @@ const userSlice = createSlice({
         state.data = { ...state.data, vets: action.payload };
       })
       .addCase(getVetByRole.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get my appointment
+      .addCase(getAppointmentByUserId.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getAppointmentByUserId.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, myAppointment: action.payload };
+      })
+      .addCase(getAppointmentByUserId.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get appointment type
+      .addCase(getAppointmentType.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getAppointmentType.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, appointmentType: action.payload };
+      })
+      .addCase(getAppointmentType.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

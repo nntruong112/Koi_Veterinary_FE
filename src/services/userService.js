@@ -113,14 +113,32 @@ export const deleteMyFish = createAsyncThunk(
   }
 );
 
-export const bookingAppointment = createAsyncThunk(
-  "appointments/create",
-  async (appointmentData, thunkAPI) => {
+export const getAppointmentByUserId = createAsyncThunk(
+  "appointments/getAppointmentByUserId",
+  async (_, thunkAPI) => {
     try {
-      const response = await BASE_URL.post(
-        "appointments/create",
-        appointmentData
+      const state = thunkAPI.getState();
+      const userId = state.users.data?.result?.userId;
+
+      if (!userId) {
+        throw new Error("User id is undefined");
+      }
+
+      const response = await BASE_URL.get(
+        `appointments/belonged_to_customerId/${userId}`
       );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getAppointmentType = createAsyncThunk(
+  "appointment_types",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("appointment_types");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

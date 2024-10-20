@@ -10,7 +10,6 @@ import {
   setCurrentStep,
   updateBookingData,
 } from "../../../redux/slices/bookingSlice";
-import { bookingAppointment } from "../../../services/userService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { path } from "../../../utils/constant";
@@ -40,34 +39,17 @@ const Booking = () => {
         <VetForm updateFormData={(data) => dispatch(updateBookingData(data))} />
       ),
     },
+    // {
+    //   step: 3,
+    //   title: "Choose",
+    //   content: <PayForm />,
+    // },
     {
       step: 3,
-      title: "Payment",
-      content: <PayForm />,
-    },
-    {
-      step: 4,
       title: "Confirm",
-      content: <ConfirmForm appointmentData={bookingInfo} />,
+      content: <ConfirmForm />,
     },
   ];
-
-  const bookingData = {
-    ...bookingInfo,
-    customerId: customerId,
-    status: "on-going",
-  };
-
-  const handleSubmit = async () => {
-    try {
-      await dispatch(bookingAppointment(bookingData));
-      dispatch(resetBookingData());
-      toast.success("Booking added successfully");
-    } catch (error) {
-      console.error("Error when submit: ", error);
-      toast.error(error.response?.data?.message || "Booking failed!");
-    }
-  };
 
   const handleNext = () => {
     if (currentStep === 0) {
@@ -87,8 +69,6 @@ const Booking = () => {
 
     if (currentStep < steps.length - 1) {
       dispatch(setCurrentStep(currentStep + 1));
-    } else {
-      handleSubmit();
     }
   };
 
@@ -154,7 +134,7 @@ const Booking = () => {
               onClick={handleNext}
               className="bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition"
             >
-              {currentStep === steps.length - 1 ? "Submit" : "Next"}
+              Next
             </button>
           </div>
         </div>

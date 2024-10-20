@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../utils/status";
-import { bookingAppointment } from "../../services/userService";
+import {
+  bookingAppointment,
+  createInvoice,
+  createPayment,
+} from "../../services/bookingService";
 
 const bookingSlice = createSlice({
   name: "booking",
@@ -63,6 +67,32 @@ const bookingSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(bookingAppointment.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(createPayment.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(createPayment.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, paymentData: action.payload };
+      })
+      .addCase(createPayment.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(createInvoice.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(createInvoice.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = action.payload;
+      })
+      .addCase(createInvoice.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

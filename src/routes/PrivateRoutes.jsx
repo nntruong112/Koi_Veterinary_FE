@@ -2,6 +2,7 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import ProtectedRoutes from "./ProtectedRoutes";
+import { element } from "prop-types";
 
 // ADMIN
 const Admin = React.lazy(() => import("../pages/Private/admin/Admin"));
@@ -163,14 +164,17 @@ const PrivateRoutes = [
             <LoadLazy children={<MyAppointment />} />
           </ProtectedRoutes>
         ),
-      },
-      {
-        path: path.PAYMENT_PAGE,
-        element: (
-          <ProtectedRoutes allowedRoles="USER">
-            <LoadLazy children={<PaymentPage />} />
-          </ProtectedRoutes>
-        ),
+
+        children: [
+          {
+            path: path.PAYMENT_PAGE,
+            element: (
+              <ProtectedRoutes allowedRoles="USER">
+                <LoadLazy children={<PaymentPage />} />
+              </ProtectedRoutes>
+            ),
+          },
+        ],
       },
 
       {

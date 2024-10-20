@@ -63,12 +63,13 @@ const InfoForm = ({ updateFormData }) => {
     return pricePerKm * distance;
   };
 
-  const calculateTotalPrice = () => {
+  useEffect(() => {
     const servicePrice = invoiceData.price || 0;
     const movingFee = invoiceData.movingPrice || 0;
     const total = servicePrice + movingFee;
-    return formatPrice(total);
-  };
+
+    dispatch(updateInvoiceData({ total }));
+  }, [invoiceData.price, invoiceData.movingPrice, dispatch]);
 
   return (
     <div className="flex flex-row min-h-[50vh] w-full gap-8 mt-5">
@@ -128,7 +129,7 @@ const InfoForm = ({ updateFormData }) => {
               label="Distance (km)"
               name="distance"
               type="number"
-              value={invoiceData.newDistance || 0}
+              value={invoiceData.newDistance || distance}
               onChange={handleDistanceChange}
             />
           </div>
@@ -183,10 +184,10 @@ const InfoForm = ({ updateFormData }) => {
               {formData.location || "none"}
             </div>
 
-            <div className="flex flex-col items-start gap-1">
+            {/* <div className="flex flex-col items-start gap-1">
               <p className="text-gray-500 font-semibold text-base">Your fish</p>
               {formData.fish || "none"}
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -208,7 +209,7 @@ const InfoForm = ({ updateFormData }) => {
 
         <div className="flex items-center justify-between text-lg font-bold text-primary">
           <h1>Total price:</h1>
-          <p>{formatPrice(calculateTotalPrice())}</p>
+          <p>{formatPrice(invoiceData.total)}</p>
         </div>
       </form>
     </div>
