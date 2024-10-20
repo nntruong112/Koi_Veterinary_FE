@@ -52,8 +52,8 @@ const VetForm = ({ updateFormData }) => {
     updateFormData({ startTime: time });
   };
 
-  const handleEndTimeChange = (event) => {
-    const time = event.target.value;
+  const handleEndTimeChange = (e) => {
+    const time = e.target.value;
     setEndTime(time);
     updateFormData({ endTime: time });
   };

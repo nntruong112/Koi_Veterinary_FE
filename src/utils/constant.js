@@ -30,6 +30,7 @@ export const path = {
   FISH: "my-fish",
   MY_APPOINTMENT: "my-appointment",
   ADD_FISH: "add-fish",
+  PAYMENT_PAGE: "payment-page",
   BOOKING: "/booking",
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
