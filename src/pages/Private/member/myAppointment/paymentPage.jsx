@@ -104,8 +104,6 @@ const PaymentPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [notFound, setNotFound] = useState(false);
-  const [error, setError] = useState(null);
-  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const fetchInvoice = async () => {
@@ -165,7 +163,6 @@ const PaymentPage = () => {
 
   if (error) {
     return <p className="text-center text-red-500 font-semibold">{error}</p>;
-    return <p className="text-center text-red-500 font-semibold">{error}</p>;
   }
 
   return (
@@ -199,38 +196,30 @@ const PaymentPage = () => {
         <h3 className="text-xl font-medium text-gray-700 mb-4">
           Choose Payment Method
         </h3>
-      <div className="payment-method mb-10">
-        <h3 className="text-xl font-medium text-gray-700 mb-4">
-          Choose Payment Method
-        </h3>
-        <select
-          value={paymentMethod}
-          onChange={(e) => setPaymentMethod(e.target.value)}
-          className="p-4 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-600"
-          className="p-4 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          <option value="">Select Payment Method</option>
-          <option value="credit_card">Credit Card</option>
-          <option value="paypal">PayPal</option>
-          <option value="bank_transfer">Bank Transfer</option>
-        </select>
-      </div>
+        <div className="payment-method mb-10">
+          <h3 className="text-xl font-medium text-gray-700 mb-4">
+            Choose Payment Method
+          </h3>
+          <select
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            className="p-4 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-600"
+          >
+            <option value="">Select Payment Method</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="bank_transfer">Bank Transfer</option>
+          </select>
+        </div>
 
-      <div className="flex justify-end">
-        <button
-          onClick={handlePayment}
-          className="py-4 px-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-300 ease-in-out"
-        >
-          Pay Now
-        </button>
-      </div>
-      <div className="flex justify-end">
-        <button
-          onClick={handlePayment}
-          className="py-4 px-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-300 ease-in-out"
-        >
-          Pay Now
-        </button>
+        <div className="flex justify-end">
+          <button
+            onClick={handlePayment}
+            className="py-4 px-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-300 ease-in-out"
+          >
+            Pay Now
+          </button>
+        </div>
       </div>
     </div>
   );
