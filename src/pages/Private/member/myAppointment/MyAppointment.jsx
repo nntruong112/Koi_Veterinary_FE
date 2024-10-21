@@ -144,6 +144,7 @@ const MyAppointment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const appointmentList =
     useSelector((state) => state.users.data.myAppointment) || [];
+  console.log(appointmentList);
 
   useEffect(() => {
     const appointmentListAction = dispatch(getAppointmentByUserId());
@@ -165,7 +166,7 @@ const MyAppointment = () => {
     setIsOutletOpen(true);
     setIsLoading(true);
     navigate(path.PAYMENT_PAGE, {
-      state: { appointmentId: selectedAppointment.appointmentId },
+      state: { selectedAppointment: selectedAppointment },
     });
   };
 
@@ -260,7 +261,7 @@ const MyAppointment = () => {
                 {appointment.appointmentDate}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.appointmentType?.appointmentService}
+                {appointment.appointmentType.appointmentService}
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.location}

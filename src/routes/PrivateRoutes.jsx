@@ -28,6 +28,9 @@ const MyAppointment = React.lazy(() =>
 const PaymentPage = React.lazy(() =>
   import("../pages/Private/member/myAppointment/paymentPage")
 );
+// const Payment = React.lazy(() =>
+//   import("../pages/Private/member/myAppointment/PaymentServices")
+// );
 const AddFish = React.lazy(() =>
   import("../pages/Private/member/fish/AddFish")
 );
