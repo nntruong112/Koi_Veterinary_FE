@@ -3,7 +3,7 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import { assets } from "../../../assets/assets";
 import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
-
+import Marquee from "react-fast-marquee";
 const Home = () => {
   return (
     <>
@@ -53,6 +53,9 @@ const Home = () => {
           <img src={assets.RatingFb} />
         </div>
       </section>
+      <Marquee>
+        <img className="w-full h-28 py-3" src={assets.teemo} />
+      </Marquee>
       <Footer />
     </>
   );
