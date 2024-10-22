@@ -26,6 +26,8 @@ import Home from "./home.jpg";
 import Diagnostics from "./Diagnostics.png";
 import Procedures from "./Procedures.png";
 import well from "./well.png";
+import fpt from "./fpt.jpg";
+import teemo from "./teemo.gif";
 
 export const assets = {
   Logo,
@@ -49,6 +51,8 @@ export const assets = {
   Vet8,
   Vet9,
   Vet10,
+  fpt,
+  teemo,
   GifLogin,
   DefaultAvatar,
   DefaultKoiFish,
