@@ -28,7 +28,7 @@ const VetSideBar = () => {
 
   return (
     <aside className="flex flex-col gap-2 w-64 min-h-screen">
-      <div className="h-full px-3 py-4 bg-gray-100 dark:bg-gray-800">
+      <div className="h-full px-3 py-4 bg-white dark:bg-gray-800 border">
         <ul className="space-y-2 font-semibold text-xl">
           <div className="flex items-center justify-start gap-4 p-2">
             <img
@@ -36,7 +36,7 @@ const VetSideBar = () => {
               className="w-10 h-10 rounded-full border border-black"
               alt="Admin Avatar"
             />
-            <span>Admin</span>
+            <span>Veterinarian</span>
           </div>
 
           <hr className="my-2 h-0.5 bg-black dark:bg-gray-700" />
@@ -51,7 +51,9 @@ const VetSideBar = () => {
               }`}
             >
               <FaUserDoctor />
-              <span className="flex-1 ms-3 whitespace-nowrap">Vet Profile</span>
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Veterinarian Profile
+              </span>
             </NavLink>
           </li>
 
@@ -70,6 +72,7 @@ const VetSideBar = () => {
               <span className="flex-1 ms-3 whitespace-nowrap">Schedule</span>
             </NavLink>
           </li>
+
           <li>
             <NavLink
               to={path.HEALTH_RECORD}
@@ -87,6 +90,25 @@ const VetSideBar = () => {
               </span>
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to={path.DO_APPOINTMENT}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <RiCalendarScheduleFill />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Appointments
+              </span>
+            </NavLink>
+          </li>
+
           <hr className="my-2 h-0.5 bg-black dark:bg-gray-700" />
 
           <li

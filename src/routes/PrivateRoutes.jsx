@@ -52,6 +52,9 @@ const Schedule = React.lazy(() =>
 const HealthRecordPage = React.lazy(() =>
   import("../pages/Private/vet/healthRecord/healthRecord")
 );
+const ToDoAppointment = React.lazy(() =>
+  import("../pages/Private/vet/toDoAppointment/ToDoAppointment")
+);
 
 // STAFF
 const Staff = React.lazy(() => import("../pages/Private/staff/Staff"));
@@ -236,6 +239,14 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="VET">
             <LoadLazy children={<HealthRecordPage />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.DO_APPOINTMENT,
+        element: (
+          <ProtectedRoutes allowedRoles="VET">
+            <LoadLazy children={<ToDoAppointment />} />
           </ProtectedRoutes>
         ),
       },

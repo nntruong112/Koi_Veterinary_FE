@@ -92,10 +92,10 @@ const VetProfile = () => {
   };
 
   return (
-    <div className="flex flex-row min-h-screen w-full gap-8 mt-5">
+    <div className="flex flex-row min-h-screen w-full gap-8 p-8">
       <form
         onSubmit={handleSubmit}
-        className="w-full h-1/2 p-10 rounded-3xl shadow-lg border-gray-200 border"
+        className="w-full h-1/2 p-10 rounded-3xl bg-white shadow-lg border-gray-200 border"
       >
         <div className="flex flex-col gap-4">
           <div className="flex flex-col items-center justify-center gap-2">

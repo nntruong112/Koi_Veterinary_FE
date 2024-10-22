@@ -9,7 +9,7 @@ const Admin = () => {
       <AdminNavbar />
       <div className="flex flex-row">
         <SideBar />
-        <main className="w-full">
+        <main className="w-full bg-gray-100">
           <Outlet />
         </main>
       </div>

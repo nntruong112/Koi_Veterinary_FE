@@ -7,9 +7,9 @@ const Staff = () => {
   return (
     <>
       <AdminNavbar />
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row">
         <StaffSideBar />
-        <main className="w-full px-5">
+        <main className="w-full bg-gray-100">
           <Outlet />
         </main>
       </div>

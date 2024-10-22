@@ -92,10 +92,10 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="flex flex-row min-h-screen w-full gap-8 my-5 pr-4">
+    <div className="flex flex-row min-h-screen w-full gap-8 p-8">
       <form
         onSubmit={handleSubmit}
-        className="w-full h-1/2 p-10 rounded-3xl shadow-lg border-gray-200 border"
+        className="w-full h-1/2 p-10 rounded-3xl shadow-lg border-gray-200 border bg-white"
       >
         <div className="flex flex-col gap-4">
           <div className="flex flex-col items-center justify-center gap-2">

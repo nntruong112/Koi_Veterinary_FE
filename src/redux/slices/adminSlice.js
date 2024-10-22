@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../utils/status";
 import {
   confirmAppointment,
+  countByRole,
   createVetAccount,
   getAllAppointment,
   getAllAppointmentType,
@@ -17,7 +18,16 @@ const adminSlice = createSlice({
     error: null,
   },
 
-  reducers: {},
+  reducers: {
+    saveCount: (state, action) => {
+      state.status = status.SUCCESSFULLY;
+
+      state.data.countByRole = {
+        ...state.data.countByRole,
+        ...action.payload,
+      };
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -109,7 +119,24 @@ const adminSlice = createSlice({
         state.status = status.FAILED;
         state.error = action.error.message;
       });
+
+    builder
+      // count by role
+      .addCase(countByRole.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(countByRole.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+
+        state.data = { ...state.data, countByRole: action.payload };
+      })
+      .addCase(countByRole.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
   },
 });
+
+export const { saveCount } = adminSlice.actions;
 
 export default adminSlice.reducer;

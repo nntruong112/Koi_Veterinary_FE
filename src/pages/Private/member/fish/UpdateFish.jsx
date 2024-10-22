@@ -124,7 +124,7 @@ const UpdateFish = () => {
     <div className="flex flex-col items-center min-h-screen w-[35%] gap-4">
       <form
         onSubmit={handleUpdateFish}
-        className="w-full h-full px-10 py-4  shadow-lg border-gray-200 border"
+        className="w-full h-full px-10 py-4 bg-white  shadow-lg border-gray-200 border"
       >
         <div className="flex justify-end">
           <button

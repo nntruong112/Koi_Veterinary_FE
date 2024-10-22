@@ -24,25 +24,13 @@ const ColoredDateCellWrapper = ({ children }) =>
 const Schedule = ({ localizer = mLocalizer, ...props }) => {
   const dispatch = useDispatch();
 
-  const veterinarianId = useSelector((state) => state.users.data.result.userId);
   const scheduleOfVet = useSelector((state) => state.admin.data.scheduleOfAll);
-  console.log(scheduleOfVet);
 
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const action = await dispatch(getScheduleByVetId(veterinarianId));
-    //     unwrapResult(action);
-    //   } catch (error) {
-    //     console.error("Failed to fetch schedule:", error);
-    //   }
-    // };
-
-    // fetchData();
     dispatch(getAllSchedule());
-  }, [dispatch, veterinarianId]);
+  }, [dispatch]);
 
   // Hàm để xác định ngày có sẵn từ dữ liệu lịch trình
   const getAvailableDays = (schedule) => {
@@ -64,14 +52,21 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
           (item) => item.availableDate === currentDay
         );
 
-        const title = scheduleForDate ? (
-          <div>
-            <p>Start time: {scheduleForDate.startTime}</p>
-            <p>End time: {scheduleForDate.endTime}</p>
-          </div>
-        ) : (
-          "No Title"
-        );
+        // Hiển thị mỗi username và giờ làm việc
+        const title =
+          scheduleForDate && scheduleForDate.veterinarianProfiles ? (
+            <div>
+              {scheduleForDate.veterinarianProfiles.map((vet) => (
+                <div key={vet.username} className="pb-2">
+                  <strong>{vet.username}</strong> <br />
+                  {/* <span>Start time: {scheduleForDate.startTime}</span> <br />
+                  <span>End time: {scheduleForDate.endTime}</span> */}
+                </div>
+              ))}
+            </div>
+          ) : (
+            "No veterinarian available"
+          );
 
         events.push({
           title: title,
@@ -97,26 +92,42 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
     }
   }, [scheduleOfVet]);
 
+  // Tùy chỉnh cách hiển thị event trong chế độ "agenda" để hiển thị giờ
+  const EventAgenda = ({ event }) => {
+    const startTime = event.resource.startTime;
+    const endTime = event.resource.endTime;
+
+    return (
+      <div>
+        {startTime && endTime ? (
+          <span>{`${startTime} - ${endTime}`}</span>
+        ) : (
+          "No Time Available"
+        )}
+      </div>
+    );
+  };
+
   const { components, defaultDate, max, views } = useMemo(
     () => ({
       components: {
         timeSlotWrapper: ColoredDateCellWrapper,
+        agenda: {
+          time: EventAgenda,
+        },
       },
       defaultDate: new Date(),
       max: moment().endOf("day").toDate(),
-      views: Object.keys(Views).map((k) => Views[k]),
+      views: ["month", "agenda"], // Chỉ để lại view "month" và "agenda"
     }),
     []
   );
 
   return (
     <Fragment>
-      <div
-        className="h-full w-full p-5 bg-white rounded-lg shadow-md"
-        {...props}
-      >
+      <div className="h-full w-full p-5 bg-white" {...props}>
         <h1 className="text-2xl font-bold mb-6 text-gray-800">Schedule</h1>
-        <div className="h-[600px] w-full">
+        <div className="h-screen w-full">
           <Calendar
             components={components}
             defaultDate={defaultDate}
