@@ -97,7 +97,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
   const location = useLocation();
-  const appointmentId = location.state?.appointmentId;
+  const appointment = location.state?.selectedAppointment;
+  const appointmentId = appointment.appointmentId;
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("");

@@ -85,21 +85,6 @@ const VetForm = ({ updateFormData }) => {
     dispatch(updateInvoiceData({ paymentMethod: selectedPaymentMethod }));
   };
 
-  const handlePaymentSubmission = async () => {
-    const paymentData = {
-      amountValue: invoiceData.total,
-      userId: formData.customerId,
-    };
-    try {
-      const paymentResponse = await dispatch(createPayment(paymentData));
-      unwrapResult(paymentResponse);
-      toast.success("Payment successful!");
-    } catch (error) {
-      console.error("Payment failed:", error);
-      toast.error("Payment unsuccessful!");
-    }
-  };
-
   return (
     <div className="flex flex-row min-h-[50vh] w-full gap-8 mt-5">
       <form className="w-3/4 mx-auto p-6 bg-white rounded-3xl shadow-lg mb-4">
@@ -190,7 +175,7 @@ const VetForm = ({ updateFormData }) => {
         </div>
 
         {/* Payment Method Selection */}
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <h1 className="text-2xl font-semibold mb-4">Choose Payment Method</h1>
 
           <div className="mb-4">
@@ -215,7 +200,7 @@ const VetForm = ({ updateFormData }) => {
               <p>Please pay at the time of appointment.</p>
             </div>
           )}
-        </div>
+        </div> */}
       </form>
 
       {/* RIGHT SIDE */}
@@ -278,10 +263,10 @@ const VetForm = ({ updateFormData }) => {
               <p>{formatPrice(invoiceData.movingPrice)}</p>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <p>Payment method:</p>
               <p>{invoiceData.paymentMethod || "none"}</p>
-            </div>
+            </div> */}
           </div>
         </section>
 

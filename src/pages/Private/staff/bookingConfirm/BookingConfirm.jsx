@@ -96,12 +96,16 @@ const BookingConfirm = () => {
                 </p>
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                <button
-                  onClick={() => handleConfirm(appointment)}
-                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                >
-                  Confirm
-                </button>
+                {appointment.status === "Confirmed" ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={() => handleConfirm(appointment)}
+                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                  >
+                    Confirm
+                  </button>
+                )}
               </td>
             </tr>
           ))}

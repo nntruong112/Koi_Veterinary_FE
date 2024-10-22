@@ -165,7 +165,7 @@ const MyAppointment = () => {
     setIsOutletOpen(true);
     setIsLoading(true);
     navigate(path.PAYMENT_PAGE, {
-      state: { appointmentId: selectedAppointment.appointmentId },
+      state: { selectedAppointment: selectedAppointment },
     });
   };
 

@@ -15,6 +15,9 @@ const Vets = React.lazy(() => import("../pages/Private/admin/vets/Vets"));
 const AppointmentList = React.lazy(() =>
   import("../pages/Private/admin/appointmentList/AppointmentList")
 );
+const AllSchedule = React.lazy(() =>
+  import("../pages/Private/admin/allSchedule/AllSchedule")
+);
 
 // USER
 const Member = React.lazy(() => import("../pages/Private/member/Member"));
@@ -108,6 +111,14 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="ADMIN">
             <LoadLazy children={<AppointmentList />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.ALL_SCHEDULE,
+        element: (
+          <ProtectedRoutes allowedRoles="ADMIN">
+            <LoadLazy children={<AllSchedule />} />
           </ProtectedRoutes>
         ),
       },

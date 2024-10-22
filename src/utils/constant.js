@@ -19,7 +19,7 @@ export const path = {
   APPOINTMENT: "appointment",
   ADD_DOCTOR: "add-doctor",
   DOCTOR: "doctors",
-
+  ALL_SCHEDULE: "all-schedule",
   ADD_VET: "add-vet",
   VETS: "vets",
   ALL_APPOINTMENT: "all-appointment",

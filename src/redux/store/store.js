@@ -3,6 +3,7 @@ import authReducer from "../slices/authSlice";
 import userReducer from "../slices/userSlice";
 import bookingReducer from "../slices/bookingSlice";
 import adminReducer from "../slices/adminSlice";
+import vetReducer from "../slices/vetSlice";
 
 import {
   persistStore,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   users: userReducer,
   booking: bookingReducer,
   admin: adminReducer,
+  vet: vetReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
