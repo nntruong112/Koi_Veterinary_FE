@@ -144,6 +144,7 @@ const MyAppointment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const appointmentList =
     useSelector((state) => state.users.data.myAppointment) || [];
+  console.log(appointmentList);
 
   useEffect(() => {
     const appointmentListAction = dispatch(getAppointmentByUserId());
