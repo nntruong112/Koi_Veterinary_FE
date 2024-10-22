@@ -29,7 +29,11 @@ const PaymentPage = () => {
           }
         );
         setPaymentResponse(res.data);
+        // Lưu paymentId vào localStorage
+        localStorage.setItem("paymentId", res.data.paymentId);
         setPaymentUrl(res.data.paymentUrl);
+
+        // setPaymentUrl(`${res.data.paymentUrl}?paymentId=${res.data.paymentId}`);
       } catch (error) {
         console.error("Error creating payment:", error);
         setPaymentResponse({ message: "Error creating payment" });
@@ -41,16 +45,38 @@ const PaymentPage = () => {
     createPayment();
   }, [appointmentId, userId]);
 
-  // Handle VNPay redirect and check payment status
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const responseCode = params.get("vnp_ResponseCode");
-    const paymentId = params.get("vnp_TxnRef"); // Get payment ID from the URL params
+  // Fetch payment details
+  const fetchPaymentDetails = async () => {
+    let paymentId;
 
-    if (responseCode === "00" && paymentId) {
-      navigate(`/my-appointment/payment-details/${paymentId}`); // Redirect to Payment Details Page with paymentId
-    } else if (responseCode) {
-      setError("Payment failed or canceled");
+    // Kiểm tra nếu có paymentResponse, nếu không thì lấy paymentId từ localStorage
+    if (paymentResponse && paymentResponse.paymentId) {
+      paymentId = paymentResponse.paymentId;
+    } else {
+      paymentId = localStorage.getItem("paymentId");
+    }
+
+    if (!paymentId) {
+      setError("No payment ID found.");
+      return;
+    }
+
+    setIsLoading(true); // Start loading
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/payments/get-payment/${paymentResponse?.paymentId}`,
+        {
+          params: { appointmentId },
+        }
+      );
+      setPaymentDetails(res.data);
+      setError(null); // Clear any previous errors
+    } catch (error) {
+      console.error("Error fetching payment:", error);
+      setPaymentDetails(null);
+      setError("Failed to fetch payment details. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   }, [navigate]);
 

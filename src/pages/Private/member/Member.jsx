@@ -8,9 +8,9 @@ const Member = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-row gap-5">
+      <div className="flex flex-row">
         <LeftBar />
-        <main className="w-full">
+        <main className="w-full bg-gray-100">
           <Outlet />
         </main>
       </div>

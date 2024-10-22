@@ -88,12 +88,12 @@ const AddFish = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-screen w-full gap-4 mb-5 pr-4">
-      <p className="text-3xl font-bold mt-4">Add a new fish</p>
+    <div className="flex flex-col items-center min-h-screen w-full gap-4 p-6">
+      <p className="text-3xl font-bold">Add a new fish</p>
 
       <form
         onSubmit={handleAddFish}
-        className="w-full h-full p-10 rounded-3xl shadow-lg border-gray-200 border"
+        className="w-full h-full p-10 rounded-3xl shadow-lg bg-white border-gray-200 border"
       >
         <div className="flex flex-col gap-4">
           {fields.map(({ label, name, type, required }) => (

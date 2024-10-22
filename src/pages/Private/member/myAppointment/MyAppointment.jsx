@@ -181,7 +181,7 @@ const MyAppointment = () => {
           <h2 className="text-2xl font-semibold mb-4">Appointment Details</h2>
         </div>
 
-        <div className="flex items-center justify-between w-full border rounded-xl p-5 shadow-lg  text-lg">
+        <div className="flex items-center justify-between w-full border rounded-xl p-5 shadow-lg  text-lg bg-white">
           <div className="grid grid-cols-3 gap-y-5 w-4/5">
             <p>
               <strong>Date: </strong> {selectedAppointment.appointmentDate}
@@ -238,7 +238,7 @@ const MyAppointment = () => {
 
   return (
     <div className="relative overflow-x-auto rounded-2xl p-5">
-      <table className="w-full text-base text-left text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-auto">
+      <table className="w-full text-base text-left bg-white text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-auto">
         <thead className="text-sm text-gray-700 uppercase dark:text-gray-400 border-b bg-gray-200">
           <tr>
             <th className="px-3 py-3 rounded-tl-2xl">Date</th>

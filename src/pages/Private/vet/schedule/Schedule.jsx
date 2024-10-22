@@ -31,17 +31,15 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const action = await dispatch(getScheduleByVetId(veterinarianId));
-    //     unwrapResult(action);
-    //   } catch (error) {
-    //     console.error("Failed to fetch schedule:", error);
-    //   }
-    // };
+    const fetchData = async () => {
+      try {
+        await dispatch(getScheduleByVetId(veterinarianId));
+      } catch (error) {
+        console.error("Failed to fetch schedule:", error);
+      }
+    };
 
-    // fetchData();
-    dispatch(getScheduleByVetId(veterinarianId));
+    fetchData();
   }, [dispatch, veterinarianId]);
 
   // Hàm để xác định ngày có sẵn từ dữ liệu lịch trình

@@ -27,7 +27,7 @@ const BookingConfirm = () => {
       startTime: appointment.startTime,
       endTime: appointment.endTime,
       paymentStatus: appointment.paymentStatus,
-      status: "Confirmed",
+      status: "Approved",
     };
 
     try {
@@ -47,9 +47,37 @@ const BookingConfirm = () => {
     }
   };
 
+  const handleSendToVet = async (appointment) => {
+    const updateData = {
+      appointmentDate: appointment.appointmentDate,
+      appointmentTypeId: appointment.appointmentTypeId,
+      location: appointment.location,
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      paymentStatus: appointment.paymentStatus,
+      status: "In service",
+    };
+
+    try {
+      await dispatch(
+        confirmAppointment({
+          appointmentId: appointment.appointmentId,
+          updateData: updateData,
+        })
+      );
+
+      toast.success("Send this appointment successfully");
+
+      dispatch(getAllAppointment());
+    } catch (error) {
+      console.log("Error while updating", error);
+      toast.error("Send to vet fail!");
+    }
+  };
+
   return (
     <div className="relative overflow-x-auto rounded-2xl p-5">
-      <table className="w-full text-base text-left text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-auto">
+      <table className="w-full text-base text-left bg-white text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-auto">
         <thead className="text-sm text-gray-700 uppercase dark:text-gray-400 border-b bg-gray-200">
           <tr>
             <th className="px-3 py-3 rounded-tl-2xl">Date</th>
@@ -96,7 +124,14 @@ const BookingConfirm = () => {
                 </p>
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.status === "Confirmed" ? (
+                {appointment.status === "Approved" ? (
+                  <button
+                    onClick={() => handleSendToVet(appointment)}
+                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                  >
+                    Send to vet
+                  </button>
+                ) : appointment.status === "In service" ? (
                   ""
                 ) : (
                   <button

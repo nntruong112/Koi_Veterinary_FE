@@ -7,9 +7,9 @@ const Vet = () => {
   return (
     <>
       <AdminNavbar />
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row">
         <VetSideBar />
-        <main className="w-full px-10 pb-10">
+        <main className="w-full bg-gray-100">
           <Outlet />
         </main>
       </div>

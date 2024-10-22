@@ -9,7 +9,7 @@ import { IoAddCircle } from "react-icons/io5";
 const LeftBar = () => {
   return (
     <aside className="flex flex-col gap-2 w-64 min-h-screen">
-      <div className="h-full px-3 py-4 bg-gray-100 dark:bg-gray-800">
+      <div className="h-full px-3 py-4 bg-white dark:bg-gray-800 border">
         <ul className="space-y-2 font-semibold text-xl">
           <li>
             <NavLink

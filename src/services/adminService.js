@@ -76,3 +76,17 @@ export const getAllSchedule = createAsyncThunk(
     }
   }
 );
+
+export const countByRole = createAsyncThunk(
+  "users/countByRole",
+  async (role, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("users/countByRole", {
+        params: { role },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);

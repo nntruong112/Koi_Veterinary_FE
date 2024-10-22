@@ -44,6 +44,7 @@ export const path = {
   VET_PROFILE: "vet-profile",
   SCHEDULE: "schedule",
   HEALTH_RECORD: "health-record",
+  DO_APPOINTMENT: "do-appointment",
 
   // STAFF
   STAFF: "/staff",
