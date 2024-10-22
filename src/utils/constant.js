@@ -31,6 +31,8 @@ export const path = {
   MY_APPOINTMENT: "my-appointment",
   ADD_FISH: "add-fish",
   PAYMENT_PAGE: "payment-page",
+  PAYMENT_DETAILS: "payment-details",
+
   BOOKING: "/booking",
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
@@ -48,5 +50,4 @@ export const path = {
   STAFF_PROFILE: "staff-profile",
   BOOKING_CONFIRM: "booking-confirm",
   ALL_FEEDBACK: "all-feedback",
-  PAYMENT_PAGE: "paymentPage",
 };
