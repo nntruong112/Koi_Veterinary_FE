@@ -148,7 +148,11 @@ const PaymentPage = () => {
           }
         );
         setPaymentResponse(res.data);
+        // Lưu paymentId vào localStorage
+        localStorage.setItem("paymentId", res.data.paymentId);
         setPaymentUrl(res.data.paymentUrl);
+
+        // setPaymentUrl(`${res.data.paymentUrl}?paymentId=${res.data.paymentId}`);
       } catch (error) {
         console.error("Error creating payment:", error);
         setPaymentResponse({ message: "Error creating payment" });
@@ -162,12 +166,23 @@ const PaymentPage = () => {
 
   // Fetch payment details
   const fetchPaymentDetails = async () => {
-    if (!paymentResponse) return; // Ensure paymentResponse is available
+    let paymentId;
+
+    // Kiểm tra nếu có paymentResponse, nếu không thì lấy paymentId từ localStorage
+    if (paymentResponse && paymentResponse.paymentId) {
+      paymentId = paymentResponse.paymentId;
+    } else {
+      paymentId = localStorage.getItem("paymentId");
+    }
+
+    if (!paymentId) {
+      setError("No payment ID found.");
+      return;
+    }
+
     setIsLoading(true); // Start loading
     try {
-      const res = await axios.get(
-        `http://localhost:8080/payments/get-payment/${paymentResponse.paymentId}`
-      );
+      const res = await axios.get(`BASE_URL/payments/get-payment/${paymentId}`);
       setPaymentDetails(res.data);
       setError(null); // Clear any previous errors
     } catch (error) {
