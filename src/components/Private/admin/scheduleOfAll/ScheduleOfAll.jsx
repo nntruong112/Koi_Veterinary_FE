@@ -8,9 +8,9 @@ import {
   momentLocalizer,
 } from "react-big-calendar";
 import { useDispatch, useSelector } from "react-redux";
-import { getScheduleByVetId } from "../../../../services/vetService";
+
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Import CSS của react-big-calendar
-import { unwrapResult } from "@reduxjs/toolkit";
+import { getAllSchedule } from "../../../../services/adminService";
 
 const mLocalizer = momentLocalizer(moment);
 
@@ -25,7 +25,7 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
   const dispatch = useDispatch();
 
   const veterinarianId = useSelector((state) => state.users.data.result.userId);
-  const scheduleOfVet = useSelector((state) => state.vet.data);
+  const scheduleOfVet = useSelector((state) => state.admin.data.scheduleOfAll);
   console.log(scheduleOfVet);
 
   const [events, setEvents] = useState([]);
@@ -41,7 +41,7 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
     // };
 
     // fetchData();
-    dispatch(getScheduleByVetId(veterinarianId));
+    dispatch(getAllSchedule());
   }, [dispatch, veterinarianId]);
 
   // Hàm để xác định ngày có sẵn từ dữ liệu lịch trình
@@ -56,7 +56,7 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
     const endDate = moment().year(year).endOf("year");
 
     for (let m = startDate; m.isBefore(endDate); m.add(1, "days")) {
-      const currentDay = m.format("dddd"); // Lấy tên ngày hiện tại (ví dụ: "Monday", "Tuesday", ...)
+      const currentDay = m.format("dddd");
 
       if (availableDays.includes(currentDay)) {
         // Tìm lịch trình tương ứng với ngày hiện tại

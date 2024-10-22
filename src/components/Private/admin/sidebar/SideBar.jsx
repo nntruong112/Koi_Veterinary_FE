@@ -3,6 +3,8 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { IoAddCircle } from "react-icons/io5";
+import { RiCalendarScheduleFill } from "react-icons/ri";
+import { GrSchedule } from "react-icons/gr";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { path } from "../../../../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,10 +118,26 @@ const SideBar = () => {
                 }`
               }
             >
-              <IoAddCircle />
+              <RiCalendarScheduleFill />
               <span className="flex-1 ms-3 whitespace-nowrap">
                 Appointments
               </span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={path.ALL_SCHEDULE}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <GrSchedule />
+              <span className="flex-1 ms-3 whitespace-nowrap">Schedule</span>
             </NavLink>
           </li>
 

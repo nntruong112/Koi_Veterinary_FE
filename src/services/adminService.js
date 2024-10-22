@@ -64,3 +64,15 @@ export const confirmAppointment = createAsyncThunk(
     }
   }
 );
+
+export const getAllSchedule = createAsyncThunk(
+  "veterinarian_schedules/getAllSchedule",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("veterinarian_schedules");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);

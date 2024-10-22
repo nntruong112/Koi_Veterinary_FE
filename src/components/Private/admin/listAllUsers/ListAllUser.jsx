@@ -27,7 +27,7 @@ const ListAllUser = () => {
             <th className="px-3 py-3 w-56">Address</th>
             <th className="px-3 py-3">Phone</th>
             <th className="px-3 py-3">Gender</th>
-            <th className="px-3 py-3 rounded-tr-2xl">Birthday</th>
+            <th className="px-3 py-3 rounded-tr-2xl">Date of birth</th>
           </tr>
         </thead>
         <tbody>

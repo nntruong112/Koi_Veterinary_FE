@@ -5,6 +5,7 @@ import {
   createVetAccount,
   getAllAppointment,
   getAllAppointmentType,
+  getAllSchedule,
   getUserByRole,
 } from "../../services/adminService";
 
@@ -80,7 +81,7 @@ const adminSlice = createSlice({
       });
 
     builder
-      // update user info
+      // confirm appointment
       .addCase(confirmAppointment.pending, (state) => {
         state.status = status.PENDING;
       })
@@ -90,6 +91,21 @@ const adminSlice = createSlice({
         state.data = { ...state.data, confirmAppointment: action.payload };
       })
       .addCase(confirmAppointment.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // confirm appointment
+      .addCase(getAllSchedule.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(getAllSchedule.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+
+        state.data = { ...state.data, scheduleOfAll: action.payload };
+      })
+      .addCase(getAllSchedule.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

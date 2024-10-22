@@ -5,7 +5,6 @@ import { GiCirclingFish } from "react-icons/gi";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
-import { IoMdBackspace } from "react-icons/io";
 
 const LeftBar = () => {
   return (
