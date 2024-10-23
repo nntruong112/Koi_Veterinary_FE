@@ -31,7 +31,7 @@ export const path = {
   MY_APPOINTMENT: "my-appointment",
   ADD_FISH: "add-fish",
   PAYMENT_PAGE: "payment-page",
-  PAYMENT_DETAILS: "payment-details",
+  PAYMENT_DETAILS: "payment-details/:paymentId",
 
   BOOKING: "/booking",
   INFO: "/info/:vetId",
