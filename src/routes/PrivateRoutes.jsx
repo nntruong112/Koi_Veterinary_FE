@@ -32,7 +32,7 @@ const PaymentPage = React.lazy(() =>
   import("../pages/Private/member/myAppointment/paymentPage")
 );
 const PaymentDetailsPage = React.lazy(() =>
-  import("../pages/Private/member/myAppointment/PaymentServices")
+  import("../pages/Private/member/myAppointment/PaymentDetails")
 );
 const AddFish = React.lazy(() =>
   import("../pages/Private/member/fish/AddFish")
@@ -176,7 +176,14 @@ const PrivateRoutes = [
           },
         ],
       },
-
+      {
+        path: path.PAYMENT_DETAILS,
+        element: (
+          <ProtectedRoutes allowedRoles="USER">
+            <LoadLazy children={<PaymentDetailsPage />} />
+          </ProtectedRoutes>
+        ),
+      },
       {
         path: path.MY_APPOINTMENT,
         element: (
@@ -191,14 +198,6 @@ const PrivateRoutes = [
             element: (
               <ProtectedRoutes allowedRoles="USER">
                 <LoadLazy children={<PaymentPage />} />
-              </ProtectedRoutes>
-            ),
-          },
-          {
-            path: path.PAYMENT_DETAILS,
-            element: (
-              <ProtectedRoutes allowedRoles="USER">
-                <LoadLazy children={<PaymentDetailsPage />} />
               </ProtectedRoutes>
             ),
           },

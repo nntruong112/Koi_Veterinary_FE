@@ -174,6 +174,13 @@ const MyAppointment = () => {
       state: { selectedAppointment: selectedAppointment },
     });
   };
+  const handlePayDetails = () => {
+    setIsOutletOpen(true);
+    setIsLoading(true);
+    navigate(path.PAYMENT_DETAILS, {
+      state: { selectedAppointment: selectedAppointment },
+    });
+  };
 
   if (selectedAppointment) {
     return (
@@ -292,6 +299,12 @@ const MyAppointment = () => {
                   className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
                 >
                   View detail
+                </button>
+                <button
+                  onClick={() => handlePayDetails(appointment)}
+                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                >
+                  View pay detail
                 </button>
               </td>
             </tr>
