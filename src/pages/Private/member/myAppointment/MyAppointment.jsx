@@ -134,17 +134,22 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { path } from "../../../../utils/constant";
 import { FaArrowLeft } from "react-icons/fa6";
 import ClipLoader from "react-spinners/ClipLoader";
+import {
+  clearSelectedAppointment,
+  setSelectedAppointment,
+} from "../../../../redux/slices/userSlice";
 
 const MyAppointment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const selectedAppointment = useSelector(
+    (state) => state.users.data.selectedAppointment
+  );
   const [isOutletOpen, setIsOutletOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const appointmentList =
     useSelector((state) => state.users.data.myAppointment) || [];
-  console.log(appointmentList);
 
   useEffect(() => {
     const appointmentListAction = dispatch(getAppointmentByUserId());
@@ -152,12 +157,12 @@ const MyAppointment = () => {
   }, [dispatch]);
 
   const handleViewDetail = (appointment) => {
-    setSelectedAppointment(appointment);
+    dispatch(setSelectedAppointment(appointment));
     setIsOutletOpen(false);
   };
 
   const handleBackToList = () => {
-    setSelectedAppointment(null);
+    dispatch(clearSelectedAppointment());
     setIsOutletOpen(false);
     setIsLoading(false);
   };
@@ -188,7 +193,7 @@ const MyAppointment = () => {
             </p>
             <p>
               <strong>Service: </strong>
-              {selectedAppointment.appointmentType.appointmentService}
+              {selectedAppointment.appointmentType?.appointmentService}
             </p>
             <p>
               <strong>Location: </strong> {selectedAppointment.location}
@@ -211,6 +216,7 @@ const MyAppointment = () => {
             </p>
             <p>
               <strong>Payment status: </strong>
+              {selectedAppointment?.paymentStatus}
             </p>
           </div>
 
@@ -261,7 +267,7 @@ const MyAppointment = () => {
                 {appointment.appointmentDate}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.appointmentType.appointmentService}
+                {appointment?.appointmentType?.appointmentService}
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.location}

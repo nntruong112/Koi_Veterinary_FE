@@ -9,11 +9,10 @@ import { saveCount } from "../../../../redux/slices/adminSlice";
 const SummaryCard = () => {
   const dispatch = useDispatch();
 
-  const count = useSelector((state) => state.admin.data.countByRole);
+  const count = useSelector((state) => state.admin.data?.countByRole) || 0;
 
   useEffect(() => {
     const fetchData = async () => {
-      // Dispatch các action bất đồng bộ
       const userCount = await dispatch(countByRole("USER"));
       const vetCount = await dispatch(countByRole("VET"));
       const staffCount = await dispatch(countByRole("STAFF"));
@@ -37,7 +36,7 @@ const SummaryCard = () => {
           <p>Total users</p>
         </div>
         <div className="text-center">
-          <strong className="text-2xl "> {count.USER}</strong>
+          <strong className="text-2xl "> {count?.USER}</strong>
         </div>
       </div>
 
@@ -47,7 +46,7 @@ const SummaryCard = () => {
           <p>Total vets</p>
         </div>
         <div className="text-center">
-          <strong className="text-2xl "> {count.VET}</strong>
+          <strong className="text-2xl "> {count?.VET}</strong>
         </div>
       </div>
 
@@ -57,7 +56,7 @@ const SummaryCard = () => {
           <p>Total staffs</p>
         </div>
         <div className="text-center">
-          <strong className="text-2xl "> {count.STAFF}</strong>
+          <strong className="text-2xl "> {count?.STAFF}</strong>
         </div>
       </div>
 

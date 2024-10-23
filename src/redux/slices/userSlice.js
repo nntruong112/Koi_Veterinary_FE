@@ -32,6 +32,14 @@ const userSlice = createSlice({
     clearFishUpdateData: (state) => {
       state.data.fishUpdateData = null;
     },
+
+    setSelectedAppointment: (state, action) => {
+      state.data = { ...state.data, selectedAppointment: action.payload };
+    },
+
+    clearSelectedAppointment: (state) => {
+      state.data.selectedAppointment = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -172,7 +180,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearUser, setFishUpdateData, clearFishUpdateData } =
-  userSlice.actions;
+export const {
+  clearUser,
+  setFishUpdateData,
+  clearFishUpdateData,
+  setSelectedAppointment,
+  clearSelectedAppointment,
+} = userSlice.actions;
 
 export default userSlice.reducer;

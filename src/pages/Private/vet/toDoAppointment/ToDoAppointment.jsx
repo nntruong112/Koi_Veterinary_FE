@@ -13,7 +13,6 @@ const ToDoAppointment = () => {
   const selectedAppointment = useSelector(
     (state) => state.vet.selectedAppointment
   );
-  console.log(selectedAppointment);
 
   const vetId = useSelector((state) => state.users.data.result.userId);
   const toDoAppointmentList =
