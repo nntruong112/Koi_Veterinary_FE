@@ -28,6 +28,20 @@ const PaymentDetailsPage = () => {
     fetchPayment();
   }, [paymentId]);
 
+  const formatDate = (dateString) => {
+    // Lấy năm, tháng, ngày, giờ, phút, giây từ chuỗi
+    const year = parseInt(dateString.substring(0, 4), 10);
+    const month = parseInt(dateString.substring(4, 6), 10) - 1; // Tháng bắt đầu từ 0
+    const day = parseInt(dateString.substring(6, 8), 10);
+    const hours = parseInt(dateString.substring(8, 10), 10);
+    const minutes = parseInt(dateString.substring(10, 12), 10);
+    const seconds = parseInt(dateString.substring(12, 14), 10);
+
+    // Tạo đối tượng Date
+    const date = new Date(year, month, day, hours, minutes, seconds);
+    return date.toLocaleString("vi-VN"); // Định dạng theo phong cách Việt Nam
+  };
+
   if (loading) {
     return <div>Đang tải...</div>;
   }
@@ -41,10 +55,10 @@ const PaymentDetailsPage = () => {
   }
 
   return (
-    <div className="pt-44 ">
-      <div className="max-w-xl mx-auto p-6  bg-white border-2 border-gray-200 rounded-lg shadow-lg">
+    <div className="pt-44">
+      <div className="max-w-xl mx-auto p-6 bg-white border-2 border-gray-200 rounded-lg shadow-lg">
         <div className="flex justify-center">
-          <img src={assets.tick} className="w-28 h-28" />
+          <img src={assets.tick} className="w-28 h-28" alt="Tick" />
         </div>
         <div className="mb-6 text-center">
           <h2 className="text-3xl font-bold text-gray-800">PAYMENT INVOICE</h2>
@@ -73,10 +87,10 @@ const PaymentDetailsPage = () => {
             Order Details
           </h3>
           <p className="text-gray-700">
-            <strong>Amount:</strong> {payment.amountValue} VND
+            <strong>Amount:</strong> {payment.amountValue.toLocaleString()} VND
           </p>
           <p className="text-gray-700">
-            <strong>Payment Date:</strong> {payment.vnp_PayDate}
+            <strong>Payment Date:</strong> {formatDate(payment.vnp_PayDate)}
           </p>
           <p className="text-gray-700">
             <strong>Order Type:</strong> {payment.orderType}
@@ -88,7 +102,7 @@ const PaymentDetailsPage = () => {
         <div className="text-right">
           <h3 className="text-lg font-semibold text-gray-800">Total</h3>
           <p className="text-2xl font-bold text-gray-900">
-            {payment.amountValue} VND
+            {payment.amountValue.toLocaleString()} VND
           </p>
         </div>
 
