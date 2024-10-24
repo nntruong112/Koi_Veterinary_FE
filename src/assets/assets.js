@@ -28,6 +28,7 @@ import Procedures from "./Procedures.png";
 import well from "./well.png";
 import fpt from "./fpt.jpg";
 import teemo from "./teemo.gif";
+import tick from "./tick.png";
 
 export const assets = {
   Logo,
@@ -52,6 +53,7 @@ export const assets = {
   Vet9,
   Vet10,
   fpt,
+  tick,
   teemo,
   GifLogin,
   DefaultAvatar,

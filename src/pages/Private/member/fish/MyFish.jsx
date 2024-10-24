@@ -60,6 +60,10 @@ const MyFish = () => {
     navigate(path.UPDATE_FISH);
   };
 
+  const handleViewHealthRecords = (fishId) => {
+    navigate(path.HEALTH_RECORD, { state: { fishId } });
+  };
+
   // Xác nhận delete
   const handleConfirmDelete = () => {
     if (selectedFishId) {
@@ -135,6 +139,12 @@ const MyFish = () => {
                   >
                     Delete
                     <MdDelete />
+                  </button>
+                  <button
+                    onClick={() => handleViewHealthRecords(fish.fishId)}
+                    className="mt-4 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-500/80 text-white rounded-full p-2"
+                  >
+                    View Health Records
                   </button>
                 </div>
               </div>
