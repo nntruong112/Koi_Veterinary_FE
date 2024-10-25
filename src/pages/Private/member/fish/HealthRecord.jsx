@@ -9,9 +9,7 @@ const HealthRecordPage = () => {
   const [error, setError] = useState("");
 
   // Fetching veterinarianId from Redux store
-  const veterinarianId = useSelector(
-    (state) => state.users.data.result.veterinarianId
-  );
+  const veterinarianId = useSelector((state) => state.users.data.result.userId);
 
   const location = useLocation();
   const fishId = location.state?.fishId; // Get fishId from state
@@ -56,9 +54,7 @@ const HealthRecordPage = () => {
             <th className="border border-gray-300 px-4 py-2">Creation Date</th>
             <th className="border border-gray-300 px-4 py-2">Diagnosis</th>
             <th className="border border-gray-300 px-4 py-2">Treatment</th>
-            <th className="border border-gray-300 px-4 py-2">
-              Veterinarian ID
-            </th>
+            <th className="border border-gray-300 px-4 py-2">Veterinarian</th>
           </tr>
         </thead>
         <tbody>
@@ -77,7 +73,7 @@ const HealthRecordPage = () => {
                 {record.treatment}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {record.user?.veterinarianId || veterinarianId}
+                {record.veterinarianId?.username || "Unknown"}
               </td>
             </tr>
           ))}

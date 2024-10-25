@@ -73,7 +73,7 @@ const PaymentDetailsPage = () => {
             Payment Information
           </h3>
           <p className="text-gray-700">
-            <strong>Payment ID:</strong> {payment.paymentId}
+            <strong>Payment ID:</strong> {payment.vnp_TxnRef}
           </p>
           <p className="text-gray-700">
             <strong>Email:</strong> {payment.email}
