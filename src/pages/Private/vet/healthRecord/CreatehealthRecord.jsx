@@ -156,9 +156,9 @@ const CreateHealthRecord = () => {
 
   const token = useSelector((state) => state.auth.data?.token);
 
-  // Fetch danh sách fishId
+  // Fetch fish species and customer username
   useEffect(() => {
-    const fetchFishIds = async () => {
+    const fetchFishDetails = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8080/appointments/belonged_to_vetId/${vetId}`,
@@ -168,16 +168,20 @@ const CreateHealthRecord = () => {
             },
           }
         );
-        const fishIds = response.data.map(
-          (appointment) => appointment.fish.fishId
-        );
-        setFishList(fishIds); // Lưu danh sách fishId vào state
+
+        const fishDetails = response.data.map((appointment) => ({
+          fishId: appointment.fish.fishId,
+          species: appointment.fish.species,
+          customerUsername: appointment.customer.username,
+        }));
+
+        setFishList(fishDetails); // Save fish details with species and username
       } catch (err) {
         setError("Failed to fetch fish list for appointments.");
       }
     };
 
-    fetchFishIds();
+    fetchFishDetails();
   }, [vetId, token]);
 
   const handleSubmit = async (e) => {
@@ -195,8 +199,8 @@ const CreateHealthRecord = () => {
         {
           healthRecordId: null,
           createdDate: new Date().toISOString().split("T")[0],
-          diagnosis: diagnosis,
-          treatment: treatment,
+          diagnosis,
+          treatment,
           fishId: selectedFishId,
           veterinarianId: vetId,
         },
@@ -226,17 +230,17 @@ const CreateHealthRecord = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-medium mb-2">Select Fish ID:</label>
+          <label className="block font-medium mb-2">Select Fish:</label>
           <select
             className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={selectedFishId}
             onChange={(e) => setSelectedFishId(e.target.value)}
             required
           >
-            <option value="">-- Select Fish ID --</option>
-            {fishList.map((fishId) => (
-              <option key={fishId} value={fishId}>
-                {fishId}
+            <option value="">-- Select Fish to Create--</option>
+            {fishList.map((fish) => (
+              <option key={fish.fishId} value={fish.fishId}>
+                {fish.species} - owned by {fish.customerUsername}
               </option>
             ))}
           </select>
