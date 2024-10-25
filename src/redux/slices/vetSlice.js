@@ -22,6 +22,10 @@ const vetSlice = createSlice({
     clearSelectedAppointment: (state) => {
       state.selectedAppointment = null;
     },
+
+    clearVetData: (state) => {
+      state.data = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -57,7 +61,10 @@ const vetSlice = createSlice({
   },
 });
 
-export const { setSelectedAppointment, clearSelectedAppointment } =
-  vetSlice.actions;
+export const {
+  setSelectedAppointment,
+  clearSelectedAppointment,
+  clearVetData,
+} = vetSlice.actions;
 
 export default vetSlice.reducer;

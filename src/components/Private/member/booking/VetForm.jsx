@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
 import { assets } from "../../../../assets/assets";
 import { useDispatch, useSelector } from "react-redux";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { getVetByRole } from "../../../../services/userService";
-import { updateInvoiceData } from "../../../../redux/slices/bookingSlice";
 import { toast } from "react-toastify";
+import { getAllBookingSchedule } from "../../../../services/bookingService";
+import { updateValidVets } from "../../../../redux/slices/bookingSlice";
 
 const availableTimes = [
   "09:00",
-  "09:30",
+
   "10:00",
-  "10:30",
+
   "11:00",
-  "11:30",
-  "12:00",
-  "12:30",
+
   "13:00",
   "13:30",
   "14:00",
-  "14:30",
+
   "15:00",
-  "15:30",
+
   "16:00",
-  "16:30",
+
   "17:00",
 ];
 
@@ -31,16 +29,55 @@ const VetForm = ({ updateFormData }) => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
 
-  const vets = useSelector((state) => state.users.data?.vets?.result) || [];
   const formData = useSelector((state) => state.booking.data.bookingData);
   const invoiceData = useSelector((state) => state.booking.data.invoiceData);
+  const bookingSchedule =
+    useSelector((state) => state.booking.data.bookingSchedule) || [];
 
   useEffect(() => {
-    const action = dispatch(getVetByRole());
-    unwrapResult(action);
-  }, [dispatch]);
+    dispatch(getVetByRole());
+    dispatch(getAllBookingSchedule());
+  }, []);
+
+  // Hàm chuyển LocalDate thành tên ngày trong tuần
+  const getWeekdayName = (dateString) => {
+    const date = new Date(dateString); // Chuyển đổi LocalDate sang Date
+    const weekdayNames = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return weekdayNames[date.getDay()];
+  };
+
+  const getValidVetsForDate = () => {
+    if (!formData.appointmentDate) return [];
+
+    // Chuyển appointmentDate thành tên ngày trong tuần
+    const appointmentDayName = getWeekdayName(formData.appointmentDate);
+
+    // Lọc danh sách lịch của các bác sĩ theo ngày
+    const vetsWorkingToday = bookingSchedule
+      .filter((schedule) => schedule.availableDate === appointmentDayName)
+      .flatMap((schedule) => schedule.veterinarianProfiles); // Chuyển đổi từ mảng lồng vào mảng phẳng
+
+    return vetsWorkingToday;
+  };
+
+  // Dùng useEffect để cập nhật danh sách bác sĩ hợp lệ khi formData.appointmentDate hoặc bookingSchedule thay đổi
+  useEffect(() => {
+    if (formData.appointmentDate && bookingSchedule.length > 0) {
+      const validVets = getValidVetsForDate();
+      // Cập nhật danh sách bác sĩ hợp lệ trong Redux
+      dispatch(updateValidVets(validVets));
+      console.log(validVets);
+    }
+  }, [formData.appointmentDate, bookingSchedule, dispatch]); // Dependency array bao gồm các giá trị sẽ trigger useEffect khi thay đổi
 
   const handleDoctorSelect = (vet) => {
     setSelectedDoctor(vet);
@@ -67,6 +104,40 @@ const VetForm = ({ updateFormData }) => {
     updateFormData({ veterinarianId: null, veterinarianName: null }); // Clear vet name as well
   };
 
+  const getValidStartTimes = () => {
+    if (!formData.appointmentDate) return [];
+
+    // Chuyển appointmentDate thành tên ngày trong tuần
+    const appointmentDayName = getWeekdayName(formData.appointmentDate);
+
+    // Nếu không có bác sĩ được chọn, trả về danh sách giờ làm việc chung của tất cả bác sĩ
+    if (!selectedDoctor) {
+      const generalSchedule = bookingSchedule.find(
+        (schedule) => schedule.availableDate === appointmentDayName
+      );
+
+      return generalSchedule?.availableTimes || availableTimes;
+    }
+
+    // Nếu có bác sĩ được chọn, tìm lịch làm việc của bác sĩ đó
+    const vetSchedule = bookingSchedule.find(
+      (schedule) =>
+        schedule.veterinarianProfiles.some(
+          (profile) =>
+            profile.veterinarianProfilesId ===
+            selectedDoctor.veterinarianProfilesId
+        ) && schedule.availableDate === appointmentDayName
+    );
+
+    if (!vetSchedule) {
+      toast.error("This doctor is not available on the selected date.");
+      return [];
+    }
+
+    // Trả về danh sách giờ làm việc của bác sĩ nếu có
+    return vetSchedule.availableTimes || availableTimes;
+  };
+
   const getValidEndTimes = () => {
     return availableTimes.filter((time) => time > startTime);
   };
@@ -76,13 +147,6 @@ const VetForm = ({ updateFormData }) => {
     return price
       ? price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })
       : "0 ₫";
-  };
-
-  const handlePaymentChange = (e) => {
-    const selectedPaymentMethod = e.target.value;
-    setPaymentMethod(selectedPaymentMethod);
-
-    dispatch(updateInvoiceData({ paymentMethod: selectedPaymentMethod }));
   };
 
   return (
@@ -104,11 +168,11 @@ const VetForm = ({ updateFormData }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-6">
-          {vets.map((vet) => (
+          {getValidVetsForDate().map((vet) => (
             <div
-              key={vet.userId}
+              key={vet.veterinarianProfilesId}
               className={`p-4 border rounded-lg shadow-lg cursor-pointer transition-all ${
-                selectedDoctor?.userId === vet.userId
+                selectedDoctor?.userId === vet.veterinarianProfilesId
                   ? "bg-blue-100 border-blue-500"
                   : "border-gray-200"
               }`}
@@ -119,9 +183,7 @@ const VetForm = ({ updateFormData }) => {
                 alt="Vet"
                 className="w-20 h-28 rounded-lg object-cover"
               />
-              <h3 className="text-lg font-semibold mt-2">
-                {vet.firstname} {vet.lastname}
-              </h3>
+              <h3 className="text-lg font-semibold mt-2">{`${vet.firstname} ${vet.lastname}`}</h3>
             </div>
           ))}
         </div>
@@ -144,7 +206,8 @@ const VetForm = ({ updateFormData }) => {
                 <option value="" disabled>
                   Select Start Time
                 </option>
-                {availableTimes.map((time) => (
+
+                {getValidStartTimes().map((time) => (
                   <option key={time} value={time}>
                     {time}
                   </option>
@@ -173,34 +236,6 @@ const VetForm = ({ updateFormData }) => {
             </div>
           </div>
         </div>
-
-        {/* Payment Method Selection */}
-        {/* <div className="mt-4">
-          <h1 className="text-2xl font-semibold mb-4">Choose Payment Method</h1>
-
-          <div className="mb-4">
-            <label className="block mb-2 font-medium">
-              Select payment method:
-            </label>
-            <select
-              value={invoiceData.paymentMethod || ""}
-              onChange={handlePaymentChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="" disabled>
-                -- Select Payment Method --
-              </option>
-              <option value="cash">Cash Payment</option>
-              <option value="vn_pay">VN Pay</option>
-            </select>
-          </div>
-
-          {paymentMethod && (
-            <div className="text-lg font-medium text-gray-700">
-              <p>Please pay at the time of appointment.</p>
-            </div>
-          )}
-        </div> */}
       </form>
 
       {/* RIGHT SIDE */}
@@ -223,57 +258,33 @@ const VetForm = ({ updateFormData }) => {
               {formData.location || "none"}
             </div>
 
-            {/* <div className="flex flex-col items-start gap-1">
-              <p className="text-gray-500 font-semibold text-base">Your fish</p>
-              {formData.fish || "none"}
-            </div> */}
-
             <div className="flex flex-col items-start gap-1">
               <p className="text-gray-500 font-semibold text-base">
-                Veterinarian name
+                Vet's Name
               </p>
               {formData.veterinarianName || "none"}
             </div>
 
             <div className="flex flex-col items-start gap-1">
-              <p className="text-gray-500 font-semibold text-base">
-                Start time
-              </p>
+              <p className="text-gray-500 font-semibold text-base">Start</p>
               {formData.startTime || "none"}
             </div>
 
             <div className="flex flex-col items-start gap-1">
-              <p className="text-gray-500 font-semibold text-base">End time</p>
+              <p className="text-gray-500 font-semibold text-base">End</p>
               {formData.endTime || "none"}
             </div>
           </div>
         </section>
 
         <section>
-          <h1 className="text-lg font-bold">Your price summary</h1>
-
-          <div className="flex flex-col gap-1 mt-2">
-            <div className="flex items-center justify-between">
-              <p>Price service:</p>
-              <p>{formatPrice(invoiceData.price)}</p>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <p>Moving fee:</p>
-              <p>{formatPrice(invoiceData.movingPrice)}</p>
-            </div>
-
-            {/* <div className="flex items-center justify-between">
-              <p>Payment method:</p>
-              <p>{invoiceData.paymentMethod || "none"}</p>
-            </div> */}
+          <div className="flex flex-row justify-between items-center gap-5">
+            <h1 className="text-lg font-bold">Total:</h1>
+            <p className="font-bold text-blue-500">
+              {formatPrice(invoiceData?.total)}
+            </p>
           </div>
         </section>
-
-        <div className="flex items-center justify-between text-lg font-bold text-primary">
-          <h1>Total price:</h1>
-          <p>{formatPrice(invoiceData.total)}</p>
-        </div>
       </form>
     </div>
   );

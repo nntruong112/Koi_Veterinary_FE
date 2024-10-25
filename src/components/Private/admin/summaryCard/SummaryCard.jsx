@@ -16,7 +16,6 @@ const SummaryCard = () => {
       const userCount = await dispatch(countByRole("USER"));
       const vetCount = await dispatch(countByRole("VET"));
       const staffCount = await dispatch(countByRole("STAFF"));
-
       await dispatch(
         saveCount({
           USER: userCount.payload,
@@ -25,7 +24,6 @@ const SummaryCard = () => {
         })
       );
     };
-
     fetchData();
   }, [dispatch]);
   return (

@@ -122,11 +122,6 @@ const ConfirmForm = () => {
             <p>Moving fee:</p>
             <p>{formatPrice(invoiceData.movingPrice)}</p>
           </div>
-
-          <div className="flex items-center justify-between">
-            <p>Payment method:</p>
-            <p>{formatPrice(invoiceData.paymentMethod)}</p>
-          </div>
         </div>
 
         <div className="flex items-center justify-between text-lg font-bold text-primary">

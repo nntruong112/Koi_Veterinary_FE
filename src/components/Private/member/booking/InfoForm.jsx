@@ -183,11 +183,6 @@ const InfoForm = ({ updateFormData }) => {
               <p className="text-gray-500 font-semibold text-base">Location</p>
               {formData.location || "none"}
             </div>
-
-            {/* <div className="flex flex-col items-start gap-1">
-              <p className="text-gray-500 font-semibold text-base">Your fish</p>
-              {formData.fish || "none"}
-            </div> */}
           </div>
         </section>
 

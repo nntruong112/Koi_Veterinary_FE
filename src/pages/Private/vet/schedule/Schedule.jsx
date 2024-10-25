@@ -10,7 +10,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getScheduleByVetId } from "../../../../services/vetService";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Import CSS của react-big-calendar
-import { unwrapResult } from "@reduxjs/toolkit";
 
 const mLocalizer = momentLocalizer(moment);
 
@@ -26,20 +25,11 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
 
   const veterinarianId = useSelector((state) => state.users.data.result.userId);
   const scheduleOfVet = useSelector((state) => state.vet.data);
-  console.log(scheduleOfVet);
 
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(getScheduleByVetId(veterinarianId));
-      } catch (error) {
-        console.error("Failed to fetch schedule:", error);
-      }
-    };
-
-    fetchData();
+    dispatch(getScheduleByVetId(veterinarianId));
   }, [dispatch, veterinarianId]);
 
   // Hàm để xác định ngày có sẵn từ dữ liệu lịch trình
