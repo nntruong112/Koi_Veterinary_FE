@@ -16,7 +16,7 @@ const ToDoAppointment = () => {
 
   const vetId = useSelector((state) => state.users.data.result.userId);
   const toDoAppointmentList =
-    useSelector((state) => state.vet.data.toDoAppointmentList) || [];
+    useSelector((state) => state.vet.data?.toDoAppointmentList) || [];
 
   useEffect(() => {
     dispatch(getToDoAppointment(vetId));

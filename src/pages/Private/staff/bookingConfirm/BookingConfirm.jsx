@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   confirmAppointment,
   getAllAppointment,
 } from "../../../../services/adminService";
 
-import { unwrapResult } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { path } from "../../../../utils/constant";
 
 const BookingConfirm = () => {
   const dispatch = useDispatch();
   const appointmentList =
-    useSelector((state) => state.admin.data.appointmentList) || [];
+    useSelector((state) => state.admin.data?.appointmentList) || [];
 
   useEffect(() => {
     dispatch(getAllAppointment());
