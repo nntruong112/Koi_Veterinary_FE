@@ -25,7 +25,6 @@ const ToDoAppointment = () => {
   const handleViewDetail = (appointment) => {
     dispatch(setSelectedAppointment(appointment));
   };
-
   const handleBackToList = () => {
     dispatch(clearSelectedAppointment());
   };
