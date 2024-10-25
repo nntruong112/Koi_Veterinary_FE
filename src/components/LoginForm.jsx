@@ -5,13 +5,15 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { login } from "../services/authService.js";
+import { login, loginGoogle } from "../services/authService.js";
 import { path } from "../utils/constant.js";
 import SuccessModal from "./Private/modal/SuccessModal.jsx";
 import { toast } from "react-toastify";
 import { logout } from "../redux/slices/authSlice.js";
 import { getInfoByToken } from "../services/userService.js";
 import { assets } from "../assets/assets.js";
+import { useGoogleLogin } from "@react-oauth/google";
+import { setUserData } from "../redux/slices/userSlice.js";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -110,6 +112,38 @@ const LoginForm = () => {
     }
   };
 
+  // Thực hiện đăng nhập Google
+  const loginByGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const accessToken = tokenResponse.access_token;
+
+      try {
+        const loginGoogleAction = await dispatch(loginGoogle(accessToken));
+        const loginGoogleInfo = unwrapResult(loginGoogleAction);
+        console.log(loginGoogleInfo);
+
+        const roles = loginGoogleInfo.user.roles;
+
+        if (roles && roles.includes("USER")) {
+          dispatch(setUserData(loginGoogleInfo.user));
+          setShowSuccessModal(true);
+          setTimeout(() => {
+            navigate(path.HOME);
+          }, 1000);
+        } else {
+          dispatch(logout());
+          toast.error("You don't have permission to access!");
+        }
+      } catch (error) {
+        toast.error("Google login failed!");
+      }
+    },
+    onError: (error) => {
+      console.error("Login Failed:", error);
+      toast.error("Google login failed!");
+    },
+  });
+
   return (
     <div className="flex justify-center items-center rounded-lg bg-white max-w-[50vw] min-h-[70vh] relative overflow-hidden">
       <div className="min-h-[70vh] w-[50vw] bg-white relative">
@@ -207,7 +241,10 @@ const LoginForm = () => {
               <p>or</p>
             </div>
 
-            <div className="flex justify-center items-center gap-8 border-2 p-1 rounded-2xl hover:bg-gray-200 cursor-pointer">
+            <div
+              onClick={() => loginByGoogle()}
+              className="flex justify-center items-center gap-8 border-2 p-1 rounded-2xl hover:bg-gray-200 cursor-pointer"
+            >
               <FcGoogle className="text-[30px] " />
               <p>Login by Google</p>
             </div>

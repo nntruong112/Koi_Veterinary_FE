@@ -93,8 +93,8 @@ const Testimonials = () => {
     <>
       <RolesNavbar />
 
-      <div className="px-6 pb-20 mt-5 bg-gray-100 rounded-lg max-w-full mx-auto">
-        <h2 className="text-4xl font-semibold text-center mb-10 text-[#071e55]">
+      <div className="px-6 pb-20 bg-gray-100 rounded-lg max-w-full mx-auto">
+        <h2 className="text-4xl font-semibold text-center pt-4 mb-10 text-[#071e55]">
           Customer Feedback
         </h2>
         <Swiper
@@ -157,7 +157,8 @@ const Testimonials = () => {
               placeholder="Your Comment"
               value={formData.comment}
               onChange={handleChange}
-              className="h-10 p-4 w-full border border-solid border-black rounded-lg"
+              rows="5"
+              className="min-h-50 p-4 w-full border border-solid border-black rounded-lg"
               required
             ></textarea>
 

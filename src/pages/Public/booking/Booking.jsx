@@ -11,6 +11,7 @@ import {
 } from "../../../redux/slices/bookingSlice";
 import { toast } from "react-toastify";
 import { TiTick } from "react-icons/ti";
+import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 
 const Booking = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ const Booking = () => {
   const bookingInfo = useSelector((state) => state.booking.data.bookingData);
   const vets =
     useSelector((state) => state.booking.data?.vetWorkingToday) || [];
-  // const vets = useSelector((state) => state.users.data.vets?.result) || [];
 
   const steps = [
     {
@@ -141,22 +141,28 @@ const Booking = () => {
           <div className="mx-20">{steps[currentStep]?.content}</div>
 
           <div className="flex items-center justify-center gap-20 w-full my-5 text-white">
-            <button
-              type="button"
-              onClick={handleBack}
-              disabled={currentStep === 0}
-              className="bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition cursor-pointer"
-            >
-              Back
-            </button>
+            {currentStep > 0 && (
+              <button
+                type="button"
+                onClick={handleBack}
+                disabled={currentStep === 0}
+                className="flex items-center gap-2 bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition cursor-pointer"
+              >
+                <FaLongArrowAltLeft />
+                Back
+              </button>
+            )}
 
-            <button
-              type="button"
-              onClick={handleNext}
-              className="bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition"
-            >
-              Next
-            </button>
+            {currentStep < steps.length - 1 && (
+              <button
+                type="button"
+                onClick={handleNext}
+                className="flex items-center gap-2 bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition"
+              >
+                Next
+                <FaLongArrowAltRight />
+              </button>
+            )}
           </div>
         </div>
       </main>

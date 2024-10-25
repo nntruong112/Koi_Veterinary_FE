@@ -16,7 +16,12 @@ export const setupInterceptor = () => {
       const state = store.getState();
       const token = state.auth.data?.token; // lấy token từ Redux store
 
-      if (token && !["/auth/login", "/users/register"].includes(config.url)) {
+      if (
+        token &&
+        !["/auth/login", "/users/register", "googles/login-google"].includes(
+          config.url
+        )
+      ) {
         // Bỏ qua login và register
         config.headers["Authorization"] = `Bearer ${token}`;
       }

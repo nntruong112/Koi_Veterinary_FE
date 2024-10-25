@@ -145,3 +145,15 @@ export const getAppointmentType = createAsyncThunk(
     }
   }
 );
+
+export const createFeedback = createAsyncThunk(
+  "feedbacks/createFeedback",
+  async (feedbackData, thunkAPI) => {
+    try {
+      const response = await BASE_URL.post("feedbacks/create", feedbackData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);

@@ -296,15 +296,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation } from "react-router-dom";
 
 const CreateHealthRecord = () => {
-  const location = useLocation();
-  const appointmentP = location.state?.selectedAppointment; // Lấy thông tin cuộc hẹn
-  const fishIda = appointmentP?.fishId;
-
   const [fishList, setFishList] = useState([]); // Danh sách cá từ cuộc hẹn
-  const [selectedFishId, setSelectedFishId] = useState(fishIda || ""); // Mã cá đã chọn
+  const [selectedFishId, setSelectedFishId] = useState(null); // Mã cá đã chọn
   const [diagnosis, setDiagnosis] = useState("");
   const [treatment, setTreatment] = useState("");
   const [error, setError] = useState(null);
@@ -319,10 +314,10 @@ const CreateHealthRecord = () => {
   // Fetch danh sách cá liên quan đến cuộc hẹn
   useEffect(() => {
     const fetchFishForAppointment = async () => {
-      if (!fishIda) {
-        setError("Không tìm thấy cá nào trong cuộc hẹn.");
-        return; // Ngừng xử lý nếu không có fishId
-      }
+      // if (!fishId) {
+      //   setError("Không tìm thấy cá nào trong cuộc hẹn.");
+      //   return; // Ngừng xử lý nếu không có fishId
+      // }
 
       try {
         const response = await axios.get(
@@ -340,7 +335,7 @@ const CreateHealthRecord = () => {
     };
 
     fetchFishForAppointment();
-  }, [token, fishIda]);
+  }, [token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

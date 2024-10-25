@@ -16,6 +16,14 @@ const BookingConfirm = () => {
     dispatch(getAllAppointment());
   }, [dispatch]);
 
+  // Hàm sắp xếp cuộc hẹn theo appointmentDate
+  const sortedAppointmentList = [...appointmentList].sort((a, b) => {
+    // Chuyển đổi chuỗi LocalDate thành đối tượng Date
+    const dateA = new Date(a.appointmentDate);
+    const dateB = new Date(b.appointmentDate);
+    return dateB - dateA; // Sắp xếp theo thứ tự giảm dần
+  });
+
   const handleConfirm = async (appointment) => {
     const updateData = {
       appointmentDate: appointment.appointmentDate,
@@ -89,7 +97,7 @@ const BookingConfirm = () => {
           </tr>
         </thead>
         <tbody>
-          {appointmentList.map((appointment) => (
+          {sortedAppointmentList.map((appointment) => (
             <tr
               key={appointment.appointmentId}
               className="border-b border-gray-200 dark:border-gray-700"

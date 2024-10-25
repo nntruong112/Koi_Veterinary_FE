@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "../../services/authService";
+import { login, loginGoogle } from "../../services/authService";
 import * as status from "../../utils/status";
 
 const authSlice = createSlice({
@@ -31,6 +31,21 @@ const authSlice = createSlice({
       })
 
       .addCase(login.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(loginGoogle.pending, (state) => {
+        state.status = status.PENDING;
+      })
+
+      .addCase(loginGoogle.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = action.payload;
+      })
+
+      .addCase(loginGoogle.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

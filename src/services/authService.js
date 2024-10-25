@@ -19,12 +19,32 @@ export const register = async (user) => {
  */
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
-    const response = await BASE_URL.post("/auth/login", user);
+    const response = await BASE_URL.post("auth/login", user);
     return response.data.result;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
+
+/**
+ *
+ * @param {*} accessToken
+ * @returns
+ */
+export const loginGoogle = createAsyncThunk(
+  "googles/login-google",
+  async (accessToken, thunkAPI) => {
+    try {
+      // Gói accessToken vào trong đối tượng để gửi đến API
+      const response = await BASE_URL.post("googles/login-google", {
+        accessToken,
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 /**
  * Verify email by 6-digit code

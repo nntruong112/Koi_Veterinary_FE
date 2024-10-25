@@ -300,9 +300,10 @@ const MyAppointment = () => {
                 >
                   View detail
                 </button>
+
                 <button
                   onClick={() => handlePayDetails(appointment)}
-                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                  className="bg-primary rounded-full p-2 ml-2 text-white hover:bg-primary/90"
                 >
                   View pay detail
                 </button>

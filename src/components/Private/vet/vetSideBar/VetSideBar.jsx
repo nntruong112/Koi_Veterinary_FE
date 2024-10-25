@@ -63,7 +63,7 @@ const VetSideBar = () => {
 
           <li>
             <NavLink
-              to={path.HEALTH_RECORD}
+              to={path.CREATE_HEALTH_RECORD}
               className={({ isActive }) =>
                 `flex items-center p-2 rounded-lg group ${
                   isActive
