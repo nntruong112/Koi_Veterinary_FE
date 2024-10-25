@@ -31,6 +31,9 @@ const MyAppointment = React.lazy(() =>
 const PaymentPage = React.lazy(() =>
   import("../pages/Private/member/myAppointment/paymentPage")
 );
+const HealthRecordPages = React.lazy(() =>
+  import("../pages/Private/member/fish/HealthRecord")
+);
 const PaymentDetailsPage = React.lazy(() =>
   import("../pages/Private/member/myAppointment/PaymentDetails")
 );
@@ -49,8 +52,8 @@ const VetProfile = React.lazy(() =>
 const Schedule = React.lazy(() =>
   import("../pages/Private/vet/schedule/Schedule")
 );
-const HealthRecordPage = React.lazy(() =>
-  import("../pages/Private/vet/healthRecord/healthRecord")
+const CreateHealthRecord = React.lazy(() =>
+  import("../pages/Private/vet/healthRecord/CreatehealthRecord")
 );
 const ToDoAppointment = React.lazy(() =>
   import("../pages/Private/vet/toDoAppointment/ToDoAppointment")
@@ -128,14 +131,7 @@ const PrivateRoutes = [
           </ProtectedRoutes>
         ),
       },
-      // {
-      //   path: path.HEALTH_RECORD,
-      //   element: (
-      //     <ProtectedRoutes allowedRoles="ADMIN">
-      //       <LoadLazy children={<HealthRecordPage />} />
-      //     </ProtectedRoutes>
-      //   ),
-      // },
+      //
     ],
   },
 
@@ -165,12 +161,21 @@ const PrivateRoutes = [
             <LoadLazy children={<MyFish />} />
           </ProtectedRoutes>
         ),
+
         children: [
           {
             path: path.UPDATE_FISH,
             element: (
               <ProtectedRoutes allowedRoles="USER">
                 <LoadLazy children={<UpdateFish />} />
+              </ProtectedRoutes>
+            ),
+          },
+          {
+            path: path.HEALTH_RECORD,
+            element: (
+              <ProtectedRoutes allowedRoles="USER">
+                <LoadLazy children={<HealthRecordPages />} />
               </ProtectedRoutes>
             ),
           },
@@ -242,10 +247,10 @@ const PrivateRoutes = [
         ),
       },
       {
-        path: path.HEALTH_RECORD,
+        path: path.CREATE_HEALTH_RECORD,
         element: (
           <ProtectedRoutes allowedRoles="VET">
-            <LoadLazy children={<HealthRecordPage />} />
+            <LoadLazy children={<CreateHealthRecord />} />
           </ProtectedRoutes>
         ),
       },

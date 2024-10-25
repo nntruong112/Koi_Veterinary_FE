@@ -30,6 +30,7 @@ export const path = {
   FISH: "my-fish",
   MY_APPOINTMENT: "my-appointment",
   ADD_FISH: "add-fish",
+  HEALTH_RECORD: "health-records-view",
   PAYMENT_PAGE: "payment-page",
   PAYMENT_DETAILS: "payment-details/:paymentId",
 
@@ -43,7 +44,7 @@ export const path = {
   VET: "/vet",
   VET_PROFILE: "vet-profile",
   SCHEDULE: "schedule",
-  HEALTH_RECORD: "health-record",
+  CREATE_HEALTH_RECORD: "health-record",
   DO_APPOINTMENT: "do-appointment",
 
   // STAFF

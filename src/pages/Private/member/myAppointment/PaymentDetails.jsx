@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { assets } from "../../../../assets/assets";
 
 const PaymentDetailsPage = () => {
   const { paymentId } = useParams(); // Lấy paymentId từ URL
@@ -27,6 +28,20 @@ const PaymentDetailsPage = () => {
     fetchPayment();
   }, [paymentId]);
 
+  const formatDate = (dateString) => {
+    // Lấy năm, tháng, ngày, giờ, phút, giây từ chuỗi
+    const year = parseInt(dateString.substring(0, 4), 10);
+    const month = parseInt(dateString.substring(4, 6), 10) - 1; // Tháng bắt đầu từ 0
+    const day = parseInt(dateString.substring(6, 8), 10);
+    const hours = parseInt(dateString.substring(8, 10), 10);
+    const minutes = parseInt(dateString.substring(10, 12), 10);
+    const seconds = parseInt(dateString.substring(12, 14), 10);
+
+    // Tạo đối tượng Date
+    const date = new Date(year, month, day, hours, minutes, seconds);
+    return date.toLocaleString("vi-VN"); // Định dạng theo phong cách Việt Nam
+  };
+
   if (loading) {
     return <div>Đang tải...</div>;
   }
@@ -36,30 +51,67 @@ const PaymentDetailsPage = () => {
   }
 
   if (!payment) {
-    return <div>Không tìm thấy thông tin thanh toán.</div>;
+    return <div>Not found payment details!</div>;
   }
 
   return (
-    <div className="payment-details p-4">
-      <h2 className="text-xl font-bold mb-4">Chi tiết thanh toán</h2>
-      <p>
-        <strong>ID thanh toán:</strong> {payment.paymentId}
-      </p>
-      {/* <p>
-        <strong>Người dùng:</strong> {payment.user.username}
-      </p> */}
-      <p>
-        <strong>Email:</strong> {payment.email}
-      </p>
-      <p>
-        <strong>Số tiền:</strong> {payment.amountValue} VND
-      </p>
-      <p>
-        <strong>Ngày thanh toán:</strong> {payment.vnp_PayDate}
-      </p>
-      <p>
-        <strong>Loại đơn hàng:</strong> {payment.orderType}
-      </p>
+    <div className="pt-44">
+      <div className="max-w-xl mx-auto p-6 bg-white border-2 border-gray-200 rounded-lg shadow-lg">
+        <div className="flex justify-center">
+          <img src={assets.tick} className="w-28 h-28" alt="Tick" />
+        </div>
+        <div className="mb-6 text-center">
+          <h2 className="text-3xl font-bold text-gray-800">PAYMENT INVOICE</h2>
+          <p className="text-sm text-gray-600">
+            Invoice Date: {new Date().toLocaleDateString()}
+          </p>
+        </div>
+        <div className="border-b border-gray-300 mb-6"></div>
+
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            Payment Information
+          </h3>
+          <p className="text-gray-700">
+            <strong>Payment ID:</strong> {payment.paymentId}
+          </p>
+          <p className="text-gray-700">
+            <strong>Email:</strong> {payment.email}
+          </p>
+        </div>
+
+        <div className="border-b border-gray-300 mb-6"></div>
+
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            Order Details
+          </h3>
+          <p className="text-gray-700">
+            <strong>Amount:</strong> {payment.amountValue.toLocaleString()} VND
+          </p>
+          <p className="text-gray-700">
+            <strong>Payment Date:</strong> {formatDate(payment.vnp_PayDate)}
+          </p>
+          <p className="text-gray-700">
+            <strong>Order Type:</strong> {payment.orderType}
+          </p>
+        </div>
+
+        <div className="border-b border-gray-300 mb-6"></div>
+
+        <div className="text-right">
+          <h3 className="text-lg font-semibold text-gray-800">Total</h3>
+          <p className="text-2xl font-bold text-gray-900">
+            {payment.amountValue.toLocaleString()} VND
+          </p>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-500">
+            Thank you for using our service!
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
