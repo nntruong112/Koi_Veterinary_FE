@@ -16,6 +16,9 @@ const Booking = () => {
   const dispatch = useDispatch();
   const currentStep = useSelector((state) => state.booking?.currentStep);
   const bookingInfo = useSelector((state) => state.booking.data.bookingData);
+  const vets =
+    useSelector((state) => state.booking.data?.vetWorkingToday) || [];
+  // const vets = useSelector((state) => state.users.data.vets?.result) || [];
 
   const steps = [
     {
@@ -27,6 +30,7 @@ const Booking = () => {
         />
       ),
     },
+
     {
       step: 2,
       title: "Choose",
@@ -34,11 +38,7 @@ const Booking = () => {
         <VetForm updateFormData={(data) => dispatch(updateBookingData(data))} />
       ),
     },
-    // {
-    //   step: 3,
-    //   title: "Choose",
-    //   content: <PayForm />,
-    // },
+
     {
       step: 3,
       title: "Confirm",
@@ -47,19 +47,45 @@ const Booking = () => {
   ];
 
   const handleNext = () => {
-    if (currentStep === 0) {
-      const { appointmentDate, appointmentTypeId, location, fishId } =
-        bookingInfo;
-      if (!appointmentDate || !appointmentTypeId || !location || !fishId) {
-        toast.error("Please complete all required fields in this step!");
-        return;
-      }
-    } else if (currentStep === 1) {
-      const { startTime, endTime } = bookingInfo;
-      if (!startTime || !endTime) {
-        toast.error("Please complete all required fields in this step!");
-        return;
-      }
+    const {
+      appointmentDate,
+      appointmentTypeId,
+      location,
+      fishId,
+      startTime,
+      endTime,
+      veterinarianId,
+    } = bookingInfo;
+
+    switch (currentStep) {
+      case 0:
+        // Kiểm tra điều kiện cho bước 1
+        if (!appointmentDate || !appointmentTypeId || !location || !fishId) {
+          toast.error("Please complete all required fields in this step!");
+          return;
+        }
+        break;
+
+      case 1:
+        // Kiểm tra điều kiện cho bước 2
+        if (!veterinarianId) {
+          const randomVet = vets[Math.floor(Math.random() * vets.length)];
+          dispatch(
+            updateBookingData({
+              veterinarianId: randomVet.userId,
+              veterinarianName: `${randomVet.firstname} ${randomVet.lastname}`,
+            })
+          );
+        }
+
+        if (!startTime || !endTime) {
+          toast.error("Please complete all required fields in this step!");
+          return;
+        }
+        break;
+
+      default:
+        break;
     }
 
     if (currentStep < steps.length - 1) {

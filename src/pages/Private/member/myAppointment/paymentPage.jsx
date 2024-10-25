@@ -117,7 +117,7 @@ const PaymentPage = () => {
               <strong>Amount:</strong> {paymentDetails.amountValue} VND
             </div>
             <div>
-              <strong>Date:</strong>{" "}
+              <strong>Date:</strong>
               {new Date(paymentDetails.payDate).toLocaleDateString()}
             </div>
             <div>

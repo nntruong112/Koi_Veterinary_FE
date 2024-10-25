@@ -4,6 +4,7 @@ import {
   bookingAppointment,
   createInvoice,
   createPayment,
+  getAllBookingSchedule,
 } from "../../services/bookingService";
 
 const bookingSlice = createSlice({
@@ -55,6 +56,14 @@ const bookingSlice = createSlice({
         },
       };
     },
+
+    updateValidVets: (state, action) => {
+      state.status = status.SUCCESSFULLY;
+      state.data = {
+        ...state.data,
+        vetWorkingToday: action.payload,
+      };
+    },
   },
 
   extraReducers: (builder) => {
@@ -96,6 +105,21 @@ const bookingSlice = createSlice({
         state.status = status.FAILED;
         state.error = action.error.message;
       });
+
+    builder
+      // confirm appointment
+      .addCase(getAllBookingSchedule.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(getAllBookingSchedule.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+
+        state.data = { ...state.data, bookingSchedule: action.payload };
+      })
+      .addCase(getAllBookingSchedule.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
   },
 });
 
@@ -104,6 +128,7 @@ export const {
   resetBookingData,
   setCurrentStep,
   updateInvoiceData,
+  updateValidVets,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

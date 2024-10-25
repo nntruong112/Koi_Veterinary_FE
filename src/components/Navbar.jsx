@@ -160,7 +160,7 @@ const Navbar = () => {
             </div>
           ) : (
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate(path.LOGIN)}
               className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block"
             >
               LOGIN

@@ -42,3 +42,15 @@ export const createInvoice = createAsyncThunk(
     }
   }
 );
+
+export const getAllBookingSchedule = createAsyncThunk(
+  "veterinarian_schedules/getAllBookingSchedule",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("veterinarian_schedules");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);

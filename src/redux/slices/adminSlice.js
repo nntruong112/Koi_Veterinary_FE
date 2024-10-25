@@ -27,6 +27,10 @@ const adminSlice = createSlice({
         ...action.payload,
       };
     },
+
+    clearAdmin: (state) => {
+      state.data = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -137,6 +141,6 @@ const adminSlice = createSlice({
   },
 });
 
-export const { saveCount } = adminSlice.actions;
+export const { saveCount, clearAdmin } = adminSlice.actions;
 
 export default adminSlice.reducer;
