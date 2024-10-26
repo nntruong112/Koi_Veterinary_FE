@@ -9,6 +9,7 @@ import { validateEmail } from "../utils/validateData";
 import VerifyEmailModal from "./Private/modal/VerifyEmailModal";
 import ClipLoader from "react-spinners/ClipLoader";
 import { assets } from "../assets/assets";
+import { path } from "../utils/constant";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -175,11 +176,6 @@ const RegisterForm = () => {
     }
   };
 
-  // Login by Google
-  const loginByGoogle = useGoogleLogin({
-    onSuccess: (tokenResponse) => console.log(tokenResponse),
-  });
-
   return (
     <div className="flex justify-center items-center rounded-lg bg-white max-w-[50vw] min-h-[70vh] relative overflow-hidden">
       <div className="min-h-[70vh] w-[50vw] relative">
@@ -202,7 +198,7 @@ const RegisterForm = () => {
             <div className="border border-solid rounded-full px-8 py-3 mx-24 md:block font-medium text-center text-white w-[50%] bg-primary">
               <button
                 onClick={() => {
-                  navigate("/login");
+                  navigate(path.LOGIN);
                 }}
               >
                 Login
@@ -356,7 +352,7 @@ const RegisterForm = () => {
 
             <button
               type="submit"
-              className="bg-primary rounded-full px-8 py-3 mx-20 mt-5 md:block font-medium text-center w-[50%] text-white"
+              className="bg-primary rounded-full p-3 md:block font-medium text-center w-full text-white"
               disabled={isLoading} // Vô hiệu hóa nút khi đang loading
             >
               {isLoading ? (
@@ -365,20 +361,6 @@ const RegisterForm = () => {
                 "Register"
               )}
             </button>
-
-            <span className="text-center text-sm">
-              <hr className="" />
-              or use another account
-              <hr />
-            </span>
-
-            <div className="flex justify-center items-center gap-8">
-              <FaFacebook className="text-blue-700 text-[30px] cursor-pointer" />
-              <FcGoogle
-                onClick={() => loginByGoogle()}
-                className="text-[33px] cursor-pointer"
-              />
-            </div>
           </form>
         </div>
       </div>

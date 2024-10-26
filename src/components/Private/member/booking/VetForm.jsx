@@ -7,20 +7,15 @@ import { getAllBookingSchedule } from "../../../../services/bookingService";
 import { updateValidVets } from "../../../../redux/slices/bookingSlice";
 
 const availableTimes = [
+  "07:00",
+  "08:00",
   "09:00",
-
   "10:00",
-
   "11:00",
-
   "13:00",
-  "13:30",
   "14:00",
-
   "15:00",
-
   "16:00",
-
   "17:00",
 ];
 
@@ -32,13 +27,15 @@ const VetForm = ({ updateFormData }) => {
 
   const formData = useSelector((state) => state.booking.data.bookingData);
   const invoiceData = useSelector((state) => state.booking.data.invoiceData);
+  const vets = useSelector((state) => state.users.data.vets?.result);
+  console.log(vets);
   const bookingSchedule =
     useSelector((state) => state.booking.data.bookingSchedule) || [];
 
   useEffect(() => {
     dispatch(getVetByRole());
     dispatch(getAllBookingSchedule());
-  }, []);
+  }, [dispatch]);
 
   // Hàm chuyển LocalDate thành tên ngày trong tuần
   const getWeekdayName = (dateString) => {
@@ -73,11 +70,10 @@ const VetForm = ({ updateFormData }) => {
   useEffect(() => {
     if (formData.appointmentDate && bookingSchedule.length > 0) {
       const validVets = getValidVetsForDate();
-      // Cập nhật danh sách bác sĩ hợp lệ trong Redux
+      // Cập nhật danh sách bác sĩ hợp lệ
       dispatch(updateValidVets(validVets));
-      console.log(validVets);
     }
-  }, [formData.appointmentDate, bookingSchedule, dispatch]); // Dependency array bao gồm các giá trị sẽ trigger useEffect khi thay đổi
+  }, [formData.appointmentDate, bookingSchedule, dispatch]);
 
   const handleDoctorSelect = (vet) => {
     setSelectedDoctor(vet);
@@ -101,7 +97,12 @@ const VetForm = ({ updateFormData }) => {
 
   const handleClearDoctorSelection = () => {
     setSelectedDoctor(null);
-    updateFormData({ veterinarianId: null, veterinarianName: null }); // Clear vet name as well
+    updateFormData({
+      veterinarianId: null,
+      veterinarianName: null,
+      startTime: null,
+      endTime: null,
+    });
   };
 
   const getValidStartTimes = () => {
@@ -142,7 +143,7 @@ const VetForm = ({ updateFormData }) => {
     return availableTimes.filter((time) => time > startTime);
   };
 
-  // Function to format price with a comma and VND currency unit
+  // Hàm đinhj dạng đơn vị tiền tệ
   const formatPrice = (price) => {
     return price
       ? price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })
@@ -154,10 +155,10 @@ const VetForm = ({ updateFormData }) => {
       <form className="w-3/4 mx-auto p-6 bg-white rounded-3xl shadow-lg mb-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold mb-4">
-            Choose a Veterinarian (Optional)
+            Choose a veterinarian (Optional)
           </h2>
 
-          {/* Clear button to deselect the vet */}
+          {/* Xóa lựa chọn đã chọn */}
           <button
             type="button"
             onClick={handleClearDoctorSelection}
@@ -168,24 +169,31 @@ const VetForm = ({ updateFormData }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-6">
-          {getValidVetsForDate().map((vet) => (
-            <div
-              key={vet.veterinarianProfilesId}
-              className={`p-4 border rounded-lg shadow-lg cursor-pointer transition-all ${
-                selectedDoctor?.userId === vet.veterinarianProfilesId
-                  ? "bg-blue-100 border-blue-500"
-                  : "border-gray-200"
-              }`}
-              onClick={() => handleDoctorSelect(vet)}
-            >
-              <img
-                src={vet.image || assets.DefaultAvatar}
-                alt="Vet"
-                className="w-20 h-28 rounded-lg object-cover"
-              />
-              <h3 className="text-lg font-semibold mt-2">{`${vet.firstname} ${vet.lastname}`}</h3>
-            </div>
-          ))}
+          {getValidVetsForDate().map((vet) => {
+            // Tìm ảnh của bác sĩ từ mảng vets dựa vào userId
+            const vetImage =
+              vets.find((v) => v.userId === vet.userId)?.image ||
+              assets.DefaultAvatar;
+
+            return (
+              <div
+                key={vet.veterinarianProfilesId}
+                className={`p-4 border rounded-lg shadow-lg cursor-pointer transition-all ${
+                  selectedDoctor?.userId === vet.veterinarianProfilesId
+                    ? "bg-blue-100 border-blue-500"
+                    : "border-gray-200"
+                }`}
+                onClick={() => handleDoctorSelect(vet)}
+              >
+                <img
+                  src={vetImage}
+                  alt="Vet"
+                  className="w-20 h-28 rounded-lg object-cover"
+                />
+                <h3 className="text-lg font-semibold mt-2">{`${vet.firstname} ${vet.lastname}`}</h3>
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-12">
@@ -260,7 +268,7 @@ const VetForm = ({ updateFormData }) => {
 
             <div className="flex flex-col items-start gap-1">
               <p className="text-gray-500 font-semibold text-base">
-                Vet's Name
+                Vet's name
               </p>
               {formData.veterinarianName || "none"}
             </div>

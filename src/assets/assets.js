@@ -29,6 +29,7 @@ import well from "./well.png";
 import fpt from "./fpt.jpg";
 import teemo from "./teemo.gif";
 import tick from "./tick.png";
+import zalo_icon from "./zalo_icon.png";
 
 export const assets = {
   Logo,
@@ -62,6 +63,7 @@ export const assets = {
   Procedures,
   well,
   Diagnostics,
+  zalo_icon,
 };
 export const vets = [
   {

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addNewFish,
+  createFeedback,
   deleteMyFish,
   getAppointmentByUserId,
   getAppointmentType,
@@ -39,6 +40,11 @@ const userSlice = createSlice({
 
     clearSelectedAppointment: (state) => {
       state.data.selectedAppointment = null;
+    },
+
+    // set user data from auth slice
+    setUserData: (state, action) => {
+      state.data = { ...state.data, result: action.payload };
     },
   },
 
@@ -177,6 +183,21 @@ const userSlice = createSlice({
         state.status = status.FAILED;
         state.error = action.error.message;
       });
+
+    builder
+      // create feedback
+      .addCase(createFeedback.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(createFeedback.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, feedback: action.payload };
+      })
+      .addCase(createFeedback.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
   },
 });
 
@@ -186,7 +207,7 @@ export const {
   clearFishUpdateData,
   setSelectedAppointment,
   clearSelectedAppointment,
-  updatePaymentStatus,
+  setUserData,
 } = userSlice.actions;
 
 export default userSlice.reducer;

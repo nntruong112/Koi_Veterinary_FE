@@ -5,6 +5,9 @@ import { assets } from "../../../assets/assets";
 import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 import Marquee from "react-fast-marquee";
 const Home = () => {
+  const handleZaloRedirect = () => {
+    window.open("https://zalo.me/0973141349", "_blank");
+  };
   return (
     <>
       <RolesNavbar />
@@ -56,6 +59,12 @@ const Home = () => {
       <Marquee>
         <img className="w-full h-28 py-3" src={assets.teemo} />
       </Marquee>
+      <button
+        onClick={handleZaloRedirect}
+        className="fixed bottom-5 right-5 z-50 rounded-full bg-primary/40 p-3"
+      >
+        <img src={assets.zalo_icon} alt="Zalo" className="w-12 h-12" />
+      </button>
       <Footer />
     </>
   );

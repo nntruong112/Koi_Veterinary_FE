@@ -4,9 +4,12 @@ import TextInput from "../inputForm.jsx/TextInput";
 import { getMyFish } from "../../../../services/userService";
 import { getAllAppointmentType } from "../../../../services/adminService";
 import { updateInvoiceData } from "../../../../redux/slices/bookingSlice";
+import { useNavigate } from "react-router-dom";
+import { path } from "../../../../utils/constant";
 
 const InfoForm = ({ updateFormData }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const fishList = useSelector((state) => state.users.data?.myFish) || [];
   const typeList = useSelector((state) => state.admin.data?.typeList) || [];
   const [selectedFishId, setSelectedFishId] = useState(null);
@@ -71,9 +74,41 @@ const InfoForm = ({ updateFormData }) => {
     dispatch(updateInvoiceData({ total }));
   }, [invoiceData.price, invoiceData.movingPrice, dispatch]);
 
+  const handleClearSelection = () => {
+    updateFormData({
+      appointmentDate: null,
+      appointmentService: null,
+      appointmentTypeId: null,
+      location: null,
+      fishId: null,
+      distance: 0,
+    });
+
+    setSelectedFishId(null);
+    setDistance(0);
+
+    dispatch(
+      updateInvoiceData({
+        price: 0,
+        movingPrice: 0,
+        total: 0,
+      })
+    );
+  };
+
   return (
     <div className="flex flex-row min-h-[50vh] w-full gap-8 mt-5">
       <form className="w-3/4 h-1/2 p-10 rounded-3xl shadow-lg border-gray-200 border bg-white">
+        <div className="flex items-center justify-end">
+          <button
+            type="button"
+            onClick={handleClearSelection}
+            className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-500/90"
+          >
+            Clear Selection
+          </button>
+        </div>
+
         <TextInput
           label="Appointment Date"
           name="appointmentDate"
@@ -158,7 +193,15 @@ const InfoForm = ({ updateFormData }) => {
                 </div>
               ))
             ) : (
-              <p>No fish available</p>
+              <div>
+                <p>No fish available</p>
+                <button
+                  onClick={() => navigate(`${path.MEMBER}/${path.ADD_FISH}`)}
+                  className="hover:text-primary underline"
+                >
+                  Click here to add
+                </button>
+              </div>
             )}
           </div>
         </div>

@@ -164,7 +164,7 @@ const MyProfile = () => {
             label="Email"
             name="email"
             value={formData.email}
-            disabled={!isEdit}
+            disabled
             onChange={handleChange}
           />
           <TextInput
@@ -177,6 +177,7 @@ const MyProfile = () => {
           <TextInput
             label="Phone"
             name="phone"
+            type="tel"
             value={formData.phone}
             disabled={!isEdit}
             onChange={handleChange}
