@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getToDoAppointment } from "../../../../services/vetService";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -6,6 +6,8 @@ import {
   clearSelectedAppointment,
   setSelectedAppointment,
 } from "../../../../redux/slices/vetSlice";
+import { confirmAppointment } from "../../../../services/adminService";
+import { toast } from "react-toastify";
 
 const ToDoAppointment = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,34 @@ const ToDoAppointment = () => {
   };
   const handleBackToList = () => {
     dispatch(clearSelectedAppointment());
+  };
+
+  const handleComplete = async (appointment) => {
+    const updateData = {
+      appointmentDate: appointment.appointmentDate,
+      appointmentTypeId: appointment.appointmentTypeId,
+      location: appointment.location,
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      paymentStatus: appointment.paymentStatus,
+      status: "Completed",
+    };
+
+    try {
+      await dispatch(
+        confirmAppointment({
+          appointmentId: appointment.appointmentId,
+          updateData: updateData,
+        })
+      );
+
+      toast.success("Complete successfully");
+
+      dispatch(getToDoAppointment(vetId));
+    } catch (error) {
+      console.log("Error while completing", error);
+      toast.error("Complete fail!");
+    }
   };
 
   if (selectedAppointment) {
@@ -73,9 +103,6 @@ const ToDoAppointment = () => {
               {selectedAppointment.paymentStatus}
             </p>
           </div>
-          <button className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90">
-            Complete
-          </button>
         </div>
       </div>
     );
@@ -98,7 +125,11 @@ const ToDoAppointment = () => {
         </thead>
         <tbody>
           {toDoAppointmentList
-            .filter((appointment) => appointment.status === "In service")
+            .filter(
+              (appointment) =>
+                appointment.status === "In service" ||
+                appointment.status === "Completed"
+            )
             .map((appointment) => (
               <tr
                 key={appointment.appointmentId}
@@ -108,7 +139,7 @@ const ToDoAppointment = () => {
                   {appointment.appointmentDate}
                 </td>
                 <td className="px-3 py-4 whitespace-normal">
-                  {appointment.appointmentType.appointmentService}
+                  {appointment.appointmentType?.appointmentService}
                 </td>
                 <td className="px-3 py-4 whitespace-normal">
                   {appointment.location}
@@ -123,7 +154,13 @@ const ToDoAppointment = () => {
                   {appointment.status}
                 </td>
                 <td className="px-3 py-4 whitespace-normal">
-                  <p className="bg-red-500 w-16 rounded-full text-white p-2 text-sm text-center ml-5">
+                  <p
+                    className={`w-16 rounded-full text-white p-2 text-sm text-center ml-5 ${
+                      appointment.paymentStatus === "Unpaid"
+                        ? "bg-red-500"
+                        : "bg-green-500"
+                    }`}
+                  >
                     {appointment.paymentStatus}
                   </p>
                 </td>
@@ -134,6 +171,17 @@ const ToDoAppointment = () => {
                   >
                     View detail
                   </button>
+
+                  {appointment.status === "Completed" ? (
+                    ""
+                  ) : (
+                    <button
+                      onClick={() => handleComplete(appointment)}
+                      className="bg-primary rounded-full p-2 text-white hover:bg-primary/90 ml-2"
+                    >
+                      Complete
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
