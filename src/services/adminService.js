@@ -12,6 +12,20 @@ export const getUserByRole = createAsyncThunk(
     }
   }
 );
+export const updatePaymentStatus = createAsyncThunk(
+  "payments/updateStatus",
+  async (paymentId, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get(
+        `payments/vn-pay-callback`,
+        { paymentStatus: "paid" } // Cập nhật trạng thái thành "paid"
+      );
+      return response.data; // Trả về dữ liệu phản hồi từ API
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data); // Trả về lỗi nếu có
+    }
+  }
+);
 
 export const createVetAccount = createAsyncThunk(
   "users/create/vet",

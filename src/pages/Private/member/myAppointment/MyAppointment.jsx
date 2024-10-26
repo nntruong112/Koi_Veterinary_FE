@@ -293,24 +293,26 @@ const MyAppointment = () => {
                 {appointment.status}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                <p className="bg-red-500 w-16 rounded-full text-white p-2 text-sm text-center ml-5">
+                <p
+                  className={`w-16 rounded-full text-white p-2 text-sm text-center ml-5 ${
+                    appointment.paymentStatus === "Unpaid"
+                      ? "bg-red-500"
+                      : "bg-green-500"
+                  }`}
+                >
                   {appointment.paymentStatus}
                 </p>
               </td>
-              <td className="px-3 py-4 whitespace-normal">
-                <button
-                  onClick={() => handleViewDetail(appointment)}
-                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                >
-                  View detail
-                </button>
 
-                <button
-                  onClick={() => handlePayDetails(appointment)}
-                  className="bg-primary rounded-full p-2 ml-2 text-white hover:bg-primary/90"
-                >
-                  View pay detail
-                </button>
+              <td className="px-3 py-4 whitespace-normal">
+                {appointment.paymentStatus !== "paid" && (
+                  <button
+                    onClick={() => handleViewDetail(appointment)}
+                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                  >
+                    View detail
+                  </button>
+                )}
               </td>
             </tr>
           ))}
