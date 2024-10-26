@@ -18,10 +18,15 @@ const BookingConfirm = () => {
 
   // Hàm sắp xếp cuộc hẹn theo appointmentDate
   const sortedAppointmentList = [...appointmentList].sort((a, b) => {
-    // Chuyển đổi chuỗi LocalDate thành đối tượng Date
-    const dateA = new Date(a.appointmentDate);
-    const dateB = new Date(b.appointmentDate);
-    return dateB - dateA; // Sắp xếp theo thứ tự giảm dần
+    const isActionAvailableA =
+      a.status === "Waiting" || a.status === "Approved";
+    const isActionAvailableB =
+      b.status === "Waiting" || b.status === "Approved";
+
+    if (isActionAvailableA && !isActionAvailableB) return -1;
+    if (!isActionAvailableA && isActionAvailableB) return 1;
+
+    return 0;
   });
 
   const handleConfirm = async (appointment) => {
@@ -87,6 +92,7 @@ const BookingConfirm = () => {
           <tr>
             <th className="px-3 py-3 rounded-tl-2xl">Date</th>
             <th className="px-3 py-3">Service</th>
+            <th className="px-3 py-3">Vet's name</th>
             <th className="px-3 py-3">Location</th>
             <th className="px-3 py-3">Start time</th>
             <th className="px-3 py-3">End time</th>
@@ -108,6 +114,7 @@ const BookingConfirm = () => {
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.appointmentType?.appointmentService}
               </td>
+              <td className="px-3 py-4 whitespace-normal">{`${appointment.veterinarian.firstname} ${appointment.veterinarian.lastname}`}</td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.location}
               </td>

@@ -28,13 +28,16 @@ const VetForm = ({ updateFormData }) => {
   const formData = useSelector((state) => state.booking.data.bookingData);
   const invoiceData = useSelector((state) => state.booking.data.invoiceData);
   const vets = useSelector((state) => state.users.data.vets?.result);
-  console.log(vets);
   const bookingSchedule =
     useSelector((state) => state.booking.data.bookingSchedule) || [];
 
   useEffect(() => {
-    dispatch(getVetByRole());
-    dispatch(getAllBookingSchedule());
+    const fetchData = async () => {
+      await dispatch(getVetByRole());
+      await dispatch(getAllBookingSchedule());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   // Hàm chuyển LocalDate thành tên ngày trong tuần
@@ -175,12 +178,15 @@ const VetForm = ({ updateFormData }) => {
               vets.find((v) => v.userId === vet.userId)?.image ||
               assets.DefaultAvatar;
 
+            console.log(vet.veterinarianProfilesId);
+            console.log(selectedDoctor?.userId);
+
             return (
               <div
                 key={vet.veterinarianProfilesId}
-                className={`p-4 border rounded-lg shadow-lg cursor-pointer transition-all ${
-                  selectedDoctor?.userId === vet.veterinarianProfilesId
-                    ? "bg-blue-100 border-blue-500"
+                className={`p-4 border rounded-lg shadow-lg cursor-pointer ${
+                  selectedDoctor?.userId === vet.userId
+                    ? "border-primary"
                     : "border-gray-200"
                 }`}
                 onClick={() => handleDoctorSelect(vet)}

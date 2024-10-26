@@ -67,12 +67,12 @@ const InfoForm = ({ updateFormData }) => {
   };
 
   useEffect(() => {
-    const servicePrice = invoiceData.price || 0;
-    const movingFee = invoiceData.movingPrice || 0;
+    const servicePrice = invoiceData?.price || 0;
+    const movingFee = invoiceData?.movingPrice || 0;
     const total = servicePrice + movingFee;
 
     dispatch(updateInvoiceData({ total }));
-  }, [invoiceData.price, invoiceData.movingPrice, dispatch]);
+  }, [invoiceData?.price, invoiceData?.movingPrice, dispatch]);
 
   const handleClearSelection = () => {
     updateFormData({

@@ -227,21 +227,25 @@ const MyAppointment = () => {
             </p>
           </div>
 
-          <div className="flex flex-col w-1/5">
-            <button
-              onClick={handlePay}
-              className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
-            >
-              {isLoading ? (
-                <ClipLoader size={20} color={"#ffffff"} loading={isLoading} />
-              ) : (
-                "Pay"
-              )}
-            </button>
-            <button className="mt-4 mr-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-600/80">
-              Cancel
-            </button>
-          </div>
+          {selectedAppointment.paymentStatus === "paid" ? (
+            ""
+          ) : (
+            <div className="flex flex-col w-1/5">
+              <button
+                onClick={handlePay}
+                className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
+              >
+                {isLoading ? (
+                  <ClipLoader size={20} color={"#ffffff"} loading={isLoading} />
+                ) : (
+                  "Pay"
+                )}
+              </button>
+              <button className="mt-4 mr-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-600/80">
+                Cancel
+              </button>
+            </div>
+          )}
         </div>
 
         {isOutletOpen && <Outlet />}
