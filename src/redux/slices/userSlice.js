@@ -186,6 +186,7 @@ export const {
   clearFishUpdateData,
   setSelectedAppointment,
   clearSelectedAppointment,
+  updatePaymentStatus,
 } = userSlice.actions;
 
 export default userSlice.reducer;
