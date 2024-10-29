@@ -54,3 +54,15 @@ export const getAllBookingSchedule = createAsyncThunk(
     }
   }
 );
+
+export const getSpeciality = createAsyncThunk(
+  "fish_specialties/getSpeciality",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("fish_specialties");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);

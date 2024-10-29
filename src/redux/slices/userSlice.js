@@ -3,6 +3,7 @@ import {
   addNewFish,
   createFeedback,
   deleteMyFish,
+  getAllFeedback,
   getAppointmentByUserId,
   getAppointmentType,
   getInfoByToken,
@@ -195,6 +196,21 @@ const userSlice = createSlice({
         state.data = { ...state.data, feedback: action.payload };
       })
       .addCase(createFeedback.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get all feedback
+      .addCase(getAllFeedback.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getAllFeedback.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, allFeedback: action.payload };
+      })
+      .addCase(getAllFeedback.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

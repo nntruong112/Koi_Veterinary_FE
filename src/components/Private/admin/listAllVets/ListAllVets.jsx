@@ -7,7 +7,6 @@ import { getVetByRole } from "../../../../services/userService";
 const ListAllVets = () => {
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.users.data?.vets?.result) || [];
-  console.log(userList);
 
   useEffect(() => {
     const userListAction = dispatch(getVetByRole());

@@ -5,7 +5,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { login, loginGoogle } from "../services/authService.js";
 import { path } from "../utils/constant.js";
 import SuccessModal from "./Private/modal/SuccessModal.jsx";
 import { toast } from "react-toastify";
@@ -14,6 +13,8 @@ import { getInfoByToken } from "../services/userService.js";
 import { assets } from "../assets/assets.js";
 import { useGoogleLogin } from "@react-oauth/google";
 import { setUserData } from "../redux/slices/userSlice.js";
+import ResetPasswordModal from "./Private/modal/ForgotPasswordModal.jsx";
+import { login, loginGoogle } from "../services/authService.js";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -32,7 +33,8 @@ const LoginForm = () => {
 
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // State cho modal
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
   const validateData = (name, value) => {
     let invalid = true;
@@ -107,6 +109,7 @@ const LoginForm = () => {
           }
         }
       } catch (error) {
+        console.error("Error: ", error);
         toast.error("Access denied!");
       }
     }
@@ -120,7 +123,6 @@ const LoginForm = () => {
       try {
         const loginGoogleAction = await dispatch(loginGoogle(accessToken));
         const loginGoogleInfo = unwrapResult(loginGoogleAction);
-        console.log(loginGoogleInfo);
 
         const roles = loginGoogleInfo.user.roles;
 
@@ -135,6 +137,7 @@ const LoginForm = () => {
           toast.error("You don't have permission to access!");
         }
       } catch (error) {
+        console.error("Error: ", error);
         toast.error("Google login failed!");
       }
     },
@@ -143,6 +146,12 @@ const LoginForm = () => {
       toast.error("Google login failed!");
     },
   });
+
+  const handleClickForgotPasword = (e) => {
+    e.preventDefault();
+
+    setShowForgotPasswordModal(true);
+  };
 
   return (
     <div className="flex justify-center items-center rounded-lg bg-white max-w-[50vw] min-h-[70vh] relative overflow-hidden">
@@ -213,23 +222,14 @@ const LoginForm = () => {
               )}
             </div>
 
-            <div className="flex justify-between items-center text-center">
-              {/* -------- REMEMBER CHECKBOX --------- */}
-              <label className="flex items-center justify-center text-center text-sm">
-                <input
-                  type="checkbox"
-                  className="mr-1 mt-1 bg-[#eee] text-sm"
-                />
-                Remember me
-              </label>
-
+            <div className="flex justify-end items-center text-center">
               {/* -------- Forgot pass --------- */}
-              <button
-                type="button"
-                className="text-center inline text-sm hover:text-blue-600"
+              <p
+                onClick={handleClickForgotPasword}
+                className="text-center inline text-sm hover:text-blue-600 cursor-pointer"
               >
                 Forgot password?
-              </button>
+              </p>
             </div>
 
             {/* ------- BUTTON LOGIN --------- */}
@@ -279,6 +279,15 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
+
+      {/* Hiển thị modal khi nhấn forgot password */}
+      {showForgotPasswordModal && (
+        <ResetPasswordModal
+          message="Forgot password form"
+          onClose={() => setShowForgotPasswordModal(false)}
+        />
+      )}
+
       {/* Hiển thị modal khi đăng nhập thành công */}
       {showSuccessModal && (
         <SuccessModal

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { register } from "../services/authService";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { validateEmail } from "../utils/validateData";
 import VerifyEmailModal from "./Private/modal/VerifyEmailModal";
 import ClipLoader from "react-spinners/ClipLoader";
 import { assets } from "../assets/assets";
 import { path } from "../utils/constant";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
@@ -164,12 +164,11 @@ const RegisterForm = () => {
       setIsLoading(true); // Bắt đầu loading
 
       try {
-        //Submit form
-        await register(user);
+        await dispatch(register(user));
         setIsModalOpen(true);
       } catch (error) {
-        const responseError = error?.response?.data;
-        alert(responseError);
+        console.error("Error: ", error);
+        toast.error("Register failed!");
       } finally {
         setIsLoading(false); // Kết thúc loading
       }

@@ -43,6 +43,9 @@ const AddFish = React.lazy(() =>
 const UpdateFish = React.lazy(() =>
   import("../pages/Private/member/fish/UpdateFish")
 );
+const Feedback = React.lazy(() =>
+  import("../pages/Private/member/myAppointment/Feedback")
+);
 
 // VET
 const Vet = React.lazy(() => import("../pages/Private/vet/Vet"));
@@ -203,6 +206,15 @@ const PrivateRoutes = [
             element: (
               <ProtectedRoutes allowedRoles="USER">
                 <LoadLazy children={<PaymentPage />} />
+              </ProtectedRoutes>
+            ),
+          },
+
+          {
+            path: path.FEEDBACK,
+            element: (
+              <ProtectedRoutes allowedRoles="USER">
+                <LoadLazy children={<Feedback />} />
               </ProtectedRoutes>
             ),
           },

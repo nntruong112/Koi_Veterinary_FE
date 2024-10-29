@@ -8,6 +8,7 @@ import {
   getAllAppointmentType,
   getAllSchedule,
   getUserByRole,
+  totalIncome,
 } from "../../services/adminService";
 
 const adminSlice = createSlice({
@@ -110,7 +111,7 @@ const adminSlice = createSlice({
       });
 
     builder
-      // confirm appointment
+      // get all schedule
       .addCase(getAllSchedule.pending, (state) => {
         state.status = status.PENDING;
       })
@@ -135,6 +136,21 @@ const adminSlice = createSlice({
         state.data = { ...state.data, countByRole: action.payload };
       })
       .addCase(countByRole.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // total income
+      .addCase(totalIncome.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(totalIncome.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+
+        state.data = { ...state.data, totalIncome: action.payload };
+      })
+      .addCase(totalIncome.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });
