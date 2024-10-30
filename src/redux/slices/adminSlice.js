@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../utils/status";
 import {
   confirmAppointment,
+  countAppointmentType,
   countByRole,
   createVetAccount,
   getAllAppointment,
@@ -29,8 +30,22 @@ const adminSlice = createSlice({
       };
     },
 
+    saveCountAppointmentType: (state, action) => {
+      state.status = status.SUCCESSFULLY;
+
+      state.data.countAppointmentType = action.payload;
+    },
+
     clearAdmin: (state) => {
       state.data = null;
+    },
+
+    setSelectedAppointment: (state, action) => {
+      state.data = { ...state.data, selectedAppointment: action.payload };
+    },
+
+    clearSelectedAppointment: (state) => {
+      state.data.selectedAppointment = null;
     },
   },
 
@@ -154,9 +169,30 @@ const adminSlice = createSlice({
         state.status = status.FAILED;
         state.error = action.error.message;
       });
+
+    builder
+      // count appointment type
+      .addCase(countAppointmentType.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(countAppointmentType.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+
+        state.data = { ...state.data, countAppointmentType: action.payload };
+      })
+      .addCase(countAppointmentType.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { saveCount, clearAdmin } = adminSlice.actions;
+export const {
+  saveCount,
+  clearAdmin,
+  setSelectedAppointment,
+  clearSelectedAppointment,
+  saveCountAppointmentType,
+} = adminSlice.actions;
 
 export default adminSlice.reducer;

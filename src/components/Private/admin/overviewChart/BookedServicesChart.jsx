@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   PieChart,
   Pie,
@@ -6,15 +8,11 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-
-const categoryData = [
-  { name: "Emergency Consultation", value: 4500 },
-  { name: "Dental Cleaning", value: 3200 },
-  { name: "Ultrasound Diagnostic Testing", value: 2800 },
-  { name: "General Consultation", value: 2100 },
-  { name: "Vaccination Appointment", value: 1900 },
-  { name: "Surgery Consultation", value: 1900 },
-];
+import {
+  countAppointmentType,
+  getAllAppointmentType,
+} from "../../../../services/adminService";
+import { saveCountAppointmentType } from "../../../../redux/slices/adminSlice";
 
 const COLORS = [
   "#6366F1",
@@ -53,23 +51,64 @@ const renderCustomizedLabel = ({
 };
 
 const BookedServicesChart = () => {
+  const dispatch = useDispatch();
+  const countData =
+    useSelector((state) => state.admin.data?.countAppointmentType) || [];
+  const typeList = useSelector((state) => state.admin.data?.typeList) || [];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Lấy danh sách các loại dịch vụ
+      await dispatch(getAllAppointmentType());
+
+      // Đảm bảo typeList đã có dữ liệu trước khi đếm
+      if (typeList.length > 0) {
+        const countDataPromises = typeList.map(async (type) => {
+          const countResult = await dispatch(
+            countAppointmentType(type.appointmentTypeId)
+          );
+          return {
+            name: type.appointmentService,
+            value: countResult.payload || 0,
+          };
+        });
+
+        // Chờ tất cả các giá trị đếm được lấy
+        const updatedCountData = await Promise.all(countDataPromises);
+
+        // Lưu dữ liệu đếm đã cập nhật vào Redux
+        await dispatch(saveCountAppointmentType(updatedCountData));
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  // Kiểm tra và đảm bảo countData là một mảng
+  if (!Array.isArray(countData)) {
+    console.error("countData is not an array", countData);
+    return null;
+  }
+
+  // Lọc dữ liệu để chỉ lấy các mục có giá trị lớn hơn 0
+  const filteredCountData = countData.filter((item) => item.value > 0);
+
   return (
     <div className="bg-white backdrop-blur-md shadow-lg rounded-xl p-6 border w-full">
-      <h2 className="text-lg font-medium mb-2">Category Distribution</h2>
+      <h2 className="text-lg font-medium mb-2">Services Distribution</h2>
       <div className="h-80">
         <ResponsiveContainer width={"100%"} height={"100%"}>
           <PieChart>
             <Pie
-              data={categoryData}
+              data={filteredCountData}
               cx={"50%"}
               cy={"50%"}
               labelLine={false}
               outerRadius={120}
-              fill="#8884d8"
               dataKey="value"
               label={renderCustomizedLabel}
             >
-              {categoryData.map((entry, index) => (
+              {filteredCountData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
@@ -84,4 +123,5 @@ const BookedServicesChart = () => {
     </div>
   );
 };
+
 export default BookedServicesChart;

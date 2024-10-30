@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { assets } from "../../../../assets/assets";
 import { useDispatch, useSelector } from "react-redux";
 import { getVetByRole } from "../../../../services/userService";
-import { toast } from "react-toastify";
-import { getAllBookingSchedule } from "../../../../services/bookingService";
+import {
+  getAllBookingSchedule,
+  getSpeciality,
+} from "../../../../services/bookingService";
 import { updateValidVets } from "../../../../redux/slices/bookingSlice";
 
 const availableTimes = [
@@ -55,6 +57,7 @@ const VetForm = ({ updateFormData }) => {
     return weekdayNames[date.getDay()];
   };
 
+  // Lọc ra các bác sĩ làm việc trong ngày mà khách hàng đặt
   const getValidVetsForDate = () => {
     if (!formData.appointmentDate) return [];
 
@@ -78,6 +81,7 @@ const VetForm = ({ updateFormData }) => {
     }
   }, [formData.appointmentDate, bookingSchedule, dispatch]);
 
+  // Xử lý việc chọn bác sĩ khi cần
   const handleDoctorSelect = (vet) => {
     setSelectedDoctor(vet);
     updateFormData({
@@ -86,18 +90,21 @@ const VetForm = ({ updateFormData }) => {
     });
   };
 
+  // Ghi nhận thay đổi khi chọn giờ bắt đầu
   const handleStartTimeChange = (event) => {
     const time = event.target.value;
     setStartTime(time);
     updateFormData({ startTime: time });
   };
 
+  // Ghi nhận thay đổi khi chọn giừo kết thúc
   const handleEndTimeChange = (e) => {
     const time = e.target.value;
     setEndTime(time);
     updateFormData({ endTime: time });
   };
 
+  // Set up các thông tin đã chọn về trạng thái ban đầu
   const handleClearDoctorSelection = () => {
     setSelectedDoctor(null);
     updateFormData({
@@ -108,45 +115,12 @@ const VetForm = ({ updateFormData }) => {
     });
   };
 
-  const getValidStartTimes = () => {
-    if (!formData.appointmentDate) return [];
-
-    // Chuyển appointmentDate thành tên ngày trong tuần
-    const appointmentDayName = getWeekdayName(formData.appointmentDate);
-
-    // Nếu không có bác sĩ được chọn, trả về danh sách giờ làm việc chung của tất cả bác sĩ
-    if (!selectedDoctor) {
-      const generalSchedule = bookingSchedule.find(
-        (schedule) => schedule.availableDate === appointmentDayName
-      );
-
-      return generalSchedule?.availableTimes || availableTimes;
-    }
-
-    // Nếu có bác sĩ được chọn, tìm lịch làm việc của bác sĩ đó
-    const vetSchedule = bookingSchedule.find(
-      (schedule) =>
-        schedule.veterinarianProfiles.some(
-          (profile) =>
-            profile.veterinarianProfilesId ===
-            selectedDoctor.veterinarianProfilesId
-        ) && schedule.availableDate === appointmentDayName
-    );
-
-    if (!vetSchedule) {
-      toast.error("This doctor is not available on the selected date.");
-      return [];
-    }
-
-    // Trả về danh sách giờ làm việc của bác sĩ nếu có
-    return vetSchedule.availableTimes || availableTimes;
-  };
-
+  // Chỉ lấy giờ kết thúc hợp lệ
   const getValidEndTimes = () => {
     return availableTimes.filter((time) => time > startTime);
   };
 
-  // Hàm đinhj dạng đơn vị tiền tệ
+  // Hàm định dạng đơn vị tiền tệ
   const formatPrice = (price) => {
     return price
       ? price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })
@@ -171,20 +145,22 @@ const VetForm = ({ updateFormData }) => {
           </button>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 gap-6">
           {getValidVetsForDate().map((vet) => {
             // Tìm ảnh của bác sĩ từ mảng vets dựa vào userId
             const vetImage =
               vets.find((v) => v.userId === vet.userId)?.image ||
               assets.DefaultAvatar;
 
-            console.log(vet.veterinarianProfilesId);
-            console.log(selectedDoctor?.userId);
+            // Tìm specialty ứng với bác sĩ
+            const vetSpeciality = vets.find(
+              (v) => v.userId === vet.userId
+            )?.fishSpecialty;
 
             return (
               <div
                 key={vet.veterinarianProfilesId}
-                className={`p-4 border rounded-lg shadow-lg cursor-pointer ${
+                className={`p-4 border rounded-lg shadow-lg cursor-pointer flex items-center gap-4 ${
                   selectedDoctor?.userId === vet.userId
                     ? "border-primary"
                     : "border-gray-200"
@@ -194,9 +170,27 @@ const VetForm = ({ updateFormData }) => {
                 <img
                   src={vetImage}
                   alt="Vet"
-                  className="w-20 h-28 rounded-lg object-cover"
+                  className="w-24 h-36 rounded-lg object-cover"
                 />
-                <h3 className="text-lg font-semibold mt-2">{`${vet.firstname} ${vet.lastname}`}</h3>
+                <div className="w-full flex flex-col gap-2">
+                  <h3 className="text-xl font-semibold mt-2 text-center">{`${vet.firstname} ${vet.lastname}`}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <p className="font-semibold">Specialty name:</p>
+                    <span>
+                      {vetSpeciality?.fishSpecialtyName || "No available"}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <p className="font-semibold">Category:</p>
+                    <span>{vetSpeciality?.category || "No available"}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <p className="font-semibold">Description:</p>
+                    <span>
+                      {vetSpeciality?.description || "No description available"}
+                    </span>
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -221,7 +215,7 @@ const VetForm = ({ updateFormData }) => {
                   Select Start Time
                 </option>
 
-                {getValidStartTimes().map((time) => (
+                {availableTimes.map((time) => (
                   <option key={time} value={time}>
                     {time}
                   </option>
