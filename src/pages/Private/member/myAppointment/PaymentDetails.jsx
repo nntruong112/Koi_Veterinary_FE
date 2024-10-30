@@ -1,14 +1,16 @@
 // PaymentDetailsPage.jsx
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { assets } from "../../../../assets/assets";
+import { path } from "../../../../utils/constant";
 
 const PaymentDetailsPage = () => {
   const { paymentId } = useParams(); // Lấy paymentId từ URL
   const [payment, setPayment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Sử dụng useNavigate cho điều hướng
 
   useEffect(() => {
     // Gọi API để lấy thông tin thanh toán
@@ -90,7 +92,7 @@ const PaymentDetailsPage = () => {
             <strong>Amount:</strong> {payment.amountValue.toLocaleString()} VND
           </p>
           <p className="text-gray-700">
-            <strong>Payment Date:</strong> {formatDate(payment.vnp_PayDate)}
+            <strong>Payment Date:</strong> {payment.vnp_PayDate}
           </p>
           <p className="text-gray-700">
             <strong>Order Type:</strong> {payment.orderType}
@@ -110,6 +112,14 @@ const PaymentDetailsPage = () => {
           <p className="text-sm text-gray-500">
             Thank you for using our service!
           </p>
+        </div>
+        <div className="mt-8 text-center">
+          <button
+            className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
+            onClick={() => navigate(`${path.MEMBER}/${path.MY_APPOINTMENT}`)}
+          >
+            Back to My Appointments
+          </button>
         </div>
       </div>
     </div>
