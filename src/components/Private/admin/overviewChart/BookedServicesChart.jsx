@@ -54,7 +54,7 @@ const renderCustomizedLabel = ({
 
 const BookedServicesChart = () => {
   return (
-    <div className="bg-white backdrop-blur-md shadow-lg rounded-xl p-6 border">
+    <div className="bg-white backdrop-blur-md shadow-lg rounded-xl p-6 border w-full">
       <h2 className="text-lg font-medium mb-2">Category Distribution</h2>
       <div className="h-80">
         <ResponsiveContainer width={"100%"} height={"100%"}>

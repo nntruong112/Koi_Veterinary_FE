@@ -157,3 +157,15 @@ export const createFeedback = createAsyncThunk(
     }
   }
 );
+
+export const getAllFeedback = createAsyncThunk(
+  "feedbacks/getAllFeedback",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("feedbacks");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);

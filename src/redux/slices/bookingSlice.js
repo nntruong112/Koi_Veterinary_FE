@@ -5,6 +5,7 @@ import {
   createInvoice,
   createPayment,
   getAllBookingSchedule,
+  getSpeciality,
 } from "../../services/bookingService";
 
 const bookingSlice = createSlice({
@@ -117,6 +118,21 @@ const bookingSlice = createSlice({
         state.data = { ...state.data, bookingSchedule: action.payload };
       })
       .addCase(getAllBookingSchedule.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get all vet speciality
+      .addCase(getSpeciality.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(getSpeciality.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+
+        state.data = { ...state.data, vetSpeciality: action.payload };
+      })
+      .addCase(getSpeciality.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

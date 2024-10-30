@@ -11,6 +11,7 @@ export const path = {
   PRICING: "/pricing",
   CONTACT: "/contact",
   LOGIN_ROLE: "/login-role",
+  FORGOT_PASSWORD: "/reset-password",
 
   // ADMIN
   ADMIN: "/admin",
@@ -33,12 +34,12 @@ export const path = {
   HEALTH_RECORD: "health-records-view",
   PAYMENT_PAGE: "payment-page",
   PAYMENT_DETAILS: "payment-details/:paymentId",
-
   BOOKING: "/booking",
   INFO: "/info/:vetId",
   APPOINTMENT_BOOKING: "/appointment-booking",
   UPDATE_FISH: "update-fish",
   CHAT: "/chat",
+  FEEDBACK: "feedback",
 
   // VET
   VET: "/vet",

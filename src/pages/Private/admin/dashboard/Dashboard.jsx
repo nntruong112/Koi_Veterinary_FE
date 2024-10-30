@@ -7,7 +7,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col w-full px-10 py-5">
       <SummaryCard />
-      <div className="grid grid-cols-2 gap-8 mt-10">
+      <div className="flex flex-col items-center gap-8 mt-10">
         <OverviewChart />
         <BookedServicesChart />
       </div>

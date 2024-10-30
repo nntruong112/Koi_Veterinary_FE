@@ -182,6 +182,14 @@ const MyAppointment = () => {
     });
   };
 
+  const handFeedback = () => {
+    setIsOutletOpen(true);
+    setIsLoading(true);
+    navigate(path.FEEDBACK, {
+      state: { selectedAppointment: selectedAppointment },
+    });
+  };
+
   if (selectedAppointment) {
     return (
       <div className="p-5">
@@ -228,7 +236,18 @@ const MyAppointment = () => {
           </div>
 
           {selectedAppointment.paymentStatus === "paid" ? (
-            ""
+            <div className="flex flex-col w-1/5">
+              <button
+                onClick={handFeedback}
+                className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
+              >
+                {isLoading ? (
+                  <ClipLoader size={20} color={"#ffffff"} loading={isLoading} />
+                ) : (
+                  "Feedback"
+                )}
+              </button>
+            </div>
           ) : (
             <div className="flex flex-col w-1/5">
               <button
@@ -305,14 +324,12 @@ const MyAppointment = () => {
               </td>
 
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.paymentStatus !== "paid" && (
-                  <button
-                    onClick={() => handleViewDetail(appointment)}
-                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                  >
-                    View detail
-                  </button>
-                )}
+                <button
+                  onClick={() => handleViewDetail(appointment)}
+                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                >
+                  View detail
+                </button>
               </td>
             </tr>
           ))}

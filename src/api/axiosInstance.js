@@ -18,9 +18,13 @@ export const setupInterceptor = () => {
 
       if (
         token &&
-        !["/auth/login", "/users/register", "googles/login-google"].includes(
-          config.url
-        )
+        ![
+          "/auth/login",
+          "/users/register",
+          "googles/login-google",
+          "users/forgot-password",
+          "users/reset-password",
+        ].includes(config.url)
       ) {
         // Bỏ qua login và register
         config.headers["Authorization"] = `Bearer ${token}`;

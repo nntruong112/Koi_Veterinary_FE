@@ -2,7 +2,7 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import NotFound from "../pages/Public/notFound/NotFound";
-import { Route } from "react-router-dom";
+// import ProtectedResetPasswordRoutes from "./ProtectedResetPasswordRoutes";
 
 const Home = React.lazy(() => import("../pages/Public/home/Home"));
 const Login = React.lazy(() => import("../pages/Public/login/Login"));
@@ -26,6 +26,11 @@ const LoginRole = React.lazy(() =>
 const AppointmentBooking = React.lazy(() =>
   import("../pages/Public/appointmentBooking/AppointmentBooking")
 );
+
+const ForgotPassword = React.lazy(() =>
+  import("../pages/Public/forgotPassword/ForgotPassword")
+);
+
 const PublicRoutes = [
   { path: path.HOME, element: <LoadLazy children={<Home />} /> },
   { path: path.LOGIN, element: <LoadLazy children={<Login />} /> },
@@ -51,6 +56,21 @@ const PublicRoutes = [
   { path: path.CONTACT, element: <LoadLazy children={<Contact />} /> },
 
   { path: path.LOGIN_ROLE, element: <LoadLazy children={<LoginRole />} /> },
+
+  // {
+  //   path: path.FORGOT_PASSWORD,
+  //   element: (
+  //     <ProtectedResetPasswordRoutes>
+  //       <LoadLazy children={<ForgotPassword />} />
+  //     </ProtectedResetPasswordRoutes>
+  //   ),
+  // },
+
+  {
+    path: path.FORGOT_PASSWORD,
+    element: <LoadLazy children={<ForgotPassword />} />,
+  },
+
   { path: "*", element: <LoadLazy children={<NotFound />} /> },
 ];
 

@@ -104,3 +104,27 @@ export const countByRole = createAsyncThunk(
     }
   }
 );
+
+export const totalIncome = createAsyncThunk(
+  "appointments/total-income",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("appointments/total-income");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const countService = createAsyncThunk(
+  "appointments/count",
+  async (_, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get("appointments/count");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
