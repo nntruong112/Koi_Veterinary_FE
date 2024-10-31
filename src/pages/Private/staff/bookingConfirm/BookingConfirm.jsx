@@ -61,13 +61,18 @@ const BookingConfirm = () => {
   const handleConfirm = async (appointment) => {
     const updateData = {
       appointmentDate: appointment.appointmentDate,
-      appointmentTypeId: appointment.appointmentTypeId,
+      appointmentTypeId: appointment.appointmentType.appointmentTypeId,
       location: appointment.location,
       startTime: appointment.startTime,
       endTime: appointment.endTime,
       paymentStatus: appointment.paymentStatus,
+      customerId: appointment.customer.userId,
+      veterinarianId: appointment.veterinarian.userId,
+      fishId: appointment.fish.fishId,
       status: "Approved",
     };
+
+    console.log(updateData);
 
     try {
       await dispatch(
@@ -89,11 +94,14 @@ const BookingConfirm = () => {
   const handleSendToVet = async (appointment) => {
     const updateData = {
       appointmentDate: appointment.appointmentDate,
-      appointmentTypeId: appointment.appointmentTypeId,
+      appointmentTypeId: appointment.appointmentType.appointmentTypeId,
       location: appointment.location,
       startTime: appointment.startTime,
       endTime: appointment.endTime,
       paymentStatus: appointment.paymentStatus,
+      customerId: appointment.customer.userId,
+      veterinarianId: appointment.veterinarian.userId,
+      fishId: appointment.fish.fishId,
       status: "In service",
     };
 
@@ -180,7 +188,7 @@ const BookingConfirm = () => {
               <td className="px-3 py-4 whitespace-normal">
                 <p
                   className={`w-16 rounded-full text-white p-2 text-sm text-center ml-5 ${
-                    appointment.paymentStatus === "unpaid"
+                    appointment.paymentStatus === "Unpaid"
                       ? "bg-red-500"
                       : "bg-green-500"
                   }`}
@@ -191,7 +199,10 @@ const BookingConfirm = () => {
               <td className="px-3 py-4 whitespace-normal flex items-center gap-2">
                 {appointment.status === "Approved" ? (
                   <button
-                    onClick={() => handleSendToVet(appointment)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Ngăn sự kiện lan truyền
+                      handleSendToVet(appointment);
+                    }}
                     className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
                   >
                     Send to vet
@@ -201,19 +212,15 @@ const BookingConfirm = () => {
                   ""
                 ) : (
                   <button
-                    onClick={() => handleConfirm(appointment)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Ngăn sự kiện lan truyền
+                      handleConfirm(appointment);
+                    }}
                     className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
                   >
                     Confirm
                   </button>
                 )}
-
-                {/* <button
-                  onClick={() => handleUpdate(appointment)}
-                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                >
-                  Update
-                </button> */}
               </td>
             </tr>
           ))}
