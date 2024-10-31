@@ -49,49 +49,52 @@ const HealthRecordPage = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg shadow-md">
-      <div className="flex justify-end">
+    <div className="p-6 bg-white rounded-lg shadow-lg">
+      <div className="flex justify-end mb-4">
         <button
           onClick={handleCloseClick}
-          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg p-2 "
+          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg p-2 transition duration-300 ease-in-out"
         >
           <AiOutlineClose />
         </button>
       </div>
-      <h1 className="text-2xl font-bold text-center mb-4">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
         Fish Health Records
       </h1>
-      <table className="min-w-full border border-gray-300">
+      <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
         <thead className="bg-gray-200">
           <tr>
-            <th className="border border-gray-300 px-4 py-2">Record ID</th>
-            <th className="border border-gray-300 px-4 py-2">Creation Date</th>
-            <th className="border border-gray-300 px-4 py-2">Diagnosis</th>
-            <th className="border border-gray-300 px-4 py-2">Treatment</th>
-            <th className="border border-gray-300 px-4 py-2">Medicine</th>
-            <th className="border border-gray-300 px-4 py-2">Veterinarian</th>
+            <th className="border-b border-gray-300 px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">
+              Creation Date
+            </th>
+            <th className="border-b border-gray-300 px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">
+              Diagnosis
+            </th>
+            <th className="border-b border-gray-300 px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">
+              Treatment
+            </th>
+            <th className="border-b border-gray-300 px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase">
+              Medicine
+            </th>
           </tr>
         </thead>
         <tbody>
           {healthRecords.map((record) => (
-            <tr key={record.healthRecordId} className="hover:bg-gray-100">
-              <td className="border border-gray-300 px-4 py-2">
-                {record.healthRecordId}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
+            <tr
+              key={record.healthRecordId}
+              className="hover:bg-gray-100 transition duration-300"
+            >
+              <td className="border-b border-gray-300 px-6 py-4 text-sm text-gray-700">
                 {record.createdDate}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border-b border-gray-300 px-6 py-4 text-sm text-gray-700">
                 {record.diagnosis}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border-b border-gray-300 px-6 py-4 text-sm text-gray-700">
                 {record.treatment}
               </td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td className="border-b border-gray-300 px-6 py-4 text-sm text-gray-700">
                 {record.medicine || "None"}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {record.veterinarianId?.veterinarian.username || "Unknown"}
               </td>
             </tr>
           ))}
