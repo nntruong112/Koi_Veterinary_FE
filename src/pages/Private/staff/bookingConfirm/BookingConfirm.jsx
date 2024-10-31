@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   confirmAppointment,
   getAllAppointment,
+  getAllAppointmentType,
+  getAllSchedule,
 } from "../../../../services/adminService";
 
 import { toast } from "react-toastify";
@@ -10,8 +12,10 @@ import {
   clearSelectedAppointment,
   setSelectedAppointment,
 } from "../../../../redux/slices/adminSlice";
-import TextInput from "../../../../components/Private/member/inputForm.jsx/TextInput";
+
 import { FaArrowLeft } from "react-icons/fa6";
+import AppointmentUpdateForm from "../../../../components/Private/staff/appointmentUpdateForm/AppointmentUpdateForm";
+import { getVetByRole } from "../../../../services/userService";
 
 const BookingConfirm = () => {
   const dispatch = useDispatch();
@@ -23,10 +27,14 @@ const BookingConfirm = () => {
     (state) => state.admin.data?.selectedAppointment
   );
 
-  const updateFormData = useState({});
-
   useEffect(() => {
-    dispatch(getAllAppointment());
+    const fetchData = async () => {
+      await dispatch(getAllAppointment());
+      await dispatch(getAllAppointmentType());
+      await dispatch(getVetByRole());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   // Hàm sắp xếp cuộc hẹn theo appointmentDate
@@ -106,39 +114,6 @@ const BookingConfirm = () => {
     }
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-
-    const updateData = {
-      appointmentDate: selectedAppointment.appointmentDate,
-      appointmentTypeId: selectedAppointment.appointmentTypeId,
-      location: selectedAppointment.location,
-      startTime: selectedAppointment.startTime,
-      endTime: selectedAppointment.endTime,
-      paymentStatus: selectedAppointment.paymentStatus,
-      status: selectedAppointment.status,
-    };
-
-    try {
-      await dispatch(
-        confirmAppointment({
-          appointmentId: selectedAppointment.appointmentId,
-          updateData: updateData,
-        })
-      );
-
-      toast.success("Send this appointment successfully");
-    } catch (error) {
-      console.log("Error while updating", error);
-      toast.error("Update failed!");
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSelectedAppointment({ ...selectedAppointment, [name]: value });
-  };
-
   if (selectedAppointment) {
     return (
       <div className="p-5">
@@ -149,30 +124,7 @@ const BookingConfirm = () => {
           />
           <h2 className="text-2xl font-semibold mb-4">Appointment Details</h2>
         </div>
-
-        <div className="flex flex-row min-h-screen w-full gap-8 p-8">
-          <form
-            onSubmit={handleUpdate}
-            className="w-full h-1/2 p-10 rounded-3xl shadow-lg border-gray-200 border bg-white"
-          >
-            <div className="flex flex-col gap-4">
-              <TextInput
-                label="Appointment Date"
-                name="appointmentDate"
-                type="date"
-                value={selectedAppointment.appointmentDate}
-                onChange={handleChange}
-              />
-
-              <button
-                type="submit"
-                className="bg-primary text-white font-semibold p-2 w-28 hover:bg-primary/80 mt-6"
-              >
-                Save
-              </button>
-            </div>
-          </form>
-        </div>
+        <AppointmentUpdateForm onBackToList={handleBackToList} />
       </div>
     );
   }
@@ -205,9 +157,11 @@ const BookingConfirm = () => {
                 {appointment.appointmentDate}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.appointmentType?.appointmentService}
+                {appointment.appointmentType.appointmentService}
               </td>
-              <td className="px-3 py-4 whitespace-normal">{`${appointment.veterinarian.firstname} ${appointment.veterinarian.lastname}`}</td>
+              <td className="px-3 py-4 whitespace-normal">
+                {`${appointment.veterinarian.firstname} ${appointment.veterinarian.lastname}`}
+              </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.location}
               </td>
@@ -218,7 +172,7 @@ const BookingConfirm = () => {
                 {appointment.endTime}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {`${appointment.customer?.firstname} ${appointment.customer?.lastname}`}
+                {`${appointment.customer.firstname} ${appointment.customer.lastname}`}
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.status}

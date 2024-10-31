@@ -25,6 +25,18 @@ export const createVetAccount = createAsyncThunk(
   }
 );
 
+export const createStaffAccount = createAsyncThunk(
+  "users/create/staff",
+  async (user, thunkAPI) => {
+    try {
+      const response = await BASE_URL.post("users/create/staff", user);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const getAllAppointment = createAsyncThunk(
   "appointments/getAllAppointment",
   async (_, thunkAPI) => {
@@ -122,6 +134,33 @@ export const countAppointmentType = createAsyncThunk(
       const response = await BASE_URL.get(
         `appointments/count/${appointmentTypeId}`
       );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const createSpecialty = createAsyncThunk(
+  "fish_specialties/create",
+  async (specialtyData, thunkAPI) => {
+    try {
+      const response = await BASE_URL.post(
+        "fish_specialties/create",
+        specialtyData
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const getIncomeByMonth = createAsyncThunk(
+  "payments/getIncomeByMonth",
+  async (month, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get(`payments/amount-in-month/${month}`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data);

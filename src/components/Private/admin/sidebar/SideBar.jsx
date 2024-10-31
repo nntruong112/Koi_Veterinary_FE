@@ -90,7 +90,9 @@ const SideBar = () => {
               }
             >
               <IoAddCircle />
-              <span className="flex-1 ms-3 whitespace-nowrap">Add New Vet</span>
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Create account
+              </span>
             </NavLink>
           </li>
 

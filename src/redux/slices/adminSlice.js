@@ -4,10 +4,13 @@ import {
   confirmAppointment,
   countAppointmentType,
   countByRole,
+  createSpecialty,
+  createStaffAccount,
   createVetAccount,
   getAllAppointment,
   getAllAppointmentType,
   getAllSchedule,
+  getIncomeByMonth,
   getUserByRole,
   totalIncome,
 } from "../../services/adminService";
@@ -34,6 +37,12 @@ const adminSlice = createSlice({
       state.status = status.SUCCESSFULLY;
 
       state.data.countAppointmentType = action.payload;
+    },
+
+    saveIncomeByMonth: (state, action) => {
+      state.status = status.SUCCESSFULLY;
+
+      state.data.getIncomeByMonth = action.payload;
     },
 
     clearAdmin: (state) => {
@@ -76,6 +85,21 @@ const adminSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(createVetAccount.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // create staff account
+      .addCase(createStaffAccount.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(createStaffAccount.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = action.payload;
+      })
+      .addCase(createStaffAccount.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });
@@ -184,6 +208,34 @@ const adminSlice = createSlice({
         state.status = status.FAILED;
         state.error = action.error.message;
       });
+
+    builder
+      // create specialty
+      .addCase(createSpecialty.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(createSpecialty.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = action.payload;
+      })
+      .addCase(createSpecialty.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get income by month
+      .addCase(getIncomeByMonth.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(getIncomeByMonth.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, getIncomeByMonth: action.payload };
+      })
+      .addCase(getIncomeByMonth.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
   },
 });
 
@@ -193,6 +245,7 @@ export const {
   setSelectedAppointment,
   clearSelectedAppointment,
   saveCountAppointmentType,
+  saveIncomeByMonth,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

@@ -16,7 +16,7 @@ const ListAllVets = () => {
 
   return (
     <div className="relative overflow-x-auto rounded-2xl p-5">
-      <table className="w-full text-sm text-left text-gray-500 rounded-2xl dark:text-gray-400 overflow-y-scroll shadow-lg table-fixed">
+      <table className="w-full text-sm text-left bg-white text-gray-500 rounded-2xl dark:text-gray-400 overflow-y-scroll shadow-lg table-fixed">
         <thead className="text-sm text-gray-700 uppercase dark:text-gray-400 border-b bg-gray-200">
           <tr>
             <th className="px-3 py-3 rounded-tl-2xl">Last Name</th>

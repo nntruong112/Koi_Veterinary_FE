@@ -135,12 +135,15 @@ const MyAppointment = () => {
               <p className="text-red-600">
                 Please pay before starting consultant
               </p>
+            ) : selectedAppointment.location !== "Online" ? (
+              ""
             ) : (
               "Please click zalo for starting consultant"
             )}
           </div>
 
-          {selectedAppointment.paymentStatus === "paid" ? (
+          {selectedAppointment.paymentStatus !== "Unpaid" &&
+          selectedAppointment.location === "Online" ? (
             <div className="flex flex-col w-1/5">
               <button
                 onClick={handleZaloRedirect}
@@ -179,18 +182,22 @@ const MyAppointment = () => {
                     "Pay"
                   )}
                 </button>
+              ) : selectedAppointment.paymentStatus === "paid" ? (
+                ""
               ) : (
-                <button
-                  onClick={handlePayBefore}
-                  className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
-                >
-                  Pay
-                </button>
-              )}
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={handlePayBefore}
+                    className="w-full mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
+                  >
+                    Pay
+                  </button>
 
-              <button className="mt-4 mr-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-600/80">
-                Cancel
-              </button>
+                  <button className="w-full mt-4 mr-4 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-600/80">
+                    Cancel
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
