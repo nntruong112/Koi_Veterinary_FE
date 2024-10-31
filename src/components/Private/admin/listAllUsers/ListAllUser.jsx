@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { unwrapResult } from "@reduxjs/toolkit";
 import { getUserByRole } from "../../../../services/adminService";
 
 const ListAllUser = () => {
@@ -10,9 +8,7 @@ const ListAllUser = () => {
     useSelector((state) => state.admin.data?.users?.result) || [];
 
   useEffect(() => {
-    const userListAction = dispatch(getUserByRole());
-
-    unwrapResult(userListAction);
+    dispatch(getUserByRole());
   }, [dispatch]);
 
   return (

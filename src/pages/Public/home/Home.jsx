@@ -5,13 +5,12 @@ import { assets } from "../../../assets/assets";
 import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
 import Marquee from "react-fast-marquee";
 const Home = () => {
-  const handleZaloRedirect = () => {
-    window.open("https://zalo.me/0973141349", "_blank");
-  };
   return (
     <>
       <RolesNavbar />
+
       <Header />
+
       <section className="flex justify-normal py-8 bg-[#f5f2f2]">
         <div className="flex items-center flex-col gap-6 text-2xl text-center w-1/2  mb-1 text-[#3d3c3c]">
           <h2 className="font-bold">
@@ -56,15 +55,11 @@ const Home = () => {
           <img src={assets.RatingFb} />
         </div>
       </section>
+
       <Marquee>
         <img className="w-full h-28 py-3" src={assets.teemo} />
       </Marquee>
-      <button
-        onClick={handleZaloRedirect}
-        className="fixed bottom-5 right-5 z-50 rounded-full bg-primary/40 p-3"
-      >
-        <img src={assets.zalo_icon} alt="Zalo" className="w-12 h-12" />
-      </button>
+
       <Footer />
     </>
   );
