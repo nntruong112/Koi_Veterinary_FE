@@ -33,7 +33,7 @@ const ConfirmForm = () => {
       endTime: bookingData.endTime,
       fishId: bookingData.fishId,
       status: "Waiting",
-      paymentStatus: "Unpaid",
+      paymentStatus: "unpaid",
     };
 
     try {
