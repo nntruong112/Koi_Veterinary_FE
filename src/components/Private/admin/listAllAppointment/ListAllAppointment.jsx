@@ -1,25 +1,116 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAppointment } from "../../../../services/adminService";
+import {
+  confirmAppointment,
+  getAllAppointment,
+  getAllAppointmentType,
+} from "../../../../services/adminService";
+
+import { toast } from "react-toastify";
+import {
+  clearSelectedAppointment,
+  setSelectedAppointment,
+} from "../../../../redux/slices/adminSlice";
+
 import { FaArrowLeft } from "react-icons/fa6";
+import AppointmentUpdateForm from "../../../../components/Private/staff/appointmentUpdateForm/AppointmentUpdateForm";
+import { getVetByRole } from "../../../../services/userService";
 
 const ListAllAppointment = () => {
   const dispatch = useDispatch();
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   const appointmentList =
-    useSelector((state) => state.admin.data.appointmentList) || [];
+    useSelector((state) => state.admin.data?.appointmentList) || [];
+
+  const selectedAppointment = useSelector(
+    (state) => state.admin.data?.selectedAppointment
+  );
 
   useEffect(() => {
-    dispatch(getAllAppointment());
+    const fetchData = async () => {
+      await dispatch(getAllAppointment());
+      await dispatch(getAllAppointmentType());
+      await dispatch(getVetByRole());
+    };
+
+    fetchData();
   }, [dispatch]);
 
+  // Hàm sắp xếp cuộc hẹn theo appointmentDate
+  const sortedAppointmentList = [...appointmentList].sort((a, b) => {
+    const isActionAvailableA =
+      a.status === "Waiting" || a.status === "Approved";
+    const isActionAvailableB =
+      b.status === "Waiting" || b.status === "Approved";
+
+    if (isActionAvailableA && !isActionAvailableB) return -1;
+    if (!isActionAvailableA && isActionAvailableB) return 1;
+
+    return 0;
+  });
+
   const handleViewDetail = (appointment) => {
-    setSelectedAppointment(appointment);
+    dispatch(setSelectedAppointment(appointment));
   };
 
   const handleBackToList = () => {
-    setSelectedAppointment(null);
+    dispatch(clearSelectedAppointment());
+  };
+
+  const handleConfirm = async (appointment) => {
+    const updateData = {
+      appointmentDate: appointment.appointmentDate,
+      appointmentTypeId: appointment.appointmentTypeId,
+      location: appointment.location,
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      paymentStatus: appointment.paymentStatus,
+      status: "Approved",
+    };
+
+    try {
+      await dispatch(
+        confirmAppointment({
+          appointmentId: appointment.appointmentId,
+          updateData: updateData,
+        })
+      );
+
+      toast.success("Confirm successfully");
+
+      dispatch(getAllAppointment());
+    } catch (error) {
+      console.log("Error while updating", error);
+      toast.error("Confirm fail!");
+    }
+  };
+
+  const handleSendToVet = async (appointment) => {
+    const updateData = {
+      appointmentDate: appointment.appointmentDate,
+      appointmentTypeId: appointment.appointmentTypeId,
+      location: appointment.location,
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
+      paymentStatus: appointment.paymentStatus,
+      status: "In service",
+    };
+
+    try {
+      await dispatch(
+        confirmAppointment({
+          appointmentId: appointment.appointmentId,
+          updateData: updateData,
+        })
+      );
+
+      toast.success("Send this appointment successfully");
+
+      dispatch(getAllAppointment());
+    } catch (error) {
+      console.log("Error while updating", error);
+      toast.error("Send to vet fail!");
+    }
   };
 
   if (selectedAppointment) {
@@ -32,71 +123,43 @@ const ListAllAppointment = () => {
           />
           <h2 className="text-2xl font-semibold mb-4">Appointment Details</h2>
         </div>
-
-        <div className="w-full border rounded-xl p-5 shadow-lg  text-lg">
-          <div className="grid grid-cols-3 gap-y-5 gap-x-10">
-            <p>
-              <strong>Date: </strong> {selectedAppointment.appointmentDate}
-            </p>
-            <p>
-              <strong>Service: </strong>
-              {selectedAppointment.appointmentType.appointmentService}
-            </p>
-            <p>
-              <strong>Location: </strong> {selectedAppointment.location}
-            </p>
-            <p>
-              <strong>Start Time: </strong> {selectedAppointment.startTime}
-            </p>
-            <p>
-              <strong>End Time: </strong> {selectedAppointment.endTime}
-            </p>
-            <p>
-              <strong>Status: </strong> {selectedAppointment.status}
-            </p>
-            <p>
-              <strong>Veterinarian: </strong>
-              {`${selectedAppointment.veterinarian?.firstname} ${selectedAppointment.veterinarian?.lastname}`}
-            </p>
-            <p>
-              <strong>Fish: </strong> {selectedAppointment.fish?.species}
-            </p>
-            <p>
-              <strong>Payment status: </strong>
-              {selectedAppointment.paymentStatus}
-            </p>
-          </div>
-        </div>
+        <AppointmentUpdateForm onBackToList={handleBackToList} />
       </div>
     );
   }
 
   return (
     <div className="relative overflow-x-auto rounded-2xl p-5">
-      <table className="w-full text-base text-left text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-auto">
+      <table className="w-full text-base text-left bg-white text-gray-500 dark:text-gray-400 overflow-y-scroll shadow-lg rounded-2xl table-auto">
         <thead className="text-sm text-gray-700 uppercase dark:text-gray-400 border-b bg-gray-200">
           <tr>
             <th className="px-3 py-3 rounded-tl-2xl">Date</th>
             <th className="px-3 py-3">Service</th>
+            <th className="px-3 py-3">Vet's name</th>
             <th className="px-3 py-3">Location</th>
             <th className="px-3 py-3">Start time</th>
             <th className="px-3 py-3">End time</th>
+            <th className="px-3 py-3">Customer name</th>
             <th className="px-3 py-3">Status</th>
             <th className="px-3 py-3">Payment status</th>
             <th className="px-3 py-3 rounded-tr-2xl">Action</th>
           </tr>
         </thead>
         <tbody>
-          {appointmentList.map((appointment) => (
+          {sortedAppointmentList.map((appointment) => (
             <tr
               key={appointment.appointmentId}
-              className="border-b border-gray-200 dark:border-gray-700"
+              onClick={() => handleViewDetail(appointment)}
+              className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100"
             >
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.appointmentDate}
               </td>
               <td className="px-3 py-4 whitespace-normal">
-                {appointment.appointmentType?.appointmentService}
+                {appointment.appointmentType.appointmentService}
+              </td>
+              <td className="px-3 py-4 whitespace-normal">
+                {`${appointment.veterinarian.firstname} ${appointment.veterinarian.lastname}`}
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.location}
@@ -106,6 +169,9 @@ const ListAllAppointment = () => {
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.endTime}
+              </td>
+              <td className="px-3 py-4 whitespace-normal">
+                {`${appointment.customer.firstname} ${appointment.customer.lastname}`}
               </td>
               <td className="px-3 py-4 whitespace-normal">
                 {appointment.status}
@@ -121,13 +187,25 @@ const ListAllAppointment = () => {
                   {appointment.paymentStatus}
                 </p>
               </td>
-              <td className="px-3 py-4 whitespace-normal">
-                <button
-                  onClick={() => handleViewDetail(appointment)}
-                  className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                >
-                  View detail
-                </button>
+              <td className="px-3 py-4 whitespace-normal flex items-center gap-2">
+                {appointment.status === "Approved" ? (
+                  <button
+                    onClick={() => handleSendToVet(appointment)}
+                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                  >
+                    Send to vet
+                  </button>
+                ) : appointment.status !== "Approved" &&
+                  appointment.status !== "Waiting" ? (
+                  ""
+                ) : (
+                  <button
+                    onClick={() => handleConfirm(appointment)}
+                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
+                  >
+                    Confirm
+                  </button>
+                )}
               </td>
             </tr>
           ))}
