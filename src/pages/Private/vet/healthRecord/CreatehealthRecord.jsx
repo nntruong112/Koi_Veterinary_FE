@@ -151,10 +151,19 @@ const CreateHealthRecord = () => {
   const [selectedFishId, setSelectedFishId] = useState("");
   const [diagnosis, setDiagnosis] = useState("");
   const [treatment, setTreatment] = useState("");
+  const [selectedMedicine, setSelectedMedicine] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const token = useSelector((state) => state.auth.data?.token);
+
+  // Danh sách thuốc có sẵn tự tạo bên FE
+  const medicineOptions = [
+    { id: 1, name: "Antibiotic A" },
+    { id: 2, name: "Antibiotic B" },
+    { id: 3, name: "Vitamin C" },
+    // Thêm các loại thuốc khác nếu cần
+  ];
 
   // Fetch fish species and customer username
   useEffect(() => {
@@ -175,7 +184,7 @@ const CreateHealthRecord = () => {
           customerUsername: appointment.customer.username,
         }));
 
-        setFishList(fishDetails); // Save fish details with species and username
+        setFishList(fishDetails); // Lưu thông tin cá
       } catch (err) {
         setError("Failed to fetch fish list for appointments.");
       }
@@ -186,7 +195,7 @@ const CreateHealthRecord = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedFishId || !diagnosis || !treatment) {
+    if (!selectedFishId || !diagnosis || !selectedMedicine || !treatment) {
       setError("Please fill in all fields.");
       return;
     }
@@ -200,6 +209,7 @@ const CreateHealthRecord = () => {
           healthRecordId: null,
           createdDate: new Date().toISOString().split("T")[0],
           diagnosis,
+          medicine: selectedMedicine,
           treatment,
           fishId: selectedFishId,
           veterinarianId: vetId,
@@ -217,6 +227,11 @@ const CreateHealthRecord = () => {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      // Reset các field sau khi submit
+      setSelectedFishId("");
+      setDiagnosis("");
+      setTreatment("");
+      setSelectedMedicine("");
     }
   };
 
@@ -266,6 +281,23 @@ const CreateHealthRecord = () => {
             onChange={(e) => setTreatment(e.target.value)}
             required
           />
+        </div>
+
+        <div>
+          <label className="block font-medium mb-2">Select Medicine:</label>
+          <select
+            className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            value={selectedMedicine}
+            onChange={(e) => setSelectedMedicine(e.target.value)}
+            required
+          >
+            <option value="">-- Select Medicine --</option>
+            {medicineOptions.map((medicine) => (
+              <option key={medicine.id} value={medicine.name}>
+                {medicine.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

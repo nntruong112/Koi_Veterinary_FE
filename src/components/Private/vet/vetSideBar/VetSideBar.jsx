@@ -6,6 +6,7 @@ import { path } from "../../../../utils/constant";
 import { useSelector } from "react-redux";
 import { VscSignOut } from "react-icons/vsc";
 import { assets } from "../../../../assets/assets.js";
+import { LuActivitySquare, LuCalendar } from "react-icons/lu";
 
 const VetSideBar = () => {
   const location = useLocation();
@@ -56,7 +57,7 @@ const VetSideBar = () => {
                 }`
               }
             >
-              <RiCalendarScheduleFill />
+              <LuCalendar />
               <span className="flex-1 ms-3 whitespace-nowrap">Schedule</span>
             </NavLink>
           </li>
@@ -72,7 +73,8 @@ const VetSideBar = () => {
                 }`
               }
             >
-              <RiCalendarScheduleFill />
+              <LuActivitySquare />
+
               <span className="flex-1 ms-3 whitespace-nowrap">
                 Health Record
               </span>

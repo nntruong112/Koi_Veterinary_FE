@@ -1,38 +1,39 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { path } from "../../../../utils/constant";
+import { parsePath, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { path } from "../../../../utils/constant";
 
 const HealthRecordPage = () => {
   const [healthRecords, setHealthRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  // Fetching veterinarianId from Redux store
-
   const location = useLocation();
-  const fishId = location.state?.fishId; // Get fishId from state
-  console.log(fishId);
-  // Function to fetch health records based on fishId
+  const fishId = location.state?.fishId;
+
   const fetchHealthRecords = async (fishId) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/health_records/belonged_to_fishId/${fishId}`
       );
-      setHealthRecords(response.data);
+      console.log(response.data);
+      if (response.data && response.data.length > 0) {
+        setHealthRecords(response.data);
+      } else {
+        toast.info("No health records found for this fish.");
+      }
     } catch (err) {
-      setError(
+      toast.error(
         "This fish does not have health records, please booking appointment for this fish to have health record from us. Thank you."
       );
     } finally {
       setLoading(false);
     }
   };
+
   const handleCloseClick = () => {
     navigate(`${path.MEMBER}/${path.FISH}`);
   };
@@ -45,10 +46,6 @@ const HealthRecordPage = () => {
 
   if (loading) {
     return <div className="text-center py-4">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-red-500 text-center py-4">{error}</div>;
   }
 
   return (
@@ -71,6 +68,7 @@ const HealthRecordPage = () => {
             <th className="border border-gray-300 px-4 py-2">Creation Date</th>
             <th className="border border-gray-300 px-4 py-2">Diagnosis</th>
             <th className="border border-gray-300 px-4 py-2">Treatment</th>
+            <th className="border border-gray-300 px-4 py-2">Medicine</th>
             <th className="border border-gray-300 px-4 py-2">Veterinarian</th>
           </tr>
         </thead>
@@ -86,9 +84,11 @@ const HealthRecordPage = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {record.diagnosis}
               </td>
-
               <td className="border border-gray-300 px-4 py-2">
                 {record.treatment}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {record.medicine || "None"}
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 {record.veterinarianId?.veterinarian.username || "Unknown"}
