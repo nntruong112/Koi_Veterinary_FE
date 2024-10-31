@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { path } from "../../../../utils/constant";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
+import { ToastContainer } from "react-toastify";
 
 const HealthRecordPage = () => {
   const [healthRecords, setHealthRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Fetching veterinarianId from Redux store
-  const veterinarianId = useSelector((state) => state.users.data.result.userId);
 
   const location = useLocation();
   const fishId = location.state?.fishId; // Get fishId from state
-
+  console.log(fishId);
   // Function to fetch health records based on fishId
   const fetchHealthRecords = async (fishId) => {
     try {
@@ -22,10 +26,15 @@ const HealthRecordPage = () => {
       );
       setHealthRecords(response.data);
     } catch (err) {
-      setError("Unable to fetch health records.");
+      setError(
+        "This fish does not have health records, please booking appointment for this fish to have health record from us. Thank you."
+      );
     } finally {
       setLoading(false);
     }
+  };
+  const handleCloseClick = () => {
+    navigate(`${path.MEMBER}/${path.FISH}`);
   };
 
   useEffect(() => {
@@ -44,6 +53,14 @@ const HealthRecordPage = () => {
 
   return (
     <div className="p-6 bg-gray-50 rounded-lg shadow-md">
+      <div className="flex justify-end">
+        <button
+          onClick={handleCloseClick}
+          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg p-2 "
+        >
+          <AiOutlineClose />
+        </button>
+      </div>
       <h1 className="text-2xl font-bold text-center mb-4">
         Fish Health Records
       </h1>
@@ -69,16 +86,18 @@ const HealthRecordPage = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {record.diagnosis}
               </td>
+
               <td className="border border-gray-300 px-4 py-2">
                 {record.treatment}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {record.veterinarianId?.username || "Unknown"}
+                {record.veterinarianId?.veterinarian.username || "Unknown"}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 };
