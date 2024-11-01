@@ -34,11 +34,14 @@ const ToDoAppointment = () => {
   const handleComplete = async (appointment) => {
     const updateData = {
       appointmentDate: appointment.appointmentDate,
-      appointmentTypeId: appointment.appointmentTypeId,
+      appointmentTypeId: appointment.appointmentType.appointmentTypeId,
       location: appointment.location,
       startTime: appointment.startTime,
       endTime: appointment.endTime,
       paymentStatus: appointment.paymentStatus,
+      veterinarianId: appointment.veterinarian.userId,
+      customerId: appointment.customer.userId,
+      fishId: appointment.fish.fishId,
       status: "Completed",
     };
 
@@ -156,7 +159,7 @@ const ToDoAppointment = () => {
                 <td className="px-3 py-4 whitespace-normal">
                   <p
                     className={`w-16 rounded-full text-white p-2 text-sm text-center ml-5 ${
-                      appointment.paymentStatus === "unpaid"
+                      appointment.paymentStatus === "Unpaid"
                         ? "bg-red-500"
                         : "bg-green-500"
                     }`}

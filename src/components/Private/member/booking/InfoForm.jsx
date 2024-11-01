@@ -6,6 +6,7 @@ import { getAllAppointmentType } from "../../../../services/adminService";
 import { updateInvoiceData } from "../../../../redux/slices/bookingSlice";
 import { useNavigate } from "react-router-dom";
 import { path } from "../../../../utils/constant";
+import { toast } from "react-toastify";
 
 const InfoForm = ({ updateFormData }) => {
   const dispatch = useDispatch();
@@ -24,6 +25,20 @@ const InfoForm = ({ updateFormData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Kiểm tra nếu là trường ngày và ngày không được ở quá khứ
+    if (name === "appointmentDate") {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Đặt giờ của ngày hiện tại về 0 để so sánh
+
+      if (selectedDate < today) {
+        toast.error("Appointment date cannot be in the past.");
+        updateFormData({ [name]: "" }); // Reset giá trị nếu ngày không hợp lệ
+        return;
+      }
+    }
+
     updateFormData({ [name]: value });
   };
 
