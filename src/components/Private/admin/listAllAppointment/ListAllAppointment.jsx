@@ -57,62 +57,6 @@ const ListAllAppointment = () => {
     dispatch(clearSelectedAppointment());
   };
 
-  const handleConfirm = async (appointment) => {
-    const updateData = {
-      appointmentDate: appointment.appointmentDate,
-      appointmentTypeId: appointment.appointmentTypeId,
-      location: appointment.location,
-      startTime: appointment.startTime,
-      endTime: appointment.endTime,
-      paymentStatus: appointment.paymentStatus,
-      status: "Approved",
-    };
-
-    try {
-      await dispatch(
-        confirmAppointment({
-          appointmentId: appointment.appointmentId,
-          updateData: updateData,
-        })
-      );
-
-      toast.success("Confirm successfully");
-
-      dispatch(getAllAppointment());
-    } catch (error) {
-      console.log("Error while updating", error);
-      toast.error("Confirm fail!");
-    }
-  };
-
-  const handleSendToVet = async (appointment) => {
-    const updateData = {
-      appointmentDate: appointment.appointmentDate,
-      appointmentTypeId: appointment.appointmentTypeId,
-      location: appointment.location,
-      startTime: appointment.startTime,
-      endTime: appointment.endTime,
-      paymentStatus: appointment.paymentStatus,
-      status: "In service",
-    };
-
-    try {
-      await dispatch(
-        confirmAppointment({
-          appointmentId: appointment.appointmentId,
-          updateData: updateData,
-        })
-      );
-
-      toast.success("Send this appointment successfully");
-
-      dispatch(getAllAppointment());
-    } catch (error) {
-      console.log("Error while updating", error);
-      toast.error("Send to vet fail!");
-    }
-  };
-
   if (selectedAppointment) {
     return (
       <div className="p-5">
@@ -141,8 +85,7 @@ const ListAllAppointment = () => {
             <th className="px-3 py-3">End time</th>
             <th className="px-3 py-3">Customer name</th>
             <th className="px-3 py-3">Status</th>
-            <th className="px-3 py-3">Payment status</th>
-            <th className="px-3 py-3 rounded-tr-2xl">Action</th>
+            <th className="px-3 py-3 rounded-tr-2xl">Payment status</th>
           </tr>
         </thead>
         <tbody>
@@ -186,26 +129,6 @@ const ListAllAppointment = () => {
                 >
                   {appointment.paymentStatus}
                 </p>
-              </td>
-              <td className="px-3 py-4 whitespace-normal flex items-center gap-2">
-                {appointment.status === "Approved" ? (
-                  <button
-                    onClick={() => handleSendToVet(appointment)}
-                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                  >
-                    Send to vet
-                  </button>
-                ) : appointment.status !== "Approved" &&
-                  appointment.status !== "Waiting" ? (
-                  ""
-                ) : (
-                  <button
-                    onClick={() => handleConfirm(appointment)}
-                    className="bg-primary rounded-full p-2 text-white hover:bg-primary/90"
-                  >
-                    Confirm
-                  </button>
-                )}
               </td>
             </tr>
           ))}
