@@ -198,6 +198,26 @@ const MyAppointment = () => {
                   </button>
                 </div>
               )}
+
+              <div className="flex flex-col items-center">
+                {selectedAppointment.status !== "Waiting" &&
+                  selectedAppointment.status !== "Approved" && (
+                    <button
+                      onClick={handFeedback}
+                      className="w-full mr-4 mt-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
+                    >
+                      {isLoading ? (
+                        <ClipLoader
+                          size={20}
+                          color={"#ffffff"}
+                          loading={isLoading}
+                        />
+                      ) : (
+                        "Feedback"
+                      )}
+                    </button>
+                  )}
+              </div>
             </div>
           )}
         </div>
