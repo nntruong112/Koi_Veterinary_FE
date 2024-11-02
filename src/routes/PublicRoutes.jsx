@@ -2,6 +2,8 @@ import { path } from "../utils/constant";
 import React from "react";
 import LoadLazy from "../components/LoadLazy";
 import NotFound from "../pages/Public/notFound/NotFound";
+import FAQ_Q4 from "../pages/Public/features/FAQ_Q4";
+import FAQ_Q3 from "../pages/Public/features/FAQ_Q3";
 // import ProtectedResetPasswordRoutes from "./ProtectedResetPasswordRoutes";
 
 const Home = React.lazy(() => import("../pages/Public/home/Home"));
@@ -19,6 +21,7 @@ const Team = React.lazy(() => import("../pages/Public/team/Team"));
 const Booking = React.lazy(() => import("../pages/Public/booking/Booking"));
 const Info = React.lazy(() => import("../pages/Public/infovet/Info"));
 const FAQ_Q1 = React.lazy(() => import("../pages/Public/features/FAQ_Q1"));
+const FAQ_Q2 = React.lazy(() => import("../pages/Public/features/FAQ_Q2"));
 const LoginRole = React.lazy(() =>
   import("../pages/Public/loginRole/LoginRole")
 );
@@ -43,6 +46,11 @@ const PublicRoutes = [
   { path: path.WORK, element: <LoadLazy children={<Work />} /> },
   { path: path.FEATURES, element: <LoadLazy children={<Features />} /> },
   { path: path.FAQ_Q1, element: <LoadLazy children={<FAQ_Q1 />} /> },
+  { path: path.FAQ_Q2, element: <LoadLazy children={<FAQ_Q2 />} /> },
+  { path: path.FAQ_Q3, element: <LoadLazy children={<FAQ_Q3 />} /> },
+
+  { path: path.FAQ_Q4, element: <LoadLazy children={<FAQ_Q4 />} /> },
+
   { path: path.PRICING, element: <LoadLazy children={<Pricing />} /> },
   { path: path.TEAM, element: <LoadLazy children={<Team />} /> },
   {

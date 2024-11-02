@@ -38,7 +38,7 @@ const Features = () => {
 
           {/* Question 2 */}
           <Link
-            to="/faq/sick-koi-signs"
+            to="/q2"
             className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
           >
             <AiOutlineInfoCircle className="text-6xl text-blue-600 mb-4" />
@@ -55,7 +55,7 @@ const Features = () => {
           {/* Continue with the same pattern for the remaining questions */}
           {/* Question 3 */}
           <Link
-            to="/faq/koi-water-conditions"
+            to="/q3"
             className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
           >
             <IoMdHelpCircleOutline className="text-6xl text-red-600 mb-4" />
@@ -71,7 +71,7 @@ const Features = () => {
 
           {/* Question 4 */}
           <Link
-            to="/faq/feeding-koi"
+            to="/q4"
             className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
           >
             <FaRegQuestionCircle className="text-6xl text-green-600 mb-4" />
