@@ -8,6 +8,7 @@ export const path = {
   WORK: "/work",
   TEAM: "/team",
   FEATURES: "/features",
+  FAQ_Q1: "/q1",
   PRICING: "/pricing",
   CONTACT: "/contact",
   LOGIN_ROLE: "/login-role",
