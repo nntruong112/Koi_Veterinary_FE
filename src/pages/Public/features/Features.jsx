@@ -4,6 +4,8 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
+import { Link } from "react-router-dom";
+import Q1 from "./FAQ_Q1";
 
 const Features = () => {
   return (
@@ -18,7 +20,10 @@ const Features = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
           {/* Question 1 */}
-          <div className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105">
+          <Link
+            to="/q1"
+            className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
+          >
             <FaRegQuestionCircle className="text-6xl text-green-600 mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               What are common koi diseases and treatments?
@@ -29,10 +34,13 @@ const Features = () => {
               maintaining clean water. KHV prevention is crucial through
               quarantine and vaccination.
             </p>
-          </div>
+          </Link>
 
           {/* Question 2 */}
-          <div className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105">
+          <Link
+            to="/q2"
+            className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
+          >
             <AiOutlineInfoCircle className="text-6xl text-blue-600 mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               How can I tell if my koi is sick?
@@ -42,10 +50,14 @@ const Features = () => {
               visible spots or sores. Test water quality and consult a vet if
               needed.
             </p>
-          </div>
+          </Link>
 
+          {/* Continue with the same pattern for the remaining questions */}
           {/* Question 3 */}
-          <div className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105">
+          <Link
+            to="/q3"
+            className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
+          >
             <IoMdHelpCircleOutline className="text-6xl text-red-600 mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               What water conditions do koi need?
@@ -55,10 +67,13 @@ const Features = () => {
               nitrate below 40 ppm, temperature 65-75°F (18-24°C). Regular
               testing and water maintenance are essential.
             </p>
-          </div>
+          </Link>
 
           {/* Question 4 */}
-          <div className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105">
+          <Link
+            to="/q4"
+            className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
+          >
             <FaRegQuestionCircle className="text-6xl text-green-600 mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               How often should I feed my koi?
@@ -68,10 +83,13 @@ const Features = () => {
               water temperature and activity levels. Avoid overfeeding to keep
               the water clean.
             </p>
-          </div>
+          </Link>
 
           {/* Question 5 */}
-          <div className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105">
+          <Link
+            to="/faq/fish-types"
+            className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
+          >
             <AiOutlineInfoCircle className="text-6xl text-blue-600 mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               What types of fish do you work with?
@@ -81,10 +99,13 @@ const Features = () => {
               Our office is equipped to work on all fish species, even those
               with sharp teeth and pointy spines!
             </p>
-          </div>
+          </Link>
 
           {/* Question 6 */}
-          <div className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105">
+          <Link
+            to="/faq/service-charges"
+            className="flex flex-col items-center text-left p-8 shadow-lg bg-white rounded-lg transform transition-transform hover:scale-105"
+          >
             <IoMdHelpCircleOutline className="text-6xl text-red-600 mb-4" />
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               What do you charge for your services?
@@ -99,7 +120,7 @@ const Features = () => {
               </a>{" "}
               for more information. Estimates are available on request.
             </p>
-          </div>
+          </Link>
         </div>
       </section>
 

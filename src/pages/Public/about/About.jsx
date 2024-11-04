@@ -15,6 +15,7 @@ const About = () => {
     network: assets.BackgroundLogin,
     rocket: assets.Background,
   };
+
   return (
     <>
       <RolesNavbar />
@@ -25,43 +26,44 @@ const About = () => {
         </h1>
 
         <p className="text-xl font-normal mb-8 text-[#7c8595]">
-          Dicover how our amazing team can help your problem.
+          Discover how our amazing team can help solve your problems and enhance
+          the health of your koi.
         </p>
 
         <div className="flex flex-col md:flex-row mt-16">
-          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10">
+          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 rounded-lg shadow-md hover:shadow-lg">
             <FaTasks className="bg-blue-500 rounded-2xl text-8xl text-white p-5" />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
-              Complete Pond/Tank Packages
+              Comprehensive Health Assessments
             </h2>
             <p className="text-[15px] text-[#7c8595]">
-              Receive a complete assessment of the health of your pond or tank.
-              These packages include water quality testing and physical exams of
-              your fish under sedation.
+              Our packages provide thorough assessments of your pond or tank,
+              including water quality testing and physical examinations of your
+              fish under sedation.
             </p>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10">
+          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 rounded-lg shadow-md hover:shadow-lg">
             <FaTasks className="bg-red-500 rounded-2xl text-8xl text-white p-5" />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
-              Complete Pond/Tank Packages
+              Tailored Treatment Plans
             </h2>
             <p className="text-[15px] text-[#7c8595]">
-              Receive a complete assessment of the health of your pond or tank.
-              These packages include water quality testing and physical exams of
-              your fish under sedation.
+              Receive personalized treatment plans designed specifically for the
+              health needs of your fish, ensuring the best possible care and
+              recovery.
             </p>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10">
+          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 rounded-lg shadow-md hover:shadow-lg">
             <FaTasks className="bg-green-500 rounded-2xl text-8xl text-white p-5" />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
-              Complete Pond/Tank Packages
+              Expert Advice and Support
             </h2>
             <p className="text-[15px] text-[#7c8595]">
-              Receive a complete assessment of the health of your pond or tank.
-              These packages include water quality testing and physical exams of
-              your fish under sedation.
+              Our experienced team is here to provide expert advice and support,
+              helping you make informed decisions about your koi’s health and
+              well-being.
             </p>
           </div>
         </div>
@@ -71,33 +73,34 @@ const About = () => {
       <section className="p-[20px] flex justify-center gap-y-0 gap-x-[50px]">
         <div className="my-10 flex flex-col md:flex-row gap-12">
           <img
-            className="w-[600px] h-[440px] md:max-w-[360px]  rounded-lg object-cover shadow-[10px_12px_40px_rgba(0,0,0,0.2)] -translate-x-10"
+            className="w-[600px] h-[440px] md:max-w-[360px] rounded-lg object-cover shadow-[10px_12px_40px_rgba(0,0,0,0.2)] -translate-x-10"
             src={assets.KoiPool}
-            alt=""
+            alt="Koi Pool"
           />
         </div>
         <div className="flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600">
           <p className="text-4xl mb-8 mt-0 text-[#071e55] font-bold">
-            Discover how we can help you to grow.
+            Discover how we can help you grow.
           </p>
           <p className="text-xl font-normal text-[#7c8595] mb-5">
-            Velis demo enim ipsam voluptatem quia voluptas sit aspernatur netsum
-            lorem fugit, seditum netis velas matrix net nesciunt.
+            Our goal is to ensure the health and happiness of your koi through
+            comprehensive services and a dedicated team that understands your
+            needs.
           </p>
 
           <ul>
             <i>
               <li className="flex mb-4 text-xl font-normal text-[#7c8595]">
                 <TiTick className="text-red-500 text-2xl my-1 mr-2" />
-                Quias netus magni netsum eos qui ratione sequi.
+                Expert consultations to assess your koi’s health.
               </li>
               <li className="flex mb-4 text-xl font-normal text-[#7c8595]">
                 <TiTick className="text-red-500 text-2xl my-1 mr-2" />
-                Venis ratione sequi netus enim quia tempor magni.
+                Tailored solutions for a variety of health issues.
               </li>
               <li className="flex mb-4 text-xl font-normal text-[#7c8595]">
                 <TiTick className="text-red-500 text-2xl my-1 mr-2" />
-                Enim ipsam netus voluptatem quia voluptas.
+                Ongoing support to ensure long-term wellness.
               </li>
             </i>
             <button
@@ -115,7 +118,7 @@ const About = () => {
         <div className="flex flex-col items-center justify-center gap-10 ml-5">
           <div
             tabIndex={0}
-            className="flex flex-col md:flex-row gap-12 cursor-pointer p-5 focus:bg-white focus:shadow-[0_0_3px_1px_#e4e2e2]"
+            className="flex flex-col md:flex-row gap-12 cursor-pointer p-5 focus:bg-white focus:shadow-[0_0_3px_1px_#e4e2e2] items-stretch"
             onClick={() => setCurrentImage(images.workflow)}
           >
             <div className="bg-white rounded-[50%] border-solid border-gray-300 border">
@@ -124,18 +127,18 @@ const About = () => {
 
             <div className="flex flex-col gap-3">
               <b className="font-bold text-3xl text-[#3d3c3c]">
-                Customize your workflow.
+                Customize Your Workflow
               </b>
               <p className="text-xl text-[#7c8595]">
-                Manage any process and be ready to address any challenge with
-                total ease.
+                Manage any process with ease and adapt quickly to challenges to
+                maintain your koi's health.
               </p>
             </div>
           </div>
 
           <div
             tabIndex={0}
-            className="flex flex-col md:flex-row gap-12 cursor-pointer p-5 focus:bg-white focus:shadow-[0_0_3px_1px_#e4e2e2]"
+            className="flex flex-col md:flex-row gap-12 cursor-pointer p-5 focus:bg-white focus:shadow-[0_0_3px_1px_#e4e2e2] items-stretch"
             onClick={() => setCurrentImage(images.network)}
           >
             <div className="bg-white rounded-[50%] border-solid border-gray-300 border">
@@ -144,18 +147,18 @@ const About = () => {
 
             <div className="flex flex-col gap-3">
               <b className="font-bold text-3xl text-[#3d3c3c]">
-                Customize your workflow.
+                Build a Supportive Network
               </b>
               <p className="text-xl text-[#7c8595]">
-                Manage any process and be ready to address any challenge with
-                total ease.
+                Connect with trusted professionals and fellow koi enthusiasts to
+                share experiences and tips.
               </p>
             </div>
           </div>
 
           <div
             tabIndex={0}
-            className="flex flex-col md:flex-row gap-12 cursor-pointer p-5 focus:bg-white focus:shadow-[0_0_3px_1px_#e4e2e2]"
+            className="flex flex-col md:flex-row gap-12 cursor-pointer p-5 focus:bg-white focus:shadow-[0_0_3px_1px_#e4e2e2] items-stretch"
             onClick={() => setCurrentImage(images.rocket)}
           >
             <div className="bg-white rounded-[50%] border-solid border-gray-300 border">
@@ -164,19 +167,20 @@ const About = () => {
 
             <div className="flex flex-col gap-3">
               <b className="font-bold text-3xl text-[#3d3c3c]">
-                Customize your workflow.
+                Launch into Success
               </b>
               <p className="text-xl text-[#7c8595]">
-                Manage any process and be ready to address any challenge with
-                total ease.
+                Experience a transformation in your koi care routine with our
+                comprehensive services and <br />
+                expert guidance.
               </p>
             </div>
           </div>
         </div>
 
-        <div>
+        <div className="flex justify-center items-center">
           <img
-            className="rounded-md inline h-[30rem] max-w-[50vw]"
+            className="rounded-md inline h-[30rem] max-w-[30rem] object-cover"
             src={currentImage}
             alt=""
           />
@@ -189,28 +193,34 @@ const About = () => {
           <b className="font-semibold text-[#3d3c3c]">WHY CHOOSE US</b>
         </div>
 
-        <div className="flex flex-col md:flex-row mb-14">
-          <div className="border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-            <b>EFFICIENCY</b>
+        <div className="flex justify-center gap-8 flex-wrap mb-10">
+          <div className="max-w-xs rounded-md shadow-lg p-5 bg-white border-2 border-gray-200 transition-transform transform hover:scale-105 hover:shadow-xl">
+            <h3 className="font-semibold text-xl mb-4">
+              Expertise You Can Trust
+            </h3>
             <p>
-              Streamlined appointment scheduling that fits into your busy
-              lifestyle.
+              Our team consists of highly trained professionals with years of
+              experience in koi health management.
             </p>
           </div>
 
-          <div className="border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-            <b>CONVENIENCE</b>
+          <div className="max-w-xs rounded-md shadow-lg p-5 bg-white border-2 border-gray-200 transition-transform transform hover:scale-105 hover:shadow-xl">
+            <h3 className="font-semibold text-xl mb-4">
+              Comprehensive Services
+            </h3>
             <p>
-              Access to a network of trusted healthcare professionals in your
-              area.
+              From health assessments to treatment plans, we cover all aspects
+              of koi care to ensure their well-being.
             </p>
           </div>
 
-          <div className="border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white  transition-all duration-300 text-gray-600 cursor-pointer">
-            <b>PERSONALIZATION</b>
+          <div className="max-w-xs rounded-md shadow-lg p-5 bg-white border-2 border-gray-200 transition-transform transform hover:scale-105 hover:shadow-xl">
+            <h3 className="font-semibold text-xl mb-4">
+              Customer-Centric Approach
+            </h3>
             <p>
-              Tailored recommendations and reminders to help you stay on top of
-              your health.
+              Your needs and concerns are our top priority. We provide
+              personalized care to meet each koi’s unique requirements.
             </p>
           </div>
         </div>
