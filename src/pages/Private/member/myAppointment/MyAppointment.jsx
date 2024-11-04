@@ -142,7 +142,7 @@ const MyAppointment = () => {
             )}
           </div>
 
-          {selectedAppointment.paymentStatus !== "Unpaid" &&
+          {selectedAppointment.paymentStatus !== "unpaid" &&
           selectedAppointment.location === "Online" ? (
             <div className="flex flex-col w-1/5">
               <button
@@ -269,7 +269,7 @@ const MyAppointment = () => {
               <td className="px-3 py-4 whitespace-normal">
                 <p
                   className={`w-16 rounded-full text-white p-2 text-sm text-center ml-5 ${
-                    appointment.paymentStatus === "Unpaid"
+                    appointment.paymentStatus === "unpaid"
                       ? "bg-red-500"
                       : "bg-green-500"
                   }`}

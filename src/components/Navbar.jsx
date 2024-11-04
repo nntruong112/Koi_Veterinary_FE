@@ -86,7 +86,7 @@ const Navbar = () => {
               <p>Welcome, </p>
               <button onClick={toggleMenu} className="p-2 cursor-pointer">
                 <img
-                  src={userInfo.image}
+                  src={userInfo.image || assets.DefaultAvatar}
                   className="w-10 h-10 rounded-full"
                   alt="User Avatar"
                 />
