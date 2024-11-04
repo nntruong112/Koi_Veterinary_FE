@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 const ForgotPasswordModal = ({ message, onClose }) => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -13,13 +14,15 @@ const ForgotPasswordModal = ({ message, onClose }) => {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
-      await dispatch(forgotPassword({ email: email }));
+      await dispatch(forgotPassword(email));
       toast.success("Send successfully!");
     } catch (error) {
       console.error("Processing failed: ", error);
       toast.error("Failed while processing!");
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -4,9 +4,11 @@ import Footer from "../../../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
+import { assets } from "../../../assets/assets";
 const Team = () => {
   const navigate = useNavigate();
   const { vets } = useContext(AppContext);
+
   return (
     <>
       <RolesNavbar />
@@ -15,14 +17,17 @@ const Team = () => {
         OUR VET
         <p>The resolver for your problem</p>
       </div>
-      <div className="w-full grid grid-cols-5 gap-4 pt-5 gap-y-6 px-10 sm:px-0">
+      <div className="w-full grid grid-cols-5 gap-4 pt-5 gap-y-6 px-10 sm:px-0 mb-5">
         {vets.slice(0, 10).map((item, index) => (
           <div
-            onClick={() => navigate("/info")}
             className="border border-[#C9D8FF] rounded-x1 overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
             key={index}
           >
-            <img className="hover:bg-blue-600" src={item.image} alt=" " />
+            <img
+              className="hover:bg-primary/20"
+              src={item.image || assets.DefaultAvatar}
+              alt=""
+            />
             <div className="p-4">
               <p className=" text-[#262626] text-lg text-center font-medium">
                 {item.name}

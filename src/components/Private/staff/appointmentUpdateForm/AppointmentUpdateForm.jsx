@@ -242,7 +242,7 @@ const AppointmentUpdateForm = ({ onBackToList }) => {
               </option>
 
               <option value="paid">Paid</option>
-              <option value="Unpaid">Unpaid</option>
+              <option value="unpaid">Unpaid</option>
             </select>
           </div>
 
