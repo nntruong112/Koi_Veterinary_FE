@@ -11,7 +11,7 @@ export const register = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await BASE_URL.post("users/register", user);
-      return response;
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
