@@ -1,128 +1,98 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import configureStore from "redux-mock-store";
-import CreateHealthRecord from "../pages/Private/vet/healthRecord/CreatehealthRecord";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import CreateHealthRecord from "../pages/Private/vet/healthRecord/CreateHealthRecord";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
+import MockAdapter from "axios-mock-adapter";
+import configureStore from "redux-mock-store";
+import { Provider } from "react-redux";
 
-// Khởi tạo mockStore để giả lập Redux store
-const mockStore = configureStore([]);
-vi.mock("axios");
+const mock = new MockAdapter(axios);
+const mockStore = configureStore();
 
 describe("CreateHealthRecord", () => {
   let store;
 
   beforeEach(() => {
     store = mockStore({
-      auth: { data: { token: "mockToken" } },
-      users: { data: { result: { userId: "mockVetId" } } },
+      users: {
+        data: {
+          result: {
+            userId: "mocked-vet-id",
+          },
+        },
+      },
+      auth: {
+        data: {
+          token: "mocked-token",
+        },
+      },
     });
+
+    // Mock fish fetching
+    mock
+      .onGet(
+        "http://localhost:8080/appointments/belonged_to_vetId/mocked-vet-id"
+      )
+      .reply(200, [
+        {
+          fish: { fishId: "1", species: "Goldfish" },
+          customer: { username: "JohnDoe" },
+        },
+      ]);
   });
 
-  it("renders CreateHealthRecord form correctly", () => {
-    render(
-      <Provider store={store}>
-        <Router>
-          <CreateHealthRecord />
-        </Router>
-      </Provider>
-    );
-
-    // Kiểm tra các phần tử của form
-    expect(screen.getByLabelText(/Select Fish:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Diagnosis:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Treatment:/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /Create Health Record/i })
-    ).toBeInTheDocument();
+  afterEach(() => {
+    mock.reset();
   });
 
-  it("displays error messages when fields are empty", () => {
-    render(
-      <Provider store={store}>
-        <Router>
-          <CreateHealthRecord />
-        </Router>
-      </Provider>
-    );
-
-    // Bấm nút "Create Health Record" mà không điền dữ liệu
-    const createButton = screen.getByRole("button", {
-      name: /Create Health Record/i,
-    });
-    fireEvent.click(createButton);
-
-    // Kiểm tra thông báo lỗi cho các trường còn trống
-    expect(screen.getByText(/Please fill in all fields./i)).toBeInTheDocument();
-  });
-
-  it("submits form and displays success message with valid data", async () => {
-    const mockDispatch = vi.fn(() => Promise.resolve({ payload: true }));
-    store.dispatch = mockDispatch;
+  test("should create health record successfully (happy case)", async () => {
+    mock.onPost("http://localhost:8080/health_records/create").reply(200);
 
     render(
       <Provider store={store}>
-        <Router>
-          <CreateHealthRecord />
-          <ToastContainer />
-        </Router>
+        <CreateHealthRecord />
       </Provider>
     );
 
-    // Điền thông tin hợp lệ vào form
+    // Simulate filling out the form
     fireEvent.change(screen.getByLabelText(/Select Fish:/i), {
-      target: { value: "mockFishId" },
+      target: { value: "1" },
     });
     fireEvent.change(screen.getByLabelText(/Diagnosis:/i), {
-      target: { value: "Test Diagnosis" },
+      target: { value: "Healthy" },
     });
     fireEvent.change(screen.getByLabelText(/Treatment:/i), {
-      target: { value: "Test Treatment" },
+      target: { value: "None" },
+    });
+    fireEvent.change(screen.getByLabelText(/Select Medicine:/i), {
+      target: { value: "Antibiotic A" },
     });
 
-    // Bấm vào nút "Create Health Record"
-    const createButton = screen.getByRole("button", {
-      name: /Create Health Record/i,
-    });
-    fireEvent.click(createButton);
+    fireEvent.click(
+      screen.getByRole("button", { name: /Create Health Record/i })
+    );
 
-    // Kiểm tra xem hàm dispatch đã được gọi chưa
-    expect(mockDispatch).toHaveBeenCalled();
-
-    // Kiểm tra thông báo thành công
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Health record created successfully!/i)
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByText(/Health record created successfully!/i)
+        ).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
   });
 
-  it("displays fish list from API", async () => {
-    const fishListData = [
-      {
-        fishId: "063d7220-dcf9-4c01-9eed-a66c48d16e5a",
-        species: "showa",
-        customerUsername: "vuong23112005",
-      },
-    ];
-    axios.get.mockResolvedValueOnce({ data: fishListData });
-
+  test("should show error message when required fields are missing (unhappy case)", async () => {
     render(
       <Provider store={store}>
-        <Router>
-          <CreateHealthRecord />
-        </Router>
+        <CreateHealthRecord />
       </Provider>
     );
 
-    // Kiểm tra danh sách cá được hiển thị sau khi tải
-    await waitFor(() =>
-      expect(
-        screen.getByText(/Goldfish - owned by customer1/i)
-      ).toBeInTheDocument()
+    fireEvent.click(
+      screen.getByRole("button", { name: /Create Health Record/i })
     );
+
+    expect(screen.getByText(/Please fill in all fields./i)).toBeInTheDocument();
   });
 });

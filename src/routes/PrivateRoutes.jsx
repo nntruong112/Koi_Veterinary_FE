@@ -73,7 +73,9 @@ const BookingConfirm = React.lazy(() =>
 const AllFeedback = React.lazy(() =>
   import("../pages/Private/staff/allFeedback/AllFeedback")
 );
-
+const NewsList = React.lazy(() =>
+  import("../pages/Private/staff/createNews/createNews")
+);
 const Chat = React.lazy(() => import("../pages/Private/member/chat/Chat"));
 
 const PrivateRoutes = [
@@ -308,6 +310,14 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="STAFF">
             <LoadLazy children={<AllFeedback />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.NEWS,
+        element: (
+          <ProtectedRoutes allowedRoles="STAFF">
+            <LoadLazy children={<NewsList />} />
           </ProtectedRoutes>
         ),
       },

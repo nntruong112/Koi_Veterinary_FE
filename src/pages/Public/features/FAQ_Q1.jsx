@@ -48,7 +48,7 @@ const FAQ_Q1 = () => {
               <h3 className="text-2xl font-semibold mb-4">
                 Detailed Treatments
               </h3>
-
+              {/* section 1 */}
               <h4 className="text-xl font-semibold mt-6">
                 1. Ich (White Spot Disease)
               </h4>
@@ -106,7 +106,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 2 */}
               <h4 className="text-xl font-semibold mt-4">2. Fin Rot</h4>
 
               <h5 className="text-lg font-medium mb-4 mt-2">Overview</h5>
@@ -223,7 +223,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 3 */}
               <h4 className="text-xl font-semibold mt-6">3. Dropsy</h4>
 
               <h5 className="text-lg font-medium mb-4 mt-2">Overview</h5>
@@ -329,7 +329,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 4 */}
               <h4 className="text-xl font-semibold mt-6">4. Ulcers</h4>
 
               <h5 className="text-lg font-medium mb-4 mt-2">Overview</h5>
@@ -434,7 +434,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 5 */}
               <h4 className="text-xl font-semibold mt-6">
                 5. Swim Bladder Disorder
               </h4>
@@ -542,7 +542,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 6 */}
               <h4 className="text-xl font-semibold mt-6">
                 6. Flukes (Gill and Skin Flukes)
               </h4>
@@ -652,7 +652,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 7 */}
               <h4 className="text-xl font-semibold mt-6">
                 7. Costia (Ichthyobodo)
               </h4>
@@ -765,7 +765,7 @@ const FAQ_Q1 = () => {
                   </li>
                 </ul>
               </div>
-
+              {/* section 8 */}
               <h4 className="text-xl font-semibold mt-6">
                 8. Anchor Worms (Lernaea)
               </h4>
