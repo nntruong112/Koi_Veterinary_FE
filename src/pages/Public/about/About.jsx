@@ -31,7 +31,7 @@ const About = () => {
         </p>
 
         <div className="flex flex-col md:flex-row mt-16">
-          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 rounded-lg shadow-md hover:shadow-lg">
+          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 py-4 border">
             <FaTasks className="bg-blue-500 rounded-2xl text-8xl text-white p-5" />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
               Comprehensive Health Assessments
@@ -43,7 +43,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 rounded-lg shadow-md hover:shadow-lg">
+          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-100 py-4 border">
             <FaTasks className="bg-red-500 rounded-2xl text-8xl text-white p-5" />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
               Tailored Treatment Plans
@@ -55,7 +55,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-300 rounded-lg shadow-md hover:shadow-lg">
+          <div className="flex flex-col items-center justify-center gap-6 md:w-2/4 px-10 hover:bg-white transition-all duration-100 py-4 border">
             <FaTasks className="bg-green-500 rounded-2xl text-8xl text-white p-5" />
             <h2 className="text-2xl font-bold mb-1 text-[#3d3c3c]">
               Expert Advice and Support
@@ -171,8 +171,7 @@ const About = () => {
               </b>
               <p className="text-xl text-[#7c8595]">
                 Experience a transformation in your koi care routine with our
-                comprehensive services and <br />
-                expert guidance.
+                comprehensive services and expert guidance.
               </p>
             </div>
           </div>

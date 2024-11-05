@@ -34,8 +34,8 @@ const Footer = () => {
         <div className="mt-10">
           <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
           <ul className="flex flex-col gap-2 text-gray-600">
-            <li>0359177611</li>
-            <li>KoiHealthService@gmail.com</li>
+            <li>+84 915-756-852</li>
+            <li>koihealthservice@gmail.com</li>
           </ul>
         </div>
       </div>
@@ -48,7 +48,7 @@ const Footer = () => {
         <div className="flex justify-between justify-items-end m-3 gap-3">
           <span className="m-2">Follow us:</span>
           <AiFillFacebook size="2rem" color="#0000FF" />
-          <AiFillInstagram size="2.1rem" color="#EE3A8C" />
+          {/* <AiFillInstagram size="2.1rem" color="#EE3A8C" /> */}
         </div>
       </div>
     </div>
