@@ -4,10 +4,6 @@ import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import { assets } from "../../../assets/assets";
 import RolesNavbar from "../../../components/rolesNavbar/RolesNavbar";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
 
 const Home = () => {
   const [newsList, setNewsList] = useState([]);
@@ -86,56 +82,50 @@ const Home = () => {
       </section>
 
       {/* section 3 */}
-      <section className="py-8  bg-[#ffffff]">
+      <section className="py-8 bg-[#ffffff]">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
           Latest News
         </h2>
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={20}
-          slidesPerView={3}
-          navigation
-          loop={true}
-          breakpoints={{
-            640: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-        >
+        <div className="flex flex-col gap-6">
           {newsList.map((news) => (
-            <SwiperSlide
+            <div
               key={news.newsId}
-              className="bg-white p-6 my-6 shadow-lg rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl"
+              className="flex bg-white p-6 shadow-lg rounded-lg transition duration-300 ease-in-out"
             >
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4 hover:text-blue-600 transition-colors duration-200">
-                {news.title}
-              </h3>
-              <p
-                className="text-gray-700 mb-4"
-                style={{ height: "calc(100% - 60px)" }}
-              >
-                {" "}
-                {/* Chiều cao của nội dung động */}
-                {expandedNews[news.newsId]
-                  ? news.newsContent
-                  : news.newsContent.length > 100
-                  ? `${news.newsContent.substring(0, 100)}...`
-                  : news.newsContent}
-              </p>
-              {news.newsContent.length > 100 && (
-                <button
-                  className="text-blue-500 hover:underline"
-                  onClick={() => toggleExpand(news.newsId)}
-                >
-                  {expandedNews[news.newsId] ? "Read less" : "Read more"}
-                </button>
+              {/* Hiển thị ảnh nếu có */}
+              {news.image && (
+                <img
+                  src={news.image}
+                  alt={news.title}
+                  className="w-1/3 h-full object-cover rounded-md mr-4"
+                />
               )}
-              <p className="text-sm text-gray-500 italic hover:text-gray-700 transition-colors duration-200">
-                Author: Koi Health Center
-              </p>
-            </SwiperSlide>
+              <div className="flex-1">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors duration-200">
+                  {news.title}
+                </h3>
+                <p className="text-gray-700 mb-4">
+                  {expandedNews[news.newsId]
+                    ? news.newsContent // Hiển thị toàn bộ nội dung nếu mở rộng
+                    : news.newsContent.length > 100
+                    ? `${news.newsContent.substring(0, 100)}...`
+                    : news.newsContent}
+                </p>
+                {news.newsContent.length > 100 && (
+                  <button
+                    className="text-blue-500 hover:underline"
+                    onClick={() => toggleExpand(news.newsId)} // Gọi hàm toggle khi nhấn nút
+                  >
+                    {expandedNews[news.newsId] ? "Read less" : "Read more"}
+                  </button>
+                )}
+                <p className="text-sm text-gray-500 italic hover:text-gray-700 transition-colors duration-200">
+                  Author: Koi Health Center
+                </p>
+              </div>
+            </div>
           ))}
-        </Swiper>
+        </div>
       </section>
 
       <Footer />
