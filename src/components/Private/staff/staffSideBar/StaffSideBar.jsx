@@ -7,6 +7,7 @@ import { path } from "../../../../utils/constant";
 import { useSelector } from "react-redux";
 import { VscSignOut } from "react-icons/vsc";
 import { assets } from "../../../../assets/assets.js";
+import { HiNewspaper } from "react-icons/hi2";
 
 const StaffSideBar = () => {
   const location = useLocation();
@@ -81,6 +82,21 @@ const StaffSideBar = () => {
               <span className="flex-1 ms-3 whitespace-nowrap">
                 All Feedback
               </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={path.NEWS}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <HiNewspaper />
+              <span className="flex-1 ms-3 whitespace-nowrap">News</span>
             </NavLink>
           </li>
         </ul>
