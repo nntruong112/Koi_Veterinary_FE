@@ -14,6 +14,7 @@ const Feedback = () => {
   const [formData, setFormData] = useState({
     comment: "",
     rating: 0,
+    punctuality: "present", // Default value for punctuality
   });
 
   const handleChange = (e) => {
@@ -40,6 +41,7 @@ const Feedback = () => {
       setFormData({
         comment: "",
         rating: 0,
+        punctuality: "present", // Reset punctuality to default value
       });
 
       e.target.reset();
@@ -83,7 +85,7 @@ const Feedback = () => {
           onSubmit={handleSubmitFeedback}
           className="w-1/2 ml-[-8rem] flex flex-col items-center justify-between gap-7 border border-solid shadow-lg rounded-lg p-10"
         >
-          <div className="flex items-center mb-4  text-2xl">
+          <div className="flex items-center mb-4 text-2xl">
             <span className="mr-2">Rating:</span>
             {renderStars(formData.rating, handleRatingChange)}
           </div>
@@ -97,6 +99,24 @@ const Feedback = () => {
             className="min-h-50 p-4 w-full border border-solid border-black rounded-lg"
             required
           ></textarea>
+
+          {/* Punctuality Select Field */}
+          <div className="flex flex-col mb-4">
+            <label htmlFor="punctuality" className="text-lg mb-2">
+              Punctuality:
+            </label>
+            <select
+              name="punctuality"
+              value={formData.punctuality}
+              onChange={handleChange}
+              className="p-2 border border-solid border-black rounded-lg"
+              required
+            >
+              <option value="present">Present</option>
+              <option value="late">Late</option>
+              <option value="absent">Absent</option>
+            </select>
+          </div>
 
           <div className="bg-primary text-white py-2 rounded-2xl font-semibold hover:bg-primary/90 w-[100px] text-center text-xl">
             <button type="submit">Submit</button>

@@ -82,7 +82,7 @@ const Home = () => {
       </section>
 
       {/* section 3 */}
-      <section className="py-8 bg-[#ffffff]">
+      <section className="w-full py-8 bg-[#ffffff]">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
           Latest News
         </h2>
@@ -92,21 +92,22 @@ const Home = () => {
               key={news.newsId}
               className="flex bg-white p-6 shadow-lg rounded-lg transition duration-300 ease-in-out"
             >
-              {/* Hiển thị ảnh nếu có */}
+              {/* Display image if available */}
               {news.image && (
                 <img
                   src={news.image}
                   alt={news.title}
-                  className="w-1/3 h-full object-cover rounded-md mr-4"
+                  className="w-[300px] h-[300px] object-cover rounded-md mr-4" // Adjust width to 1/4 or a fixed size
                 />
               )}
+
               <div className="flex-1">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors duration-200">
                   {news.title}
                 </h3>
                 <p className="text-gray-700 mb-4">
                   {expandedNews[news.newsId]
-                    ? news.newsContent // Hiển thị toàn bộ nội dung nếu mở rộng
+                    ? news.newsContent // Display full content if expanded
                     : news.newsContent.length > 100
                     ? `${news.newsContent.substring(0, 100)}...`
                     : news.newsContent}
@@ -114,7 +115,7 @@ const Home = () => {
                 {news.newsContent.length > 100 && (
                   <button
                     className="text-blue-500 hover:underline"
-                    onClick={() => toggleExpand(news.newsId)} // Gọi hàm toggle khi nhấn nút
+                    onClick={() => toggleExpand(news.newsId)} // Call toggle function on button click
                   >
                     {expandedNews[news.newsId] ? "Read less" : "Read more"}
                   </button>

@@ -25,6 +25,8 @@ const FeedbackList = () => {
               <th className="px-4 py-3 border">Comment</th>
               <th className="px-4 py-3 border">Rating</th>
               <th className="px-4 py-3 border">Customer</th>
+              <th className="px-4 py-3 border">Punctuality</th>{" "}
+              {/* New column for punctuality */}
               {/* <th className="px-4 py-3 border">Appointment ID</th> */}
             </tr>
           </thead>
@@ -37,6 +39,10 @@ const FeedbackList = () => {
                 <td className="px-4 py-3 border">{feedback.comment}</td>
                 <td className="px-4 py-3 border">{feedback.rating}</td>
                 <td className="px-4 py-3 border">{feedback.customerId}</td>
+                <td className="px-4 py-3 border">
+                  {feedback.punctuality}
+                </td>{" "}
+                {/* Display punctuality */}
                 {/* <td className="px-4 py-3 border">{feedback.appointmentId}</td> */}
               </tr>
             ))}
