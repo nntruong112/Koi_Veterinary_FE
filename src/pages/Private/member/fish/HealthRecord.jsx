@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { parsePath, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,11 +40,36 @@ const HealthRecordPage = () => {
   useEffect(() => {
     if (fishId) {
       fetchHealthRecords(fishId);
+    } else {
+      // Navigate back or handle case when fishId is not provided
+      toast.error("No fish selected.");
+      setLoading(false);
     }
   }, [fishId]);
 
   if (loading) {
     return <div className="text-center py-4">Loading...</div>;
+  }
+
+  if (healthRecords.length === 0) {
+    return (
+      <div className="p-6 bg-white rounded-lg shadow-lg">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleCloseClick}
+            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg p-2 transition duration-300 ease-in-out"
+          >
+            <AiOutlineClose />
+          </button>
+        </div>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Fish Health Records
+        </h1>
+        <p className="text-center text-gray-700">
+          No health records found for this fish.
+        </p>
+      </div>
+    );
   }
 
   return (
