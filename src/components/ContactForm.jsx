@@ -237,7 +237,7 @@ export default function Contact() {
           <p className="font-semibold text-lg text-gray-600">OUR CENTER</p>
           <p>123 XVNT, Ward 17, Binh Thanh District, HCMC</p>
           <p>
-            Tel: +84 915-756-852 <br /> Email: KoiHealthService@gmail.com
+            Tel: +84 915-756-852 <br /> Email: koihealthservice@gmail.com
           </p>
           <p className="font-serif text-lg text-gray-600">
             Careers at KOI HEALTH CENTER
@@ -248,9 +248,14 @@ export default function Contact() {
           </div>
         </div>
       </section>
-      <div className="bg-center contact-col bg-cover bg-[url('./src/assets/home.jpg')] min-h-svh flex justify-center items-center">
+      <div className="contact-col min-h-svh relative">
+        <img
+          src={assets.Home}
+          className="w-full h-full absolute z-10 object-cover"
+          alt="Background"
+        />
         <form
-          className="w-[50vw] h-[80vh] rounded-lg bg-fixed flex flex-col gap-8 items-center"
+          className="w-[80vw] h-[80vh] rounded-lg flex flex-col gap-8 items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
           onSubmit={onSubmit}
         >
           <input
@@ -258,38 +263,34 @@ export default function Contact() {
             name="Name"
             placeholder="Your Name"
             required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
+            className="w-[800px] h-[50px] p-2 rounded-md bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
           />
-
           <input
             type="email"
             name="Email"
             placeholder="Email Address"
             required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
+            className="w-[800px] h-[50px] p-2 rounded-md bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
           />
-
           <input
             type="tel"
             name="Phone"
             placeholder="Phone"
             required
-            className="w-[500px] h-[30px] p-2 rounded-md bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
+            className="w-[800px] h-[50px] p-2 rounded-md bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
           />
-
           <textarea
             name="Message"
             placeholder="Messages"
             rows="5"
-            className="w-[500px] p-2 rounded-md resize-y text-lg bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
+            className="w-[800px] p-2 rounded-md resize-y text-lg bg-transparent border border-solid focus:outline-none text-white placeholder:text-white"
           ></textarea>
-
           <div className="w-[250px] text-white bg-primary p-3 rounded-lg font-semibold hover:bg-primary/90 transition text-center">
             <button type="submit">Submit!</button>
             <ToastContainer />
           </div>
         </form>
-        <span>{result}</span>
+        <span className="relative z-20">{result}</span>
       </div>
     </>
   );

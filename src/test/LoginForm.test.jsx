@@ -110,94 +110,143 @@
 //     });
 //   });
 
-//   // it("displays alert when login fails", async () => {
-//   //   // Mock alert
-//   //   window.alert = vi.fn();
+// it("displays alert when login fails", async () => {
+//   // Mock alert
+//   window.alert = vi.fn();
 
-//   //   const mockDispatch = vi.fn(() =>
-//   //     Promise.reject({
-//   //       response: { data: { error: "Invalid credentials" } },
-//   //     })
-//   //   );
-//   //   store.dispatch = mockDispatch;
+//   const mockDispatch = vi.fn(() =>
+//     Promise.reject({
+//       response: { data: { error: "Invalid credentials" } },
+//     })
+//   );
+//   store.dispatch = mockDispatch;
 
-//   //   render(
-//   //     <Provider store={store}>
-//   //       <Router>
-//   //         <LoginForm />
-//   //       </Router>
-//   //     </Provider>
-//   //   );
+//   render(
+//     <Provider store={store}>
+//       <Router>
+//         <LoginForm />
+//       </Router>
+//     </Provider>
+//   );
 
-//   //   fireEvent.change(screen.getByPlaceholderText(/username/i), {
-//   //     target: { value: "thienloc" },
-//   //   });
-//   //   fireEvent.change(screen.getByPlaceholderText(/password/i), {
-//   //     target: { value: "saipassword" },
-//   //   });
+//   fireEvent.change(screen.getByPlaceholderText(/username/i), {
+//     target: { value: "thienloc" },
+//   });
+//   fireEvent.change(screen.getByPlaceholderText(/password/i), {
+//     target: { value: "saipassword" },
+//   });
 
-//   //   const loginButton = screen.getByRole("button", { name: /login/i });
-//   //   fireEvent.click(loginButton);
+//   const loginButton = screen.getByRole("button", { name: /login/i });
+//   fireEvent.click(loginButton);
 
-//   //   expect(mockDispatch).toHaveBeenCalled();
+//   expect(mockDispatch).toHaveBeenCalled();
 
-//   //   await waitFor(() => {
-//   //     expect(window.alert).toHaveBeenCalledWith(
-//   //       "Login failed: Invalid credentials"
-//   //     );
-//   //   });
-//   // });
+//   await waitFor(() => {
+//     expect(window.alert).toHaveBeenCalledWith(
+//       "Login failed: Invalid credentials"
+//     );
+//   });
+// });
 // });
 
+import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+import configureStore from "redux-mock-store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginForm from "../components/LoginForm";
-import "@testing-library/jest-dom";
-import { expect, test } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import * as status from "../utils/status";
+import { toast } from "react-toastify";
 
-test("successful login with correct credentials", async () => {
-  render(<LoginForm />);
+vi.mock("react-toastify", () => ({
+  toast: {
+    error: vi.fn(),
+  },
+}));
 
-  fireEvent.change(screen.getByLabelText(/Username/i), {
-    target: { value: "" },
+// Khởi tạo mockStore để giả lập Redux store
+const mockStore = configureStore([]);
+let store;
+
+const GOOGLE_CLIENT_ID = "your-google-client-id";
+
+describe("LoginForm", () => {
+  beforeEach(() => {
+    store = mockStore({
+      auth: {
+        status: status.IDLE,
+        data: null,
+        error: null,
+      },
+    });
   });
-  fireEvent.change(screen.getByLabelText(/Password/i), {
-    target: { value: "password123" },
-  });
-  fireEvent.click(screen.getByRole("button", { name: /Login/i }));
 
-  await waitFor(() => {
-    expect(screen.getByText(/Login successfully/i)).toBeInTheDocument();
-  });
-});
+  it("Login successfully", async () => {
+    const mockDispatch = vi.fn(() =>
+      Promise.resolve({ payload: { token: "valid-token" } })
+    );
+    store.dispatch = mockDispatch;
 
-test("shows error message on invalid credentials", async () => {
-  render(<LoginForm />);
+    render(
+      <Provider store={store}>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <Router>
+            <LoginForm />
+          </Router>
+        </GoogleOAuthProvider>
+      </Provider>
+    );
 
-  fireEvent.change(screen.getByLabelText(/Email/i), {
-    target: { value: "wrong@example.com" },
-  });
-  fireEvent.change(screen.getByLabelText(/Password/i), {
-    target: { value: "wrongpass" },
-  });
-  fireEvent.click(screen.getByRole("button", { name: /Login/i }));
+    // Nhập thông tin đăng nhập hợp lệ
+    fireEvent.change(screen.getByPlaceholderText(/username/i), {
+      target: { value: "thienloc" },
+    });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), {
+      target: { value: "12345679" },
+    });
 
-  await waitFor(() => {
-    expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument();
-  });
-});
+    // Bấm vào nút "Login"
+    const loginButton = screen.getByRole("button", { name: /login/i });
+    fireEvent.click(loginButton);
 
-test("navigates to dashboard after successful login", async () => {
-  render(<LoginForm />);
-
-  fireEvent.change(screen.getByLabelText(/Email/i), {
-    target: { value: "test@example.com" },
+    // Kiểm tra modal thông báo thành công có xuất hiện
+    await waitFor(() => {
+      expect(screen.getByText(/Login successfully!/i)).toBeInTheDocument();
+    });
   });
-  fireEvent.change(screen.getByLabelText(/Password/i), {
-    target: { value: "password123" },
-  });
-  fireEvent.click(screen.getByRole("button", { name: /Login/i }));
 
-  await waitFor(() => {
-    expect(window.location.pathname).toBe("/dashboard");
+  it("Login fail", async () => {
+    const mockDispatch = vi.fn(() =>
+      Promise.reject({ error: "Invalid credentials" })
+    );
+    store.dispatch = mockDispatch;
+
+    render(
+      <Provider store={store}>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <Router>
+            <LoginForm />
+          </Router>
+        </GoogleOAuthProvider>
+      </Provider>
+    );
+
+    // Nhập thông tin đăng nhập không hợp lệ
+    fireEvent.change(screen.getByPlaceholderText(/username/i), {
+      target: { value: "wrongusername" },
+    });
+    fireEvent.change(screen.getByPlaceholderText(/password/i), {
+      target: { value: "wrongpass" },
+    });
+
+    // Bấm vào nút "Login"
+    fireEvent.click(screen.getByRole("button", { name: /login/i }));
+
+    // Kiểm tra rằng toast báo lỗi được hiển thị
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith("Access denied!");
+    });
   });
 });

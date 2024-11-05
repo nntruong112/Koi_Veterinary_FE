@@ -27,6 +27,7 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
   const scheduleOfVet = useSelector((state) => state.vet.data);
 
   const [events, setEvents] = useState([]);
+  const [popupInfo, setPopupInfo] = useState(null); // State cho pop-up
 
   useEffect(() => {
     dispatch(getScheduleByVetId(veterinarianId));
@@ -43,29 +44,36 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
     const startDate = moment().year(year).startOf("year");
     const endDate = moment().year(year).endOf("year");
 
-    for (let m = startDate; m.isBefore(endDate); m.add(1, "days")) {
-      const currentDay = m.format("dddd"); // Lấy tên ngày hiện tại (ví dụ: "Monday", "Tuesday", ...)
+    for (
+      let m = startDate;
+      m.isBefore(endDate) || m.isSame(endDate, "day");
+      m.add(1, "days")
+    ) {
+      const currentDay = m.format("dddd");
 
       if (availableDays.includes(currentDay)) {
-        // Tìm lịch trình tương ứng với ngày hiện tại
-        const scheduleForDate = schedule.find(
+        // Tìm tất cả các lịch trình tương ứng với ngày hiện tại
+        const schedulesForDate = schedule.filter(
           (item) => item.availableDate === currentDay
         );
 
-        const title = scheduleForDate ? (
-          <div>
-            <p>Start time: {scheduleForDate.startTime}</p>
-            <p>End time: {scheduleForDate.endTime}</p>
-          </div>
-        ) : (
-          "No Title"
-        );
+        schedulesForDate.forEach((scheduleForDate) => {
+          const title = scheduleForDate ? (
+            <p>
+              Slot {scheduleForDate.slot}: {""}
+              {scheduleForDate.startTime.slice(0, 5)} - {""}
+              {scheduleForDate.endTime.slice(0, 5)}
+            </p>
+          ) : (
+            "No Title"
+          );
 
-        events.push({
-          title: title,
-          start: m.toDate(),
-          end: m.toDate(),
-          resource: scheduleForDate,
+          events.push({
+            title: title,
+            start: m.toDate(),
+            end: m.toDate(),
+            resource: scheduleForDate,
+          });
         });
       }
     }
@@ -73,15 +81,27 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
   };
 
   useEffect(() => {
-    if (scheduleOfVet) {
+    if (scheduleOfVet && scheduleOfVet.length > 0) {
       // Khi dữ liệu đã tải xong, tạo danh sách events
       const availableDays = getAvailableDays(scheduleOfVet);
+      const currentYear = new Date().getFullYear();
+
+      // Tạo sự kiện cho năm hiện tại
       const generatedEvents = getAvailableDatesInYear(
-        new Date().getFullYear(),
+        currentYear,
         availableDays,
         scheduleOfVet
       );
-      setEvents(generatedEvents);
+
+      // Tạo sự kiện cho năm mới
+      const nextYearGeneratedEvents = getAvailableDatesInYear(
+        currentYear + 1,
+        availableDays,
+        scheduleOfVet
+      );
+
+      // Kết hợp các sự kiện từ năm hiện tại và năm mới
+      setEvents([...generatedEvents, ...nextYearGeneratedEvents]);
     }
   }, [scheduleOfVet]);
 
@@ -92,19 +112,16 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
       },
       defaultDate: new Date(),
       max: moment().endOf("day").toDate(),
-      views: Object.keys(Views).map((k) => Views[k]),
+      views: ["month"],
     }),
     []
   );
 
   return (
     <Fragment>
-      <div
-        className="h-full w-full p-5 bg-white rounded-lg shadow-md"
-        {...props}
-      >
+      <div className="h-full w-full p-5 bg-white" {...props}>
         <h1 className="text-2xl font-bold mb-6 text-gray-800">Schedule</h1>
-        <div className="h-[600px] w-full">
+        <div className="h-screen w-full">
           <Calendar
             components={components}
             defaultDate={defaultDate}
@@ -114,6 +131,10 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
             showMultiDayTimes
             step={60}
             views={views}
+            // popup // Hiển thị pop-up khi click vào "+X more"
+            // eventPropGetter={(event) => ({
+            //   style: { display: "block" }, // Hiển thị tất cả các sự kiện
+            // })}
             className="h-full w-full bg-gray-50 rounded-lg shadow-inner"
           />
         </div>

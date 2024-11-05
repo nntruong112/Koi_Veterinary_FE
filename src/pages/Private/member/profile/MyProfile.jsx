@@ -9,6 +9,7 @@ import { storage } from "../../../../firebase/firebaseConfig";
 import { toast } from "react-toastify";
 import { unwrapResult } from "@reduxjs/toolkit";
 import TextInput from "../../../../components/Private/member/inputForm.jsx/TextInput";
+import { assets } from "../../../../assets/assets";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ const MyProfile = () => {
               src={
                 selectedImage
                   ? URL.createObjectURL(selectedImage)
-                  : formData.image
+                  : formData.image || assets.DefaultAvatar
               }
               className="w-28 h-28 rounded-full"
               alt="Profile"

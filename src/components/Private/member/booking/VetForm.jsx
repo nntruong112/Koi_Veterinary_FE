@@ -2,36 +2,28 @@ import { useState, useEffect } from "react";
 import { assets } from "../../../../assets/assets";
 import { useDispatch, useSelector } from "react-redux";
 import { getVetByRole } from "../../../../services/userService";
-import {
-  getAllBookingSchedule,
-  getSpeciality,
-} from "../../../../services/bookingService";
+import { getAllBookingSchedule } from "../../../../services/bookingService";
 import { updateValidVets } from "../../../../redux/slices/bookingSlice";
 
-const availableTimes = [
-  "07:00",
-  "08:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
+const timeSlots = [
+  { slot: "1", start: "07:00", end: "09:00" },
+  { slot: "2", start: "10:00", end: "12:00" },
+  { slot: "3", start: "13:00", end: "15:00" },
+  { slot: "4", start: "16:00", end: "18:00" },
 ];
 
 const VetForm = ({ updateFormData }) => {
   const dispatch = useDispatch();
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState(null);
 
   const formData = useSelector((state) => state.booking.data.bookingData);
   const invoiceData = useSelector((state) => state.booking.data.invoiceData);
   const vets = useSelector((state) => state.users.data.vets?.result);
   const bookingSchedule =
     useSelector((state) => state.booking.data.bookingSchedule) || [];
+  const vetWorkingToday =
+    useSelector((state) => state.booking.data?.vetWorkingToday) || [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +37,7 @@ const VetForm = ({ updateFormData }) => {
   // Hàm chuyển LocalDate thành tên ngày trong tuần
   const getWeekdayName = (dateString) => {
     const date = new Date(dateString); // Chuyển đổi LocalDate sang Date
+
     const weekdayNames = [
       "Sunday",
       "Monday",
@@ -54,19 +47,24 @@ const VetForm = ({ updateFormData }) => {
       "Friday",
       "Saturday",
     ];
-    return weekdayNames[date.getDay()];
+
+    return weekdayNames[date.getDay()]; // Lấy ngày theo mảng đã tạo
   };
 
   // Lọc ra các bác sĩ làm việc trong ngày mà khách hàng đặt
   const getValidVetsForDate = () => {
-    if (!formData.appointmentDate) return [];
+    if (!formData.appointmentDate && !selectedSlot) return [];
 
     // Chuyển appointmentDate thành tên ngày trong tuần
     const appointmentDayName = getWeekdayName(formData.appointmentDate);
 
     // Lọc danh sách lịch của các bác sĩ theo ngày
     const vetsWorkingToday = bookingSchedule
-      .filter((schedule) => schedule.availableDate === appointmentDayName)
+      .filter(
+        (schedule) =>
+          schedule.availableDate === appointmentDayName &&
+          schedule.slot === selectedSlot?.slot
+      )
       .flatMap((schedule) => schedule.veterinarianProfiles); // Chuyển đổi từ mảng lồng vào mảng phẳng
 
     return vetsWorkingToday;
@@ -74,12 +72,19 @@ const VetForm = ({ updateFormData }) => {
 
   // Dùng useEffect để cập nhật danh sách bác sĩ hợp lệ khi formData.appointmentDate hoặc bookingSchedule thay đổi
   useEffect(() => {
-    if (formData.appointmentDate && bookingSchedule.length > 0) {
+    if (
+      formData.appointmentDate &&
+      formData.slot &&
+      bookingSchedule.length > 0
+    ) {
       const validVets = getValidVetsForDate();
+
       // Cập nhật danh sách bác sĩ hợp lệ
-      dispatch(updateValidVets(validVets));
+      if (validVets && validVets.length > 0) {
+        dispatch(updateValidVets(validVets));
+      }
     }
-  }, [formData.appointmentDate, bookingSchedule, dispatch]);
+  }, [formData.appointmentDate, formData.slot, bookingSchedule, dispatch]);
 
   // Xử lý việc chọn bác sĩ khi cần
   const handleDoctorSelect = (vet) => {
@@ -90,18 +95,17 @@ const VetForm = ({ updateFormData }) => {
     });
   };
 
-  // Ghi nhận thay đổi khi chọn giờ bắt đầu
-  const handleStartTimeChange = (event) => {
-    const time = event.target.value;
-    setStartTime(time);
-    updateFormData({ startTime: time });
-  };
-
-  // Ghi nhận thay đổi khi chọn giừo kết thúc
-  const handleEndTimeChange = (e) => {
-    const time = e.target.value;
-    setEndTime(time);
-    updateFormData({ endTime: time });
+  // Ghi nhận thay đổi khi chọn slot thời gian
+  const handleSlotChange = (e) => {
+    const selectedSlot = timeSlots.find((slot) => slot.slot === e.target.value);
+    if (selectedSlot) {
+      setSelectedSlot(selectedSlot);
+      updateFormData({
+        slot: selectedSlot.slot,
+        startTime: selectedSlot.start,
+        endTime: selectedSlot.end,
+      });
+    }
   };
 
   // Set up các thông tin đã chọn về trạng thái ban đầu
@@ -115,11 +119,6 @@ const VetForm = ({ updateFormData }) => {
     });
   };
 
-  // Chỉ lấy giờ kết thúc hợp lệ
-  const getValidEndTimes = () => {
-    return availableTimes.filter((time) => time > startTime);
-  };
-
   // Hàm định dạng đơn vị tiền tệ
   const formatPrice = (price) => {
     return price
@@ -131,9 +130,7 @@ const VetForm = ({ updateFormData }) => {
     <div className="flex flex-row min-h-[50vh] w-full gap-8 mt-5">
       <form className="w-3/4 mx-auto p-6 bg-white rounded-3xl shadow-lg mb-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold mb-4">
-            Choose a veterinarian (Optional)
-          </h2>
+          <h1 className="text-2xl font-semibold mb-4">Booking Times</h1>
 
           {/* Xóa lựa chọn đã chọn */}
           <button
@@ -145,8 +142,39 @@ const VetForm = ({ updateFormData }) => {
           </button>
         </div>
 
+        <div className="mb-4 flex items-start gap-4">
+          <div>
+            <label className="mr-2">Select Time Slot:</label>
+            <select
+              value={formData.slot}
+              onChange={handleSlotChange}
+              className="p-2 border border-gray-300 rounded-lg"
+            >
+              <option value="" disabled>
+                Select Time Slot
+              </option>
+              {timeSlots.map((slot) => (
+                <option key={slot.slot} value={slot.slot}>
+                  {slot.slot}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="font-medium flex flex-col gap-2">
+            <p>Slot 1: 07:00 - 09:00</p>
+            <p>Slot 2: 10:00 - 12:00</p>
+            <p>Slot 3: 13:00 - 15:00</p>
+            <p>Slot 4: 16:00 - 18:00</p>
+          </div>
+        </div>
+
+        <h1 className="text-2xl font-semibold mb-4 mt-12">
+          Choose a veterinarian (Optional)
+        </h1>
+
         <div className="grid grid-cols-2 gap-6">
-          {getValidVetsForDate().map((vet) => {
+          {vetWorkingToday.map((vet) => {
             // Tìm ảnh của bác sĩ từ mảng vets dựa vào userId
             const vetImage =
               vets.find((v) => v.userId === vet.userId)?.image ||
@@ -195,55 +223,6 @@ const VetForm = ({ updateFormData }) => {
             );
           })}
         </div>
-
-        <div className="mt-12">
-          <h3 className="text-2xl font-semibold mb-4">
-            Booking Times
-            {` for ${formData.veterinarianName || ""}`}
-          </h3>
-
-          <div className="flex items-center gap-10">
-            {/* Select for Start Time */}
-            <div className="mb-4">
-              <label className="mr-2">Start Time:</label>
-              <select
-                value={startTime}
-                onChange={handleStartTimeChange}
-                className="p-2 border border-gray-300 rounded-lg"
-              >
-                <option value="" disabled>
-                  Select Start Time
-                </option>
-
-                {availableTimes.map((time) => (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Select for End Time */}
-            <div className="mb-4">
-              <label className="mr-2">End Time:</label>
-              <select
-                value={endTime}
-                onChange={handleEndTimeChange}
-                className="p-2 border border-gray-300 rounded-lg"
-                disabled={!startTime}
-              >
-                <option value="" disabled>
-                  Select End Time
-                </option>
-                {getValidEndTimes().map((time) => (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
       </form>
 
       {/* RIGHT SIDE */}
@@ -274,12 +253,14 @@ const VetForm = ({ updateFormData }) => {
             </div>
 
             <div className="flex flex-col items-start gap-1">
-              <p className="text-gray-500 font-semibold text-base">Start</p>
+              <p className="text-gray-500 font-semibold text-base">
+                Start time
+              </p>
               {formData.startTime || "none"}
             </div>
 
             <div className="flex flex-col items-start gap-1">
-              <p className="text-gray-500 font-semibold text-base">End</p>
+              <p className="text-gray-500 font-semibold text-base">End time</p>
               {formData.endTime || "none"}
             </div>
           </div>

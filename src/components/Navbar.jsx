@@ -101,7 +101,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between border-b-2">
                   <div className="flex items-center justify-start gap-2 py-4 px-4 ">
                     <img
-                      src={userInfo.image}
+                      src={userInfo.image || assets.DefaultAvatar}
                       className="w-10 h-10 rounded-full"
                       alt="User Avatar"
                     />

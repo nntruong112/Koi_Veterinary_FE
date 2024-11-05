@@ -7,8 +7,14 @@ const Work = () => {
   return (
     <>
       <Navbar />
-      <section className="bg-center bg-cover bg-[url('./src/assets/home.jpg')]">
-        <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 mx-11 md:py-[10vw] md:mb-[-30px]">
+      <section className="relative">
+        <img
+          src={assets.Home}
+          className="w-full h-full absolute z-10 object-cover"
+          alt="Background"
+        />
+
+        <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 mx-11 md:py-[10vw] md:mb-[-30px] z-20 relative">
           <p className="text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight md:leading-tight lg:leading-tight">
             Veterinary Services
           </p>
@@ -23,6 +29,7 @@ const Work = () => {
           </div>
         </div>
       </section>
+
       <section className="text-center py-8 bg-[#f1faff]">
         <h1 className="text-5xl font-bold mt-0 mb-8 text-[#071e55]">
           OUR SERVICES
