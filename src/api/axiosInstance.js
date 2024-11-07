@@ -12,9 +12,9 @@ export const setupInterceptor = () => {
   // thêm hàm xử lý cho tất cả request HTTP trước khi gửi
   BASE_URL.interceptors.request.use(
     (config) => {
-      // Lấy trạng thái hiện tại của Redux store
+      // Lấy trạng thái hiện tại
       const state = store.getState();
-      const token = state.auth.data?.token; // lấy token từ Redux store
+      const token = state.auth.data?.token; // lấy token
 
       if (
         token &&
@@ -26,7 +26,6 @@ export const setupInterceptor = () => {
           "users/reset-password",
         ].includes(config.url)
       ) {
-        // Bỏ qua login và register
         config.headers["Authorization"] = `Bearer ${token}`;
       }
 

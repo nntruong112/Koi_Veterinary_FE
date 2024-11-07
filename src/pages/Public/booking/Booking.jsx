@@ -155,6 +155,7 @@ const Booking = () => {
 
             {currentStep < steps.length - 1 && (
               <button
+                name="next"
                 type="button"
                 onClick={handleNext}
                 className="flex items-center gap-2 bg-primary p-2 rounded-lg font-semibold hover:bg-primary/80 transition"

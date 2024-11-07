@@ -127,6 +127,7 @@ const MyProfile = () => {
               value={formData.lastname}
               disabled={!isEdit}
               onChange={handleChange}
+              id="lastname"
             />
             <TextInput
               label="First name"
@@ -134,6 +135,7 @@ const MyProfile = () => {
               value={formData.firstname}
               disabled={!isEdit}
               onChange={handleChange}
+              id="firstname"
             />
           </div>
 
