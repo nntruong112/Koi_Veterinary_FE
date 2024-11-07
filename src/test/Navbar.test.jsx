@@ -1,95 +1,77 @@
-// import React from "react";
-// import { render, screen, fireEvent } from "@testing-library/react";
-// import { Provider } from "react-redux";
-// import configureStore from "redux-mock-store"; // Để mock Redux store
-// import { BrowserRouter as Router } from "react-router-dom";
-// import Navbar from "../components/Navbar"; // Đường dẫn đến Navbar component
-// import { beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import HealthRecordPage from "../pages/Private/member/fish/HealthRecord";
+import { ToastContainer } from "react-toastify";
+import axios from "axios";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
-// const mockStore = configureStore([]);
+vi.mock("axios");
 
-// describe("Navbar", () => {
-//   let store;
+describe("HealthRecordPage", () => {
+  const mockFishId = 123;
 
-//   beforeEach(() => {
-//     store = mockStore({
-//       auth: {
-//         data: {
-//           token: "mockToken",
-//         },
-//       },
-//       users: {
-//         data: {
-//           result: {
-//             name: "vuongtran",
-//           },
-//         },
-//       },
-//     });
-//   });
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-//   it("renders Navbar correctly with user logged in", () => {
-//     render(
-//       <Provider store={store}>
-//         <Router>
-//           <Navbar />
-//         </Router>
-//       </Provider>
-//     );
+  test("This fish have health record", async () => {
+    axios.get.mockResolvedValueOnce({
+      data: [
+        {
+          healthRecordId: 1,
+          createdDate: "2024-11-01",
+          diagnosis: "Fin Rot",
+          treatment: "Antibiotic Treatment",
+          medicine: "Med A",
+        },
+        {
+          healthRecordId: 2,
+          createdDate: "2024-11-02",
+          diagnosis: "Ich",
+          treatment: "Salt Bath",
+          medicine: "Med B",
+        },
+      ],
+    });
 
-//     // Kiểm tra hiển thị tên người dùng
-//     expect(screen.getByText(/Hi, vuongtran/i)).toBeInTheDocument();
+    render(
+      <Router>
+        <Routes>
+          <Route path="/health-record" element={<HealthRecordPage />} />
+        </Routes>
+        <ToastContainer />
+      </Router>
+    );
 
-//     // Kiểm tra hiển thị các đường dẫn
-//     expect(screen.getByText(/home/i)).toBeInTheDocument();
-//     expect(screen.getByText(/about/i)).toBeInTheDocument();
-//   });
+    waitFor(() => {
+      expect(screen.getByText("Fish Health Records")).toBeInTheDocument();
+    });
 
-//   it("logs out when Logout is clicked", () => {
-//     const mockLogout = vi.fn();
-//     store.dispatch = mockLogout; // Mock dispatch
+    waitFor(() => {
+      expect(screen.getByText("Fin Rot")).toBeInTheDocument();
+      expect(screen.getByText("Antibiotic Treatment")).toBeInTheDocument();
+      expect(screen.getByText("Med A")).toBeInTheDocument();
+    });
+  });
 
-//     render(
-//       <Provider store={store}>
-//         <Router>
-//           <Navbar />
-//         </Router>
-//       </Provider>
-//     );
+  test("This fish does not have health record", async () => {
+    axios.get.mockResolvedValueOnce({
+      data: [],
+    });
 
-//     // Mở dropdown
-//     fireEvent.click(screen.getByText(/Hi, vuongtran/i));
+    render(
+      <Router>
+        <Routes>
+          <Route path="/health-record" element={<HealthRecordPage />} />
+        </Routes>
+        <ToastContainer />
+      </Router>
+    );
 
-//     // Nhấp vào Logout
-//     fireEvent.click(screen.getByText(/logout/i));
-
-//     // Kiểm tra xem dispatch có được gọi không
-//     expect(mockLogout).toHaveBeenCalled(); // Kiểm tra xem logout action đã được gọi
-//   });
-
-//   it("renders login button when user is not logged in", () => {
-//     store = mockStore({
-//       auth: {
-//         data: {
-//           token: null,
-//         },
-//       },
-//       users: {
-//         data: {
-//           result: null,
-//         },
-//       },
-//     });
-
-//     render(
-//       <Provider store={store}>
-//         <Router>
-//           <Navbar />
-//         </Router>
-//       </Provider>
-//     );
-
-//     // Kiểm tra hiển thị nút LOGIN
-//     expect(screen.getByText(/login/i)).toBeInTheDocument();
-//   });
-// });
+    waitFor(() => {
+      expect(
+        screen.getByText(/This fish does not have health records/)
+      ).toBeInTheDocument();
+    });
+  });
+});
