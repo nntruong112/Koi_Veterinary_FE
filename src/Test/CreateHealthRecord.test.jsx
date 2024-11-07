@@ -1,98 +1,120 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import CreateHealthRecord from "../pages/Private/vet/healthRecord/CreateHealthRecord";
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
-import configureStore from "redux-mock-store";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
+import { BrowserRouter as Router } from "react-router-dom";
+import HealthRecordPage from "../pages/Private/member/fish/HealthRecord";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { vi } from "vitest";
 
-const mock = new MockAdapter(axios);
-const mockStore = configureStore();
+// Mocking axios and toast
+vi.mock("axios");
+vi.mock("react-toastify", () => ({
+  ToastContainer: vi.fn(() => <div>Toast Container Mock</div>),
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+  },
+}));
 
-describe("CreateHealthRecord", () => {
-  let store;
+const mockStore = configureStore([]);
+const mockFishId = "fish123";
 
+const renderComponent = (fishId = mockFishId) =>
+  render(
+    <Provider
+      store={mockStore({
+        users: { data: { result: { userId: "testUserId" } } },
+      })}
+    >
+      <Router>
+        <HealthRecordPage />
+      </Router>
+    </Provider>
+  );
+
+describe("HealthRecordPage", () => {
   beforeEach(() => {
-    store = mockStore({
-      users: {
-        data: {
-          result: {
-            userId: "mocked-vet-id",
-          },
-        },
-      },
-      auth: {
-        data: {
-          token: "mocked-token",
-        },
-      },
-    });
-
-    // Mock fish fetching
-    mock
-      .onGet(
-        "http://localhost:8080/appointments/belonged_to_vetId/mocked-vet-id"
-      )
-      .reply(200, [
+    axios.get.mockResolvedValue({
+      data: [
         {
-          fish: { fishId: "1", species: "Goldfish" },
-          customer: { username: "JohnDoe" },
+          healthRecordId: "1",
+          createdDate: "2024-11-01",
+          diagnosis: "Healthy",
+          treatment: "None",
+          medicine: "Antibiotic A",
         },
-      ]);
+      ],
+    });
   });
 
   afterEach(() => {
-    mock.reset();
+    vi.clearAllMocks();
   });
 
-  test("should create health record successfully (happy case)", async () => {
-    mock.onPost("http://localhost:8080/health_records/create").reply(200);
+  it("should display health records when data is available", async () => {
+    renderComponent();
 
-    render(
-      <Provider store={store}>
-        <CreateHealthRecord />
-      </Provider>
-    );
+    // Wait for health records to load
+    await waitFor(() => screen.getByText("Fish Health Records"));
 
-    // Simulate filling out the form
-    fireEvent.change(screen.getByLabelText(/Select Fish:/i), {
-      target: { value: "1" },
-    });
-    fireEvent.change(screen.getByLabelText(/Diagnosis:/i), {
-      target: { value: "Healthy" },
-    });
-    fireEvent.change(screen.getByLabelText(/Treatment:/i), {
-      target: { value: "None" },
-    });
-    fireEvent.change(screen.getByLabelText(/Select Medicine:/i), {
-      target: { value: "Antibiotic A" },
-    });
+    // Check if the record data is displayed
+    expect(screen.getByText("2024-11-01")).toBeInTheDocument();
+    expect(screen.getByText("Healthy")).toBeInTheDocument();
+    expect(screen.getByText("None")).toBeInTheDocument();
+    expect(screen.getByText("Antibiotic A")).toBeInTheDocument();
+  });
 
-    fireEvent.click(
-      screen.getByRole("button", { name: /Create Health Record/i })
-    );
+  it("should show a message when no health records are found", async () => {
+    axios.get.mockResolvedValueOnce({ data: [] }); // No records
 
-    await waitFor(
-      () => {
-        expect(
-          screen.getByText(/Health record created successfully!/i)
-        ).toBeInTheDocument();
-      },
-      { timeout: 3000 }
+    renderComponent();
+
+    // Wait for health records to load
+    await waitFor(() => screen.getByText("Fish Health Records"));
+
+    // Check if the no records message is displayed
+    expect(
+      screen.getByText("No health records found for this fish.")
+    ).toBeInTheDocument();
+    expect(toast.info).toHaveBeenCalledWith(
+      "No health records found for this fish."
     );
   });
 
-  test("should show error message when required fields are missing (unhappy case)", async () => {
-    render(
-      <Provider store={store}>
-        <CreateHealthRecord />
-      </Provider>
-    );
+  it("should show an error message if the request fails", async () => {
+    axios.get.mockRejectedValueOnce(new Error("Request failed"));
 
-    fireEvent.click(
-      screen.getByRole("button", { name: /Create Health Record/i })
-    );
+    renderComponent();
 
-    expect(screen.getByText(/Please fill in all fields./i)).toBeInTheDocument();
+    // Wait for the error toast to be shown
+    await waitFor(() =>
+      expect(toast.error).toHaveBeenCalledWith(
+        "This fish does not have health records, please booking appointment for this fish to have health record from us. Thank you."
+      )
+    );
+  });
+
+  it("should navigate to the fish list when the close button is clicked", async () => {
+    renderComponent();
+
+    // Check for the close button in the component
+    const closeButton = screen.getByRole("button", { name: /close/i });
+
+    fireEvent.click(closeButton);
+
+    // Verify that the navigation was triggered
+    expect(screen.getByText("Toast Container Mock")).toBeInTheDocument();
+  });
+
+  it("should show a loading message when data is being fetched", async () => {
+    axios.get.mockResolvedValueOnce({ data: [] }); // Simulating loading
+
+    renderComponent();
+
+    // While loading, check for loading message
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 });

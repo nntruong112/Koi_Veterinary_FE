@@ -155,30 +155,41 @@ const PaymentPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(null);
   const userId = useSelector((state) => state.users.data?.result?.userId);
+  const token = useSelector((state) => state.auth.data?.token);
 
   // Automatically create payment when component mounts
   useEffect(() => {
     const createPayment = async () => {
       setIsLoading(true);
+
+      if (!token) {
+        setError("User is not authenticated. Please log in.");
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const res = await axios.post(
           "http://localhost:8080/payments/create-payment",
           {
-            appointmentId,
-            userId,
+            appointmentId: appointmentId,
+            userId: userId,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
 
         if (res.data && res.data.paymentUrl) {
           setPaymentResponse(res.data);
+          setPaymentUrl(res.data.paymentUrl); // Ensure paymentUrl is set
           localStorage.setItem("paymentId", res.data.paymentId); // Store paymentId
-          setPaymentUrl(res.data.paymentUrl); // Set payment URL
         } else {
           throw new Error("Invalid payment response");
         }
       } catch (error) {
         console.error("Error creating payment:", error);
-        setError("Error creating payment: " + error.message);
+        setError("Something went wrong with the payment creation.");
       } finally {
         setIsLoading(false);
       }
