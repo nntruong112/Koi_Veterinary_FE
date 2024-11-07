@@ -8,10 +8,13 @@ const TextInput = ({
   onChange,
   type,
   placeholder,
+  id,
 }) => {
   return (
     <div className="mb-4">
-      <label className="block text-lg font-medium mb-3">{label}</label>
+      <label htmlFor={id} className="block text-lg font-medium mb-3">
+        {label}
+      </label>
       <input
         type={type}
         name={name}
@@ -19,6 +22,7 @@ const TextInput = ({
         onChange={onChange}
         disabled={disabled}
         placeholder={placeholder}
+        id={id}
         className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary"
       />
     </div>

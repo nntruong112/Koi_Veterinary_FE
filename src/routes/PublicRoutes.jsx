@@ -14,7 +14,7 @@ const Testimonials = React.lazy(() =>
   import("../pages/Public/testimonials/Testimonials")
 );
 const Features = React.lazy(() => import("../pages/Public/features/Features"));
-// const Pricing = React.lazy(() => import("../pages/Public/pricing/Pricing"));
+
 const Contact = React.lazy(() => import("../pages/Public/contact/Contact"));
 const Work = React.lazy(() => import("../pages/Public/work/Work"));
 const Team = React.lazy(() => import("../pages/Public/team/Team"));
@@ -44,13 +44,11 @@ const PublicRoutes = [
     element: <LoadLazy children={<Testimonials />} />,
   },
   { path: path.WORK, element: <LoadLazy children={<Work />} /> },
-  { path: path.FEATURES, element: <LoadLazy children={<Features />} /> },
+  //{ path: path.FEATURES, element: <LoadLazy children={<Features />} /> },
   { path: path.FAQ_Q1, element: <LoadLazy children={<FAQ_Q1 />} /> },
   { path: path.FAQ_Q2, element: <LoadLazy children={<FAQ_Q2 />} /> },
   { path: path.FAQ_Q3, element: <LoadLazy children={<FAQ_Q3 />} /> },
   { path: path.FAQ_Q4, element: <LoadLazy children={<FAQ_Q4 />} /> },
-
-  // { path: path.PRICING, element: <LoadLazy children={<Pricing />} /> },
   { path: path.TEAM, element: <LoadLazy children={<Team />} /> },
   {
     path: path.BOOKING,

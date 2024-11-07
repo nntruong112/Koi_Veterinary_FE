@@ -98,7 +98,10 @@ const AddFish = () => {
         <div className="flex flex-col gap-4">
           {fields.map(({ label, name, type, required }) => (
             <div key={name}>
-              <label className="block text-lg font-medium text-gray-700 mb-1">
+              <label
+                htmlFor={name}
+                className="block text-lg font-medium text-gray-700 mb-1"
+              >
                 {label}
               </label>
               {type === "file" ? (
@@ -111,6 +114,7 @@ const AddFish = () => {
                 />
               ) : (
                 <input
+                  id={name}
                   type={type}
                   name={name}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"

@@ -46,7 +46,7 @@ export const store = configureStore({
 
 export let persistor = persistStore(store);
 
-// Thêm hành động để xóa Redux persist khi logout
+// Hành động để xóa Redux persist khi logout
 export const clearPersistedStore = () => {
   persistor.purge();
 };
