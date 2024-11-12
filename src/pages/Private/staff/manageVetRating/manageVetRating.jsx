@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 const ManageRating = () => {
   const token = useSelector((state) => state.auth.data?.token);
 
-  const [vetUsers, setVetUsers] = useState([]); // Lưu danh sách VET users với userId và username
+  const [vetUsers, setVetUsers] = useState([]); // Lưu danh sách VET users với userId, lastname, và firstname
   const [selectedUserId, setSelectedUserId] = useState(""); // userId được chọn
   const [penaltyType, setPenaltyType] = useState("late");
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const ManageRating = () => {
             lastname: user.lastname,
             firstname: user.firstname,
           }))
-        ); // Lưu các userId và username vào state
+        ); // Lưu các userId, lastname, và firstname vào state
       } catch (error) {
         console.error("Error fetching VET users:", error);
         toast.error("Failed to load VET users.");
@@ -61,7 +61,9 @@ const ManageRating = () => {
       const penaltyUrl =
         penaltyType === "late"
           ? `http://localhost:8080/users/late-penalty/${selectedUserId}`
-          : `http://localhost:8080/users/absent-penalty/${selectedUserId}`;
+          : penaltyType === "absent"
+          ? `http://localhost:8080/users/absent-penalty/${selectedUserId}`
+          : `http://localhost:8080/users/bonus-rating/${selectedUserId}`;
 
       await axios.post(
         penaltyUrl,
@@ -75,7 +77,11 @@ const ManageRating = () => {
 
       toast.success(
         `${
-          penaltyType === "late" ? "Late" : "Absent"
+          penaltyType === "late"
+            ? "Late"
+            : penaltyType === "absent"
+            ? "Absent"
+            : "Bonus" // If it's "Present" we consider it a bonus rating
         } penalty applied successfully!`
       );
     } catch (error) {
@@ -90,14 +96,14 @@ const ManageRating = () => {
   return (
     <div className="w-full p-6 bg-gray-50 shadow-lg rounded-lg mt-10">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-        Apply Penalty
+        Manage Rating
       </h1>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
       <div className="mb-5">
         <div className="flex items-center mb-4">
-          <label className="text-lg mr-2">Select Vet to manage Rating:</label>
+          <label className="text-lg mr-2">Select User:</label>
           <select
             value={selectedUserId}
             onChange={handleUserChange}
@@ -106,7 +112,7 @@ const ManageRating = () => {
             <option value="">-- Select User --</option>
             {vetUsers.map((user) => (
               <option key={user.userId} value={user.userId}>
-                {user.lastname} {user.firstname}
+                {user.lastname} {user.firstname}{" "}
               </option>
             ))}
           </select>
@@ -121,6 +127,7 @@ const ManageRating = () => {
           >
             <option value="late">Late Penalty</option>
             <option value="absent">Absent Penalty</option>
+            <option value="present">Present (Bonus Rating)</option>{" "}
           </select>
         </div>
 
