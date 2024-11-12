@@ -17,7 +17,6 @@ const FeedbackList = () => {
 
   return (
     <div className="p-5">
-      {/* <h2 className="text-2xl font-semibold mb-4">All Feedbacks</h2> */}
       <div className="relative overflow-x-auto rounded-2xl shadow-lg">
         <table className="min-w-full bg-white text-gray-500 border border-gray-200 table-auto">
           <thead className="text-sm text-gray-700 uppercase bg-gray-200 border-b">
@@ -25,9 +24,8 @@ const FeedbackList = () => {
               <th className="px-4 py-3 border">Comment</th>
               <th className="px-4 py-3 border">Rating</th>
               <th className="px-4 py-3 border">Customer</th>
-              <th className="px-4 py-3 border">Punctuality</th>{" "}
-              {/* New column for punctuality */}
-              {/* <th className="px-4 py-3 border">Appointment ID</th> */}
+              <th className="px-4 py-3 border">Veterinarian</th>
+              <th className="px-4 py-3 border">Punctuality</th>
             </tr>
           </thead>
           <tbody>
@@ -38,12 +36,21 @@ const FeedbackList = () => {
               >
                 <td className="px-4 py-3 border">{feedback.comment}</td>
                 <td className="px-4 py-3 border">{feedback.rating}</td>
-                <td className="px-4 py-3 border">{feedback.customerId}</td>
                 <td className="px-4 py-3 border">
-                  {feedback.punctuality}
-                </td>{" "}
-                {/* Display punctuality */}
-                {/* <td className="px-4 py-3 border">{feedback.appointmentId}</td> */}
+                  {feedback.customer &&
+                  feedback.customer.lastname &&
+                  feedback.customer.firstname
+                    ? `${feedback.customer.lastname} ${feedback.customer.firstname}`
+                    : "N/A"}
+                </td>
+                <td className="px-4 py-3 border">
+                  {feedback.appointment.veterinarian &&
+                  feedback.appointment.veterinarian.lastname &&
+                  feedback.appointment.veterinarian.firstname
+                    ? `${feedback.appointment.veterinarian.lastname} ${feedback.appointment.veterinarian.firstname}`
+                    : "N/A"}
+                </td>
+                <td className="px-4 py-3 border">{feedback.punctuality}</td>
               </tr>
             ))}
           </tbody>
