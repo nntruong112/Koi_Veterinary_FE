@@ -185,6 +185,10 @@ const VetForm = ({ updateFormData }) => {
               (v) => v.userId === vet.userId
             )?.fishSpecialty;
 
+            // Tim vet rating
+            const vetRating = vets.find((v) => v.userId === vet.userId)?.rating;
+            console.log(vetRating);
+
             return (
               <div
                 key={vet.veterinarianProfilesId}
@@ -204,6 +208,12 @@ const VetForm = ({ updateFormData }) => {
                   <h3 className="text-xl font-semibold mt-2 text-center">
                     {`${vet.firstname} ${vet.lastname} `}
                   </h3>
+                  <div className="flex flex-wrap gap-2">
+                    <p className="font-semibold">Rating:</p>
+                    <span>
+                      {vetRating ? `${vetRating} / 5` : "No available rating"}
+                    </span>
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     <p className="font-semibold">Specialty name:</p>
                     <span>

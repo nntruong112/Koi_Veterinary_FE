@@ -57,8 +57,8 @@ const PaymentDetailsPage = () => {
   }
 
   return (
-    <div className="pt-44">
-      <div className="max-w-xl mx-auto p-6 bg-white border-2 border-gray-200 rounded-lg shadow-lg">
+    <div className="p-8">
+      <div className="max-w-full mx-auto p-6 bg-white border-2 border-gray-200 rounded-lg shadow-lg">
         <div className="flex justify-center">
           <img src={assets.tick} className="w-28 h-28" alt="Tick" />
         </div>

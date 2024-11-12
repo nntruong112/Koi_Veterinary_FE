@@ -167,7 +167,8 @@ const MyAppointment = () => {
           ) : (
             <div className="flex flex-col w-1/5">
               {selectedAppointment.appointmentDate === today &&
-              selectedAppointment.status !== "Waiting" ? (
+              selectedAppointment.status !== "Waiting" &&
+              selectedAppointment.paymentStatus !== "paid" ? (
                 <button
                   onClick={handlePay}
                   className="mt-4 mr-4 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
@@ -182,7 +183,7 @@ const MyAppointment = () => {
                     "Pay"
                   )}
                 </button>
-              ) : selectedAppointment.paymentStatus !== "unpaid" ? (
+              ) : selectedAppointment.paymentStatus === "paid" ? (
                 ""
               ) : (
                 <div className="flex flex-col items-center">
