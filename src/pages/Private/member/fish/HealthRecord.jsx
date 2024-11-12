@@ -78,6 +78,7 @@ const HealthRecordPage = () => {
         <button
           onClick={handleCloseClick}
           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-lg p-2 transition duration-300 ease-in-out"
+          data-testid="close-button"
         >
           <AiOutlineClose />
         </button>
