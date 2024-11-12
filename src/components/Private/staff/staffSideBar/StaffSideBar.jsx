@@ -84,6 +84,25 @@ const StaffSideBar = () => {
               </span>
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to={path.MANAGE_RATING}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <GiConfirmed />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Manage Vet's Rating
+              </span>
+            </NavLink>
+          </li>
+
           <li>
             <NavLink
               to={path.NEWS}

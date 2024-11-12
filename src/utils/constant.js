@@ -60,4 +60,5 @@ export const path = {
   BOOKING_CONFIRM: "booking-confirm",
   ALL_FEEDBACK: "all-feedback",
   NEWS: "news-create",
+  MANAGE_RATING: "manage-rating",
 };

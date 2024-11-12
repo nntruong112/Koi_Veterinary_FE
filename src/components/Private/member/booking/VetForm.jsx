@@ -201,7 +201,9 @@ const VetForm = ({ updateFormData }) => {
                   className="w-24 h-36 rounded-lg object-cover"
                 />
                 <div className="w-full flex flex-col gap-2">
-                  <h3 className="text-xl font-semibold mt-2 text-center">{`${vet.firstname} ${vet.lastname}`}</h3>
+                  <h3 className="text-xl font-semibold mt-2 text-center">
+                    {`${vet.firstname} ${vet.lastname} `}
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     <p className="font-semibold">Specialty name:</p>
                     <span>
