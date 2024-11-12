@@ -76,13 +76,11 @@ const AllFeedback = React.lazy(() =>
 const NewsList = React.lazy(() =>
   import("../pages/Private/staff/createNews/createNews")
 );
-<<<<<<< HEAD
 const ManageRating = React.lazy(() =>
   import("../pages/Private/staff/manageVetRating/manageVetRating")
-=======
+);
 const ScheduleOfVet = React.lazy(() =>
   import("../pages/Private/staff/scheduleOFVet/ScheduleOfVet")
->>>>>>> 6cfde6adaf03b975aba568652ac1b636fbcb48ed
 );
 
 const PrivateRoutes = [
@@ -333,11 +331,10 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="STAFF">
             <LoadLazy children={<ManageRating />} />
-            </ProtectedRoutes>
-
-          ),
-          },
-          {
+          </ProtectedRoutes>
+        ),
+      },
+      {
         path: path.SCHEDULE_OF_VET,
         element: (
           <ProtectedRoutes allowedRoles="STAFF">
