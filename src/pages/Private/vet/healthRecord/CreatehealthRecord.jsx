@@ -536,6 +536,23 @@ const CreateHealthRecord = () => {
     { id: 1, name: "Antibiotic A" },
     { id: 2, name: "Antibiotic B" },
     { id: 3, name: "Vitamin C" },
+    { id: 4, name: "Anti-Fungal D" },
+    { id: 5, name: "Parasiticide E" },
+    { id: 6, name: "Bacterial Control F" },
+    { id: 7, name: "Anti-Inflammatory G" },
+    { id: 8, name: "Antibiotic H" },
+    { id: 9, name: "Antiparasitic I" },
+    { id: 10, name: "Probiotic J" },
+    { id: 11, name: "Immune Booster K" },
+    { id: 12, name: "Stress Relief L" },
+    { id: 13, name: "Vitamin D" },
+    { id: 14, name: "Electrolyte M" },
+    { id: 15, name: "Water Conditioner N" },
+    { id: 16, name: "Antifungal O" },
+    { id: 17, name: "Detox P" },
+    { id: 18, name: "Mineral Supplement Q" },
+    { id: 19, name: "Antibiotic R" },
+    { id: 20, name: "Antiviral S" },
   ];
 
   // Fetch fish species and customer username

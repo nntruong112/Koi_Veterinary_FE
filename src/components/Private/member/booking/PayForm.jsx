@@ -136,7 +136,7 @@ const PayForm = ({ updateFormData }) => {
 
             <div className="flex items-center justify-between">
               <p>Moving fee:</p>
-              <p>{formatPrice(invoiceData.movingPrice)}</p>
+              <p>{formatPrice(invoiceData.movingFee)}</p>
             </div>
           </div>
         </section>

@@ -71,9 +71,12 @@ const InfoForm = ({ updateFormData }) => {
   const handleDistanceChange = (e) => {
     const newDistance = e.target.value;
     setDistance(newDistance);
-    dispatch(updateInvoiceData({ newDistance }));
-    const movingPrice = calculatePriceByDistance(newDistance);
-    dispatch(updateInvoiceData({ movingPrice }));
+
+    // Calculate the moving fee based on the new distance
+    const movingFee = calculatePriceByDistance(newDistance);
+
+    // Update the invoice data with the moving fee
+    dispatch(updateInvoiceData({ movingFee, newDistance }));
   };
 
   const calculatePriceByDistance = (distance) => {
@@ -83,11 +86,10 @@ const InfoForm = ({ updateFormData }) => {
 
   useEffect(() => {
     const servicePrice = invoiceData?.price || 0;
-    const movingFee = invoiceData?.movingPrice || 0;
+    const movingFee = invoiceData?.movingFee || 0;
     const total = servicePrice + movingFee;
-
     dispatch(updateInvoiceData({ total }));
-  }, [invoiceData?.price, invoiceData?.movingPrice, dispatch]);
+  }, [invoiceData?.price, invoiceData?.movingFee, dispatch]);
 
   const handleClearSelection = () => {
     updateFormData({
@@ -105,7 +107,7 @@ const InfoForm = ({ updateFormData }) => {
     dispatch(
       updateInvoiceData({
         price: 0,
-        movingPrice: 0,
+        movingFee: 0,
         total: 0,
       })
     );
@@ -255,7 +257,7 @@ const InfoForm = ({ updateFormData }) => {
 
             <div className="flex items-center justify-between">
               <p>Moving fee:</p>
-              <p>{formatPrice(invoiceData.movingPrice)}</p>
+              <p>{formatPrice(invoiceData.movingFee)}</p>
             </div>
           </div>
         </section>

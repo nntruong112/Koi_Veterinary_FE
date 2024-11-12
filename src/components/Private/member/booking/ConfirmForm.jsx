@@ -21,7 +21,6 @@ const ConfirmForm = () => {
       ? price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })
       : "0 ₫";
   };
-
   const handleSubmit = async () => {
     const appointmentData = {
       customerId: userId,
@@ -32,25 +31,28 @@ const ConfirmForm = () => {
       startTime: bookingData.startTime,
       endTime: bookingData.endTime,
       fishId: bookingData.fishId,
+      movingFee: invoiceData.movingFee,
       status: "Waiting",
       paymentStatus: "unpaid",
     };
+    console.log(bookingData.movingFee);
 
     try {
-      // Tạo lịch hẹn
-      await dispatch(bookingAppointment(appointmentData));
+      const resultAction = await dispatch(bookingAppointment(appointmentData));
+      unwrapResult(resultAction);
 
-      // Reset booking data sau khi hoàn thành
       dispatch(resetBookingData());
-
       navigate(path.BOOKING);
-
       toast.success("Booking successfully!");
     } catch (error) {
       console.error("Error while requesting: ", error);
       toast.error(error.response?.data?.message || "Booking unsuccessfully!");
     }
   };
+
+  if (!bookingData || !invoiceData) {
+    return <p>Loading booking details...</p>;
+  }
 
   return (
     <div className="flex flex-row min-h-[50vh] w-full gap-8 mt-5">
@@ -120,7 +122,7 @@ const ConfirmForm = () => {
 
           <div className="flex items-center justify-between">
             <p>Moving fee:</p>
-            <p>{formatPrice(invoiceData.movingPrice)}</p>
+            <p>{formatPrice(invoiceData.movingFee)}</p>
           </div>
         </div>
 
