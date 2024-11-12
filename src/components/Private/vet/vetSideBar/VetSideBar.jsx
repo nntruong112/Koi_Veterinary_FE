@@ -4,7 +4,6 @@ import { RiCalendarScheduleFill } from "react-icons/ri";
 import { NavLink, useLocation } from "react-router-dom";
 import { path } from "../../../../utils/constant";
 import { useSelector } from "react-redux";
-import { VscSignOut } from "react-icons/vsc";
 import { assets } from "../../../../assets/assets.js";
 import { LuActivitySquare, LuCalendar } from "react-icons/lu";
 

@@ -168,13 +168,7 @@ const LoginRoleForm = () => {
             )}
           </div>
 
-          <div className="flex justify-between items-center text-center">
-            {/* -------- REMEMBER CHECKBOX --------- */}
-            <label className="flex items-center justify-center text-center text-sm">
-              <input type="checkbox" className="mr-1 mt-1 bg-[#eee] text-sm" />
-              Remember me
-            </label>
-
+          <div className="flex justify-end items-center text-center">
             {/* -------- Forgot pass --------- */}
             <button
               type="button"

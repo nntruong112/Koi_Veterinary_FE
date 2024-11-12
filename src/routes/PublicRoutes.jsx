@@ -44,7 +44,7 @@ const PublicRoutes = [
     element: <LoadLazy children={<Testimonials />} />,
   },
   { path: path.WORK, element: <LoadLazy children={<Work />} /> },
-  //{ path: path.FEATURES, element: <LoadLazy children={<Features />} /> },
+  { path: path.FEATURES, element: <LoadLazy children={<Features />} /> },
   { path: path.FAQ_Q1, element: <LoadLazy children={<FAQ_Q1 />} /> },
   { path: path.FAQ_Q2, element: <LoadLazy children={<FAQ_Q2 />} /> },
   { path: path.FAQ_Q3, element: <LoadLazy children={<FAQ_Q3 />} /> },

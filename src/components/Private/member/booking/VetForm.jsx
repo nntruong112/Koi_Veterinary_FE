@@ -146,12 +146,12 @@ const VetForm = ({ updateFormData }) => {
           <div>
             <label className="mr-2">Select Time Slot:</label>
             <select
-              value={formData.slot}
+              value={formData.slot || ""}
               onChange={handleSlotChange}
               className="p-2 border border-gray-300 rounded-lg"
             >
               <option value="" disabled>
-                Select Time Slot
+                Select Slot
               </option>
               {timeSlots.map((slot) => (
                 <option key={slot.slot} value={slot.slot}>

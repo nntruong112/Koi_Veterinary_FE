@@ -27,7 +27,7 @@ const Schedule = ({ localizer = mLocalizer, ...props }) => {
   const scheduleOfVet = useSelector((state) => state.vet.data);
 
   const [events, setEvents] = useState([]);
-  const [popupInfo, setPopupInfo] = useState(null); // State cho pop-up
+  // const [popupInfo, setPopupInfo] = useState(null); // State cho pop-up
 
   useEffect(() => {
     dispatch(getScheduleByVetId(veterinarianId));

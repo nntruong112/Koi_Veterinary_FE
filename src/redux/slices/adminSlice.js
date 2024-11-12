@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as status from "../../utils/status";
 import {
+  addSlotForVet,
   confirmAppointment,
   countAppointmentType,
   countByRole,
@@ -233,6 +234,20 @@ const adminSlice = createSlice({
         state.data = { ...state.data, getIncomeByMonth: action.payload };
       })
       .addCase(getIncomeByMonth.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // add slot for vet
+      .addCase(addSlotForVet.pending, (state) => {
+        state.status = status.PENDING;
+      })
+      .addCase(addSlotForVet.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, addSlotForVet: action.payload };
+      })
+      .addCase(addSlotForVet.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });

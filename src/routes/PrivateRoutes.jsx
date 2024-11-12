@@ -76,6 +76,9 @@ const AllFeedback = React.lazy(() =>
 const NewsList = React.lazy(() =>
   import("../pages/Private/staff/createNews/createNews")
 );
+const ScheduleOfVet = React.lazy(() =>
+  import("../pages/Private/staff/scheduleOFVet/ScheduleOfVet")
+);
 
 const PrivateRoutes = [
   {
@@ -317,6 +320,14 @@ const PrivateRoutes = [
         element: (
           <ProtectedRoutes allowedRoles="STAFF">
             <LoadLazy children={<NewsList />} />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: path.SCHEDULE_OF_VET,
+        element: (
+          <ProtectedRoutes allowedRoles="STAFF">
+            <LoadLazy children={<ScheduleOfVet />} />
           </ProtectedRoutes>
         ),
       },
