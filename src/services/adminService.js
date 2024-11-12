@@ -167,3 +167,15 @@ export const getIncomeByMonth = createAsyncThunk(
     }
   }
 );
+
+export const addSlotForVet = createAsyncThunk(
+  "veterinarian_schedules/addSlotForVet",
+  async (data, thunkAPI) => {
+    try {
+      const response = await BASE_URL.post("veterinarian_schedules/link", data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);

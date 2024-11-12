@@ -5,9 +5,9 @@ import { MdFeedback } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import { path } from "../../../../utils/constant";
 import { useSelector } from "react-redux";
-import { VscSignOut } from "react-icons/vsc";
 import { assets } from "../../../../assets/assets.js";
 import { HiNewspaper } from "react-icons/hi2";
+import { RiCalendarScheduleFill } from "react-icons/ri";
 
 const StaffSideBar = () => {
   const location = useLocation();
@@ -24,7 +24,7 @@ const StaffSideBar = () => {
         <ul className="space-y-2 font-semibold text-xl">
           <div className="flex items-center justify-start gap-4 p-2">
             <img
-              src={userInfo?.image || assets.DefaultAvatar}
+              src={userInfo.image || assets.DefaultAvatar}
               className="w-10 h-10 rounded-full border border-black"
               alt="Admin Avatar"
             />
@@ -116,6 +116,24 @@ const StaffSideBar = () => {
             >
               <HiNewspaper />
               <span className="flex-1 ms-3 whitespace-nowrap">News</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={path.SCHEDULE_OF_VET}
+              className={({ isActive }) =>
+                `flex items-center p-2 rounded-lg group ${
+                  isActive
+                    ? "text-white bg-blue-500 dark:bg-blue-700"
+                    : "text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`
+              }
+            >
+              <RiCalendarScheduleFill />
+              <span className="flex-1 ms-3 whitespace-nowrap">
+                Vet Schedule
+              </span>
             </NavLink>
           </li>
         </ul>

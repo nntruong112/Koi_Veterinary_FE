@@ -61,4 +61,5 @@ export const path = {
   ALL_FEEDBACK: "all-feedback",
   NEWS: "news-create",
   MANAGE_RATING: "manage-rating",
+  SCHEDULE_OF_VET: "schedule-of-vet",
 };
