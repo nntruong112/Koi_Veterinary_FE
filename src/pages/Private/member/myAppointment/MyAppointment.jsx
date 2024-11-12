@@ -182,7 +182,7 @@ const MyAppointment = () => {
                     "Pay"
                   )}
                 </button>
-              ) : selectedAppointment.paymentStatus === "paid" ? (
+              ) : selectedAppointment.paymentStatus !== "unpaid" ? (
                 ""
               ) : (
                 <div className="flex flex-col items-center">
