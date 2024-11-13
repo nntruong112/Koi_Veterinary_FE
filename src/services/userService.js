@@ -169,3 +169,17 @@ export const getAllFeedback = createAsyncThunk(
     }
   }
 );
+
+export const getFeedbackByAppointmentId = createAsyncThunk(
+  "feedbacks/getFeedbackByAppointmentId",
+  async (appointmentId, thunkAPI) => {
+    try {
+      const response = await BASE_URL.get(
+        `feedbacks/byAppointment/${appointmentId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);

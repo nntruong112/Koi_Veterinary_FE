@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAppointmentByUserId } from "../../../../services/userService";
+import {
+  getAppointmentByUserId,
+  getFeedbackByAppointmentId,
+} from "../../../../services/userService";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { path } from "../../../../utils/constant";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -24,11 +27,19 @@ const MyAppointment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const appointmentList =
     useSelector((state) => state.users.data.myAppointment) || [];
+  const feedbackForAppointment =
+    useSelector((state) => state.users.data.feedbackForAppointment) || [];
 
   useEffect(() => {
     const appointmentListAction = dispatch(getAppointmentByUserId());
     unwrapResult(appointmentListAction);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedAppointment) {
+      dispatch(getFeedbackByAppointmentId(selectedAppointment.appointmentId));
+    }
+  }, [dispatch, selectedAppointment]);
 
   const handleViewDetail = (appointment) => {
     dispatch(setSelectedAppointment(appointment));
@@ -82,7 +93,7 @@ const MyAppointment = () => {
   const today = new Date().toISOString().split("T")[0];
 
   const handleZaloRedirect = () => {
-    window.open("https://zalo.me/0973141349", "_blank");
+    window.open("https://zalo.me/0389534019", "_blank");
   };
 
   if (selectedAppointment) {
@@ -220,6 +231,45 @@ const MyAppointment = () => {
                   )}
               </div>
             </div>
+          )}
+        </div>
+        <div className="flex flex-col items-center my-5">
+          <h2 className="text-2xl font-semibold mb-4">
+            Feedback of this appointment
+          </h2>
+
+          {feedbackForAppointment.length > 0 ? (
+            <table className="min-w-full border border-gray-200 rounded-lg shadow-lg bg-white">
+              <thead>
+                <tr>
+                  <th className="px-6 py-3 border-b border-gray-200 text-left text-lg font-semibold text-gray-600">
+                    Comment
+                  </th>
+                  <th className="px-6 py-3 border-b border-gray-200 text-left text-lg font-semibold text-gray-600">
+                    Rating
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {feedbackForAppointment.map((feedback) => (
+                  <tr
+                    key={feedback.feedbackId}
+                    className="hover:bg-gray-50 text-base"
+                  >
+                    <td className="px-6 py-4 border-b border-gray-200">
+                      {feedback.comment}
+                    </td>
+                    <td className="px-6 py-4 border-b border-gray-200">
+                      {feedback.rating}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-gray-500">
+              No feedback available for this appointment.
+            </p>
           )}
         </div>
 

@@ -6,6 +6,7 @@ import {
   getAllFeedback,
   getAppointmentByUserId,
   getAppointmentType,
+  getFeedbackByAppointmentId,
   getInfoByToken,
   getMyFish,
   getVetByRole,
@@ -211,6 +212,21 @@ const userSlice = createSlice({
         state.data = { ...state.data, allFeedback: action.payload };
       })
       .addCase(getAllFeedback.rejected, (state, action) => {
+        state.status = status.FAILED;
+        state.error = action.error.message;
+      });
+
+    builder
+      // get feedback for appointment
+      .addCase(getFeedbackByAppointmentId.pending, (state) => {
+        state.status = status.PENDING;
+        state.error = null;
+      })
+      .addCase(getFeedbackByAppointmentId.fulfilled, (state, action) => {
+        state.status = status.SUCCESSFULLY;
+        state.data = { ...state.data, feedbackForAppointment: action.payload };
+      })
+      .addCase(getFeedbackByAppointmentId.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
       });
